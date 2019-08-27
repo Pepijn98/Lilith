@@ -1,9 +1,9 @@
 # D3 discord bot
-not a bot yet, still testing the api and things
+Diablo 3 discord bot
 
 ### TODO
-- switch to typescript
-- command handler
+- ~~switch to typescript~~
+- ~~command handler~~
 
 ### Must Have
 - request items
