@@ -1,10 +1,62 @@
 {
-  "name": "d3-discord",
-  "version": "0.0.1",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.19.0",
-    "blizzard.js": "^3.1.0"
-  }
+    "name": "mashu",
+    "version": "0.1.0",
+    "description": "Diablo 3 discord bot",
+    "engines": {
+        "yarn": ">=1.16.0"
+    },
+    "author": {
+        "email": "root@kurozeropb.info",
+        "name": "KurozeroPB",
+        "url": "https://kurozeropb.info"
+    },
+    "main": "src/index.js",
+    "license": "MIT",
+    "homepage": "https://github.com/KurozeroPB/d3-discord#readme",
+    "bugs": {
+        "email": "root@kurozeropb.info",
+        "url": "https://github.com/KurozeroPB/d3-discord/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/KurozeroPB/d3-discord.git"
+    },
+    "scripts": {
+        "deploy": "pm2 start ecosystem.config.js --env production",
+        "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register src/index.ts",
+        "dev": "yarn test",
+        "test": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/index.ts",
+        "pretest": "yarn check && yarn lint",
+        "reinstall": "yarn clean && yarn install",
+        "clean": "rm -rf ./node_modules && rm ./yarn.lock",
+        "check": "gts check",
+        "fix": "gts fix",
+        "lint": "eslint --ext .ts .",
+        "lint:fix": "eslint --ext .ts --fix ."
+    },
+    "dependencies": {
+        "@kurozero/collection": "^0.4.5",
+        "axios": "^0.19.0",
+        "bufferutil": "^4.0.1",
+        "chalk": "^2.4.2",
+        "cross-env": "^5.2.0",
+        "eris": "^0.10.1",
+        "erlpack": "abalabahaha/erlpack",
+        "moment": "^2.24.0",
+        "mongoose": "^5.6.11",
+        "winston": "^3.2.1",
+        "zlib-sync": "^0.1.5"
+    },
+    "devDependencies": {
+        "@types/mongoose": "^5.5.13",
+        "@types/node": "^12.7.2",
+        "@typescript-eslint/eslint-plugin": "^2.0.0",
+        "@typescript-eslint/parser": "^2.0.0",
+        "eslint": "^6.2.2",
+        "gts": "^1.1.0",
+        "ts-node": "^8.3.0",
+        "tsconfig-paths": "^3.8.0",
+        "tslint": "^5.19.0",
+        "typescript": "^3.5.3"
+    }
 }
