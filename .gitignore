@@ -119,3 +119,6 @@ dist
 # Ignore lock files
 package-lock.json
 yarn.lock
+
+test.js
+test.ts

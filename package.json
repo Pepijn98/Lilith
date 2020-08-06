@@ -41,6 +41,7 @@
         "chalk": "^4.1.0",
         "eris": "^0.13.3",
         "erlpack": "abalabahaha/erlpack",
+        "list": "^2.0.19",
         "moment": "^2.27.0",
         "mongoose": "^5.9.27",
         "winston": "^3.3.3",
