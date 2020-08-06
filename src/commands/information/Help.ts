@@ -1,7 +1,7 @@
 import Command from "../../Command";
-import D3 from "../../structures/D3Client";
+import Lilith from "../../structures/Client";
 import { Message } from "eris";
-import { ICommandContext } from "../../interfaces/ICommandContext";
+import { ICommandContext } from "../../types/ICommandContext";
 
 export default class Help extends Command {
     public constructor(category: string) {
@@ -14,17 +14,17 @@ export default class Help extends Command {
         });
     }
 
-    public async run(msg: Message, args: string[], client: D3, ctx: ICommandContext): Promise<Message | undefined> {
+    public async run(msg: Message, args: string[], client: Lilith, ctx: ICommandContext): Promise<Message | undefined> {
         if (args.length === 0) {
-            let messageQueue: string[] = [];
+            const messageQueue: string[] = [];
             let currentMessage = `\n# Here's a list of my commands. For more info do: ${ctx.settings.prefix}help <command>\n# Prefix: ${ctx.settings.prefix}\n`;
             client.commands.forEach((command) => {
                 if (command.hidden === true) return; // Command is hidden
                 if (command.ownerOnly && msg.author.id !== ctx.settings.owner) return; // Command can only be viewed by the owner
 
-                let toAdd = `@${command.name}\n` +
-                    `   "${command.description}"\n`;
-                if (currentMessage.length + toAdd.length >= 1900) { // If too long push to queue and reset it.
+                const toAdd = `@${command.name}\n` + `   "${command.description}"\n`;
+                if (currentMessage.length + toAdd.length >= 1900) {
+                    // If too long push to queue and reset it.
                     messageQueue.push(currentMessage);
                     currentMessage = "";
                 }
@@ -33,7 +33,7 @@ export default class Help extends Command {
             messageQueue.push(currentMessage);
             msg.channel.addMessageReaction(msg.id, "✅");
             const dm = await client.getDMChannel(msg.author.id);
-            let sendInOrder = setInterval(async () => {
+            const sendInOrder = setInterval(async () => {
                 if (messageQueue.length > 0) {
                     await dm.createMessage(`\`\`\`py${messageQueue.shift()}\`\`\``); // If still messages queued send the next one.
                 } else {
@@ -49,7 +49,8 @@ export default class Help extends Command {
                 return await msg.channel.createMessage("This command can only be viewed and used by the owner.");
             }
 
-            const helpMessage = "```asciidoc\n" +
+            const helpMessage =
+                "```asciidoc\n" +
                 `[${command.name.capitalize()}]\n\n` +
                 `= ${command.description} =\n\n` +
                 `Category           ::  ${command.category}\n` +
@@ -70,7 +71,7 @@ export default class Help extends Command {
         }
     }
 
-    public checkForMatch(name: string, client: D3, ctx: ICommandContext): Command | undefined {
+    public checkForMatch(name: string, client: Lilith, ctx: ICommandContext): Command | undefined {
         if (name.startsWith(ctx.settings.prefix)) {
             name = name.substr(1);
         }

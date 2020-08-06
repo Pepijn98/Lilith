@@ -1,7 +1,7 @@
-import Mashu from "./structures/D3Client";
-import { ICommandOptions } from "./interfaces/Options";
+import Mashu from "./structures/Client";
+import { ICommandOptions } from "./types/Options";
 import { isGuildChannel } from "./utils/Helpers";
-import { ICommandContext } from "./interfaces/ICommandContext";
+import { ICommandContext } from "./types/ICommandContext";
 import { Message, Guild, AnyGuildChannel, Member } from "eris";
 
 export default abstract class Command {
@@ -15,7 +15,7 @@ export default abstract class Command {
     public category: string;
     public aliases: string[];
     public hidden: boolean;
-    public guildOnly: boolean
+    public guildOnly: boolean;
     public ownerOnly: boolean;
     public requiredArgs: number;
     public userPermissions: string[];
@@ -47,17 +47,18 @@ export default abstract class Command {
         if (!str || str === "") return false;
 
         let guild: Guild | null = null;
-        if (isGuildChannel(msg.channel))
-            guild = (msg.channel as AnyGuildChannel).guild;
+        if (isGuildChannel(msg.channel)) guild = (msg.channel as AnyGuildChannel).guild;
 
         if (!guild) return false;
 
-        if ((/^\d{17,18}/u).test(str) || (/^<@!?\d{17,18}>/u).test(str)) {
-            const member = guild.members.get((/^<@!?\d{17,18}>/u).test(str) ? str.replace(/<@!?/u, "").replace(">", "") : str);
+        if (/^\d{17,18}/u.test(str) || /^<@!?\d{17,18}>/u.test(str)) {
+            const member = guild.members.get(/^<@!?\d{17,18}>/u.test(str) ? str.replace(/<@!?/u, "").replace(">", "") : str);
             return member ? member : false;
         } else if (str.length <= 33) {
             const isMemberName = (name: string, something: string): boolean => name === something || name.startsWith(something) || name.includes(something);
-            const member = guild.members.find((m) => (m.nick && isMemberName(m.nick.toLowerCase(), str.toLowerCase())) ? true : isMemberName(m.user.username.toLowerCase(), str.toLowerCase()));
+            const member = guild.members.find((m) =>
+                m.nick && isMemberName(m.nick.toLowerCase(), str.toLowerCase()) ? true : isMemberName(m.user.username.toLowerCase(), str.toLowerCase())
+            );
             return member ? member : false;
         }
 

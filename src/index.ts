@@ -1,6 +1,6 @@
 // import mongoose from "mongoose";
-import settings from "../settings";
-import D3 from "./structures/D3Client";
+import settings from "./settings";
+import Lilith from "./structures/Client";
 import CommandHandler from "./structures/CommandHandler";
 import CommandLoader from "./structures/CommandLoader";
 import Logger from "./utils/Logger";
@@ -13,7 +13,7 @@ import "./utils/Extended";
 let ready = false;
 
 // Initialize discord client
-const client = new D3(settings.token, {
+const client = new Lilith(settings.token, {
     getAllUsers: true,
     restMode: true
 });

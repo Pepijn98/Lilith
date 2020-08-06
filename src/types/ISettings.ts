@@ -1,9 +1,11 @@
 export interface BattleNet {
-    clientId: string;
-    clientSecret: string;
+    id: string;
+    secret: string;
 }
 
 export interface IDatabase {
+    user: string;
+    password: string;
     host: string;
     port: number;
     name: string;

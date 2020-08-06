@@ -1,4 +1,4 @@
-import D3 from "../structures/D3Client";
+import Lilith from "../structures/Client";
 import Logger from "../utils/Logger";
 import { ISettings } from "./ISettings";
 import { User } from "eris";
@@ -6,7 +6,7 @@ import Collection from "@kurozero/collection";
 
 export interface ICommandHandlerOptions {
     settings: ISettings;
-    client: D3;
+    client: Lilith;
     logger: Logger;
 }
 

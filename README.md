@@ -1,16 +1,38 @@
-# D3 discord bot
-Diablo 3 discord bot
+# Lilith (WIP)
+Diablo 3 discord bot \
+Default prefix will be `;`
 
-### TODO
+# TODO (Must Have)
 - ~~switch to typescript~~
 - ~~command handler~~
-
-### Must Have
-- request items
-- character class/skills
-- request season/era leaderboards
+- set battle.net account name
+- set region
 - request account
 - request specific hero from account
 
-### Want
-- save battlenet account name
+# TODO (Add Later)
+- request items
+- character class/skills
+- request season/era leaderboards
+- changable prefix per guild
+
+# Commands
+`[]` - optional parameters \
+`<>` - required parameters
+
+| name | parameters | description |
+|:-|:-|:-|
+| tag | [battle-tag] | set battle.net account name |
+| region | [us/eu/kr/tw/cn] | set your region |
+| locale | [locale] | set the locale (setting locale will only change the requested data from the api and not the bot its self) |
+| account || get your account details |
+| hero | <hero_id> | get a specific hero |
+
+# Regions and their corresponding locale(s)
+| region | host | locales |
+|:-|:-|:-|
+| North America | https://us.api.blizzard.com/ | en_US <br> es_MX <br> pt_BR |
+| Europe | https://eu.api.blizzard.com/ | en_GB <br> es_ES <br> fr_FR <br> ru_RU <br> de_DE <br> pt_PT <br> it_IT |
+| Korea | https://kr.api.blizzard.com/ | ko_KR |
+| Taiwan | https://tw.api.blizzard.com/ | zh_TW |
+| China | https://gateway.battlenet.com.cn/ | zh_CN |

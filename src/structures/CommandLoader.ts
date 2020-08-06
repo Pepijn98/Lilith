@@ -1,6 +1,7 @@
 import Command from "../Command";
 import Logger from "../utils/Logger";
 import Collection from "@kurozero/collection";
+import path from "path";
 import { promises as fs } from "fs";
 
 export default class CommandLoader {
@@ -16,10 +17,10 @@ export default class CommandLoader {
     public async load(commandDir: string): Promise<Collection<Command>> {
         const dirs = await fs.readdir(commandDir);
         for (const dir of dirs) {
-            const files = await fs.readdir(`${commandDir}/${dir}`);
+            const files = await fs.readdir(path.join(commandDir, dir));
             for (const file of files) {
-                if (file.endsWith(".ts")) {
-                    await this._add(`${commandDir}/${dir}/${file}`, dir);
+                if (/\.(j|t)s$/iu.test(file)) {
+                    await this._add(path.join(commandDir, dir, file), dir);
                 }
             }
         }
@@ -28,14 +29,11 @@ export default class CommandLoader {
 
     private async _add(commandPath: string, category: string): Promise<void> {
         try {
-            const cmd = await import(commandPath);
-            const command: Command = new cmd.default(category);
-
+            const command = new (await import(commandPath)).default(category) as Command;
             if (this.commands.has(command.name)) {
-                this.logger.warn("CommandHandler", `A command with the name ${command.name} already exists and has been skipped`);
-            } else {
-                this.commands.add(command);
+                return this.logger.warn("CommandHandler", `A command with the name ${command.name} already exists and has been skipped`);
             }
+            this.commands.add(command);
         } catch (e) {
             this.logger.warn("CommandHandler", `${commandPath} - ${e.stack}`);
         }

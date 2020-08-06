@@ -1,6 +1,6 @@
 import Command from "../../Command";
-import D3 from "../../structures/D3Client";
-import { ICommandContext } from "../../interfaces/ICommandContext";
+import Lilith from "../../structures/Client";
+import { ICommandContext } from "../../types/ICommandContext";
 import { Message } from "eris";
 
 export default class Eval extends Command {
@@ -16,10 +16,10 @@ export default class Eval extends Command {
         });
     }
 
-    public async run(msg: Message, args: string[], client: D3, ctx: ICommandContext): Promise<void> {
+    public async run(msg: Message, args: string[], client: Lilith, ctx: ICommandContext): Promise<void> {
         ctx.logger.info("EVAL", `${msg.author.username}: ${msg.content}`);
 
-        let toEval = msg.content.replace(`${ctx.settings.prefix}eval`, "").trim();
+        const toEval = msg.content.replace(`${ctx.settings.prefix}eval`, "").trim();
         let result = "~eval failed~";
         try {
             result = await eval(toEval);

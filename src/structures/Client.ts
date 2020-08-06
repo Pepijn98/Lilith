@@ -1,32 +1,34 @@
 import Collection from "@kurozero/collection";
 import Command from "../Command";
-import settings from "../../settings";
+import settings from "../settings";
 import axios from "axios";
 import { Client, ClientOptions } from "eris";
-import { ICommandStats } from "../interfaces/Options";
+import { ICommandStats } from "../types/Options";
 
-function requestToken(client: D3): void {
-    axios.get("https://us.battle.net/oauth/token", {
-        params: {
-            "client_id": settings.battlenet.clientId,
-            "client_secret": settings.battlenet.clientSecret,
-            "grant_type": "client_credentials"
-        }
-    }).then((response) => {
-        switch (response.data.token_type) {
-            case "bearer":
-                client.expiresIn = response.data.expires_in;
-                client.token = response.data.access_token;
-                client.lastRequest = Date.now();
-                break;
-
-            default:
-                break;
-        }
-    }, (error) => console.error(error));
+function requestToken(client: Lilith): void {
+    axios
+        .get("https://us.battle.net/oauth/token", {
+            params: {
+                client_id: settings.battlenet.id,
+                client_secret: settings.battlenet.secret,
+                grant_type: "client_credentials"
+            }
+        })
+        .then((response) => {
+            switch (response.data.token_type) {
+                case "bearer":
+                    client.expiresIn = response.data.expires_in;
+                    client.token = response.data.access_token;
+                    client.lastRequest = Date.now();
+                    break;
+                default:
+                    break;
+            }
+        })
+        .catch(console.error);
 }
 
-export default class D3 extends Client {
+export default class Lilith extends Client {
     public commands: Collection<Command>;
     public ready = false;
     public stats: ICommandStats;
@@ -52,7 +54,7 @@ export default class D3 extends Client {
         // If not valid request new token
         setInterval(() => {
             if (this.lastRequest && this.expiresIn) {
-                if ((this.lastRequest - Date.now()) > this.expiresIn) {
+                if (this.lastRequest - Date.now() > this.expiresIn) {
                     console.log("requesting new token");
                     requestToken(this);
                 }

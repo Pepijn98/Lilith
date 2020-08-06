@@ -6,12 +6,18 @@ export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTim
 /** Check whether channel is guild channel */
 export const isGuildChannel = (channel: AnyChannel): boolean => {
     switch (channel.type) {
-        case 0: return true; // TextChannel
-        case 2: return true; // VoiceChannel
-        case 4: return true; // CategoryChannel
-        case 5: return true; // NewsChannel
-        case 6: return true; // StoreChannel
-        default: return false;
+        case 0:
+            return true; // TextChannel
+        case 2:
+            return true; // VoiceChannel
+        case 4:
+            return true; // CategoryChannel
+        case 5:
+            return true; // NewsChannel
+        case 6:
+            return true; // StoreChannel
+        default:
+            return false;
     }
 };
 
@@ -29,6 +35,6 @@ export const formatSeconds = (time: number): string => {
 };
 
 export const round = (value: number, precision: number): number => {
-    let multiplier = Math.pow(10, precision || 0);
+    const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
 };

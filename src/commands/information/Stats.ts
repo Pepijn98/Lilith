@@ -1,5 +1,5 @@
 import Command from "../../Command";
-import D3 from "../../structures/D3Client";
+import Lilith from "../../structures/Client";
 import { version } from "../../../package.json";
 import { formatSeconds } from "../../utils/Helpers";
 import { Message, GuildChannel } from "eris";
@@ -16,14 +16,14 @@ export default class Stats extends Command {
         });
     }
 
-    public async run(msg: Message, _args: string[], client: D3): Promise<Message | undefined> {
+    public async run(msg: Message, _args: string[], client: Lilith): Promise<Message | undefined> {
         return msg.channel.createMessage({
             embed: {
                 color: 0,
                 author: {
                     name: "D3 Stats",
                     url: "https://mashu.xyz",
-                    icon_url: client.user.avatarURL // eslint-disable-line @typescript-eslint/camelcase
+                    icon_url: client.user.avatarURL
                 },
                 thumbnail: {
                     url: client.user.avatarURL

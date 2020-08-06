@@ -1,14 +1,14 @@
-import D3 from "./D3Client";
+import Lilith from "./Client";
 import Logger from "../utils/Logger";
-import { ISettings } from "../interfaces/ISettings";
-import { ICommandHandlerOptions } from "../interfaces/Options";
+import { ISettings } from "../types/ISettings";
+import { ICommandHandlerOptions } from "../types/Options";
 import { isGuildChannel } from "../utils/Helpers";
 import { Message, AnyGuildChannel, User } from "eris";
 import { Collection } from "@kurozero/collection";
 
 export default class CommandHandler {
     public settings: ISettings;
-    public client: D3;
+    public client: Lilith;
     public logger: Logger;
 
     public constructor(options: ICommandHandlerOptions) {
@@ -66,7 +66,7 @@ export default class CommandHandler {
             if (botPermissions.length > 0) {
                 const member = channel.guild.members.get(this.client.user.id);
                 if (!member) return;
-                let missingPermissions = [];
+                const missingPermissions = [];
                 for (let i = 0; i < botPermissions.length; i++) {
                     const hasPermission = member.permission.has(botPermissions[i]);
                     if (hasPermission === false) {
@@ -86,7 +86,7 @@ export default class CommandHandler {
             if (userPermissions.length > 0) {
                 const member = channel.guild.members.get(msg.author.id);
                 if (!member) return;
-                let missingPermissions = [];
+                const missingPermissions = [];
                 for (let i = 0; i < userPermissions.length; i++) {
                     const hasPermission = member.permission.has(userPermissions[i]);
                     if (hasPermission === false) {
@@ -109,7 +109,7 @@ export default class CommandHandler {
             try {
                 await msg.channel.createMessage({
                     embed: {
-                        color: 0xDC143C,
+                        color: 0xdc143c,
                         description: error.toString()
                     }
                 });
