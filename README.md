@@ -5,6 +5,7 @@
 # Lilith (WIP)
 Diablo 3 discord bot \
 Default prefix will be `;`
+Click [here](https://discord.com/oauth2/authorize?client_id=740897738983604284&scope=bot&permissions=379968) to invite the bot
 
 # TODO (Must Have)
 - ~~switch to typescript~~
