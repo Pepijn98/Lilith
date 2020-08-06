@@ -5,34 +5,34 @@ interface HeroKills {
 }
 
 interface Hero {
-    id: bigint;
-    name: string;
-    class: string;
-    classSlug: string;
-    gender: number; // 0 = male; 1 = female
-    level: number;
-    kills: HeroKills;
-    paragonLevel: number;
-    hardcore: boolean;
-    seasonal: boolean;
-    dead: boolean;
+    "id": bigint;
+    "name": string;
+    "class": string;
+    "classSlug": string;
+    "gender": number; // 0 = male; 1 = female
+    "level": number;
+    "kills": HeroKills;
+    "paragonLevel": number;
+    "hardcore": boolean;
+    "seasonal": boolean;
+    "dead": boolean;
     "last-updated": bigint;
 }
 
 interface Kills {
     monsters: bigint;
     elites: bigint;
-    hardcoreMonsters: bigint
+    hardcoreMonsters: bigint;
 }
 
 interface TimePlayed {
     "demon-hunter": number;
-    barbarian: number;
+    "barbarian": number;
     "witch-doctor": number;
-    necromancer: number;
-    wizard: number;
-    monk: number;
-    crusader: number;
+    "necromancer": number;
+    "wizard": number;
+    "monk": number;
+    "crusader": number;
 }
 
 interface Progression {
