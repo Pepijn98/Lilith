@@ -1,5 +1,5 @@
 <div align="center">
-    <img height="250" src="./assets/avatar-980x980.jpg" style="border-radius: 50%;">
+    <img height="250" src="./assets/avatar-round.png">
 </div>
 
 # Lilith (WIP)
