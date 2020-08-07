@@ -24,10 +24,7 @@ export default class Eval extends Command {
     async run(msg: Message, args: string[], client: Lilith, ctx: CommandContext): Promise<void> {
         const prefix = settings.prefix;
         let isTypescript = false;
-        let content = msg.content
-            .replace(`${prefix}eval`, "")
-            .replace(/^\s+/, "")
-            .replace(/\s*$/, "");
+        let content = msg.content.replace(`${prefix}eval`, "").replace(/^\s+/, "").replace(/\s*$/, "");
 
         if (content.startsWith("```") && content.endsWith("```")) {
             content = content.substring(3, content.length - 3);
@@ -48,25 +45,23 @@ export default class Eval extends Command {
             },
             _formatLines() {
                 return this._lines.map((line: any) => line && `//> ${line}\n`).join("");
-            },
+            }
         };
         console.log = console.error = console.warn = console.info = console._logger.bind(console);
         const compilerOptions: ts.CompilerOptions = {
-            "baseUrl": ".",
-            "module": ts.ModuleKind.CommonJS,
-            "strict": false,
-            "esModuleInterop": true,
-            "target": ts.ScriptTarget.ESNext,
-            "noImplicitAny": true,
-            "moduleResolution": ts.ModuleResolutionKind.NodeJs,
-            "sourceMap": false,
-            "noImplicitReturns": false,
-            "resolveJsonModule": true,
-            "declaration": false,
-            "outDir": "build",
-            "typeRoots": [
-                "src/@types"
-            ]
+            baseUrl: ".",
+            module: ts.ModuleKind.CommonJS,
+            strict: false,
+            esModuleInterop: true,
+            target: ts.ScriptTarget.ESNext,
+            noImplicitAny: true,
+            moduleResolution: ts.ModuleResolutionKind.NodeJs,
+            sourceMap: false,
+            noImplicitReturns: false,
+            resolveJsonModule: true,
+            declaration: false,
+            outDir: "build",
+            typeRoots: ["src/@types"]
         };
 
         let result;

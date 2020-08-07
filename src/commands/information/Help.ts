@@ -17,12 +17,12 @@ export default class Help extends Command {
     async run(msg: Message, args: string[], client: Lilith, ctx: CommandContext): Promise<Message | undefined> {
         if (args.length === 0) {
             const messageQueue: string[] = [];
-            let currentMessage = `\n# Here's a list of my commands. For more info do: ${ctx.settings.prefix}help <command>\n# Prefix: ${ctx.settings.prefix}\n`;
+            let currentMessage = `\n// Here's a list of my commands. For more info do: ${ctx.settings.prefix}help <command>\n// Prefix: ${ctx.settings.prefix}\n`;
             client.commands.forEach((command) => {
                 if (command.hidden === true) return; // Command is hidden
                 if (command.ownerOnly && msg.author.id !== ctx.settings.owner) return; // Command can only be viewed by the owner
 
-                const toAdd = `@${command.name}\n` + `   "${command.description}"\n`;
+                const toAdd = `[;${command.name}]\n   "${command.description}"\n`;
                 if (currentMessage.length + toAdd.length >= 1900) {
                     // If too long push to queue and reset it.
                     messageQueue.push(currentMessage);
@@ -31,19 +31,22 @@ export default class Help extends Command {
                 currentMessage += `\n${toAdd}`;
             });
             messageQueue.push(currentMessage);
-            msg.channel.addMessageReaction(msg.id, "✅");
-            try {
-                const dm = await client.getDMChannel(msg.author.id);
-                const sendInOrder = setInterval(async () => {
-                    if (messageQueue.length > 0) {
-                        await dm.createMessage(`\`\`\`py${messageQueue.shift()}\`\`\``); // If still messages queued send the next one.
-                    } else {
-                        clearInterval(sendInOrder);
-                    }
-                }, 300);
-            } catch (e) {
-                msg.channel.createMessage("I can't DM you the list of commands, please enable DMs so I can send you the list of commands.");
-            }
+            const dm = await client.getDMChannel(msg.author.id);
+            const sendInOrder = setInterval(async () => {
+                if (messageQueue.length > 0) {
+                    dm.createMessage(`\`\`\`cs${messageQueue.shift()}\`\`\``)
+                        .then(() => {
+                            msg.channel.addMessageReaction(msg.id, "✅");
+                        })
+                        .catch(() => {
+                            msg.channel.addMessageReaction(msg.id, "❌");
+                            msg.channel.createMessage("I can't DM you the list of commands, please enable DMs so I can send you the list of commands.");
+                            clearInterval(sendInOrder);
+                        });
+                } else {
+                    clearInterval(sendInOrder);
+                }
+            }, 300);
         } else {
             const command = this.checkForMatch(args[0], client, ctx);
             if (!command) return await msg.channel.createMessage(`Command \`${ctx.settings.prefix}${args[0]}\` not found`);

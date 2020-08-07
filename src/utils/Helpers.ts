@@ -29,13 +29,13 @@ export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTim
 export function isGuildChannel(channel: Channel): channel is GuildChannel {
     if (channel instanceof GuildChannel) return true;
     return false;
-};
+}
 
 /** Check whether channel is DM channel */
 export function isDMChannel(channel: Channel): channel is PrivateChannel {
     if (channel instanceof PrivateChannel) return true;
     return false;
-};
+}
 
 /** Convert seconds to human readable form */
 export const formatSeconds = (time: number): string => {
