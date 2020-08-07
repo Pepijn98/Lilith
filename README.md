@@ -47,15 +47,15 @@ Another example: Demon Hunter's acronym is `dh` so you'd do `;heroes dh` and **N
 | China         | cn      | https://gateway.battlenet.com.cn/ | zh_CN                                                                   |
 
 # Class list
-| Acronym | Class        |
-|:--------|:-------------|
-| dh      | Demon Hunter |
-| necro   | Necromancer  |
-| monk    | Monk         |
-| barb    | Brabarian    |
-| wd      | Witch Doctor |
-| wiz     | Wizard       |
-| cru     | Cursader     |
+| Class        | Acronym |
+|:-------------|:--------|
+| Demon Hunter | dh      |
+| Necromancer  | necro   |
+| Monk         | monk    |
+| Brabarian    | barb    |
+| Witch Doctor | wd      |
+| Wizard       | wiz     |
+| Cursader     | cru     |
 
 [invite-link]: https://discord.com/oauth2/authorize?client_id=740897738983604284&scope=bot&permissions=379968
 [locale-link]: https://github.com/Pepijn98/Lilith#regions-and-their-corresponding-locales
