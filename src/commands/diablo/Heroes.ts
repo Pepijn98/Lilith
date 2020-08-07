@@ -12,6 +12,7 @@ export default class extends Command {
             description: "Get a list of your heroes",
             usage: "heroes [class]",
             example: "heroes dh",
+            botPermissions: ["embedLinks", "addReactions", "manageMessages"],
             category
         });
     }

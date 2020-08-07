@@ -11,6 +11,7 @@ export default class extends Command {
             usage: "hero <id>",
             example: "hero 123456789",
             requiredArgs: 1,
+            botPermissions: ["embedLinks"],
             category
         });
     }
