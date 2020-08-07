@@ -63,8 +63,7 @@ export default class extends Command {
                     },
                     {
                         name: "Alive",
-                        value: hero.alive ? "yes" : "no",
-                        inline: true
+                        value: hero.alive ? "yes" : "no"
                     },
                     {
                         name: "\u200B",
@@ -73,9 +72,8 @@ export default class extends Command {
                     ...hero.skills.active.map((active) => ({ name: active.skill.name, value: active.rune.name, inline: true })),
                     {
                         name: "\u200B",
-                        value: "**__Passive Skills__**"
-                    },
-                    ...hero.skills.passive.map((active) => ({ name: active.skill.name, value: "\u200B", inline: true }))
+                        value: `**__Passive Skills__**\n${hero.skills.passive.map((active) => active.skill.name).join("\n")}`
+                    }
                 ]
             }
         });
