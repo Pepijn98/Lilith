@@ -5,16 +5,16 @@ import path from "path";
 import { promises as fs } from "fs";
 
 export default class CommandLoader {
-    public commands: Collection<Command>;
-    public logger: Logger;
+    commands: Collection<Command>;
+    logger: Logger;
 
-    public constructor(logger: Logger) {
+    constructor(logger: Logger) {
         this.commands = new Collection(Command);
         this.logger = logger;
     }
 
     /** Load all the commands */
-    public async load(commandDir: string): Promise<Collection<Command>> {
+    async load(commandDir: string): Promise<Collection<Command>> {
         const dirs = await fs.readdir(commandDir);
         for (const dir of dirs) {
             const files = await fs.readdir(path.join(commandDir, dir));

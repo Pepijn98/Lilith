@@ -5,7 +5,7 @@ import { formatSeconds } from "../../utils/Helpers";
 import { Message, GuildChannel } from "eris";
 
 export default class Stats extends Command {
-    public constructor(category: string) {
+    constructor(category: string) {
         super({
             name: "stats",
             description: "",
@@ -16,13 +16,13 @@ export default class Stats extends Command {
         });
     }
 
-    public async run(msg: Message, _args: string[], client: Lilith): Promise<Message | undefined> {
+    async run(msg: Message, _args: string[], client: Lilith): Promise<Message | undefined> {
         return msg.channel.createMessage({
             embed: {
                 color: 0,
                 author: {
-                    name: "D3 Stats",
-                    url: "https://mashu.xyz",
+                    name: "Lilith",
+                    url: "https://github.com/Pepijn98/Lilith",
                     icon_url: client.user.avatarURL
                 },
                 thumbnail: {

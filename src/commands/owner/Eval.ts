@@ -4,7 +4,7 @@ import { ICommandContext } from "../../types/ICommandContext";
 import { Message } from "eris";
 
 export default class Eval extends Command {
-    public constructor(category: string) {
+    constructor(category: string) {
         super({
             name: "eval",
             description: "Evaluate javascript code",
@@ -16,7 +16,7 @@ export default class Eval extends Command {
         });
     }
 
-    public async run(msg: Message, args: string[], client: Lilith, ctx: ICommandContext): Promise<void> {
+    async run(msg: Message, args: string[], client: Lilith, ctx: ICommandContext): Promise<void> {
         ctx.logger.info("EVAL", `${msg.author.username}: ${msg.content}`);
 
         const toEval = msg.content.replace(`${ctx.settings.prefix}eval`, "").trim();

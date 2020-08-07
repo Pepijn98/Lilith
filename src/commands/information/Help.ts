@@ -4,7 +4,7 @@ import { Message } from "eris";
 import { ICommandContext } from "../../types/ICommandContext";
 
 export default class Help extends Command {
-    public constructor(category: string) {
+    constructor(category: string) {
         super({
             name: "help",
             description: "send info about the commands",
@@ -14,7 +14,7 @@ export default class Help extends Command {
         });
     }
 
-    public async run(msg: Message, args: string[], client: Lilith, ctx: ICommandContext): Promise<Message | undefined> {
+    async run(msg: Message, args: string[], client: Lilith, ctx: ICommandContext): Promise<Message | undefined> {
         if (args.length === 0) {
             const messageQueue: string[] = [];
             let currentMessage = `\n# Here's a list of my commands. For more info do: ${ctx.settings.prefix}help <command>\n# Prefix: ${ctx.settings.prefix}\n`;
@@ -71,7 +71,7 @@ export default class Help extends Command {
         }
     }
 
-    public checkForMatch(name: string, client: Lilith, ctx: ICommandContext): Command | undefined {
+    checkForMatch(name: string, client: Lilith, ctx: ICommandContext): Command | undefined {
         if (name.startsWith(ctx.settings.prefix)) {
             name = name.substr(1);
         }

@@ -7,17 +7,17 @@ import { Message, AnyGuildChannel, User } from "eris";
 import { Collection } from "@kurozero/collection";
 
 export default class CommandHandler {
-    public settings: ISettings;
-    public client: Lilith;
-    public logger: Logger;
+    settings: ISettings;
+    client: Lilith;
+    logger: Logger;
 
-    public constructor(options: ICommandHandlerOptions) {
+    constructor(options: ICommandHandlerOptions) {
         this.settings = options.settings;
         this.client = options.client;
         this.logger = options.logger;
     }
 
-    public async handleCommand(msg: Message, dm: boolean): Promise<boolean | undefined> {
+    async handleCommand(msg: Message, dm: boolean): Promise<boolean | undefined> {
         const parts = msg.content.split(" ");
         const name = parts[0].slice(this.settings.prefix.length);
 

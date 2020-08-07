@@ -4,7 +4,7 @@ import { round, formatSeconds } from "../../utils/Helpers";
 import { Message } from "eris";
 
 export default class SysInfo extends Command {
-    public constructor(category: string) {
+    constructor(category: string) {
         super({
             name: "sysinfo",
             description: "Info about the system the bot runs on",
@@ -15,7 +15,7 @@ export default class SysInfo extends Command {
         });
     }
 
-    public async run(msg: Message): Promise<void> {
+    async run(msg: Message): Promise<void> {
         let cpuUsage = 0;
         os.cpuUsage((value: number) => (cpuUsage = value));
 

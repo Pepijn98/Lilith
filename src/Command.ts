@@ -5,23 +5,23 @@ import { ICommandContext } from "./types/ICommandContext";
 import { Message, Guild, AnyGuildChannel, Member } from "eris";
 
 export default abstract class Command {
-    public _key: string; // Collection id
+    _key: string; // Collection id
 
-    public name: string;
-    public description: string;
-    public usage: string;
-    public example: string;
-    public subCommands: string[];
-    public category: string;
-    public aliases: string[];
-    public hidden: boolean;
-    public guildOnly: boolean;
-    public ownerOnly: boolean;
-    public requiredArgs: number;
-    public userPermissions: string[];
-    public botPermissions: string[];
+    name: string;
+    description: string;
+    usage: string;
+    example: string;
+    subCommands: string[];
+    category: string;
+    aliases: string[];
+    hidden: boolean;
+    guildOnly: boolean;
+    ownerOnly: boolean;
+    requiredArgs: number;
+    userPermissions: string[];
+    botPermissions: string[];
 
-    public constructor(options: ICommandOptions) {
+    constructor(options: ICommandOptions) {
         this._key = options.name;
 
         this.name = options.name;
@@ -43,7 +43,7 @@ export default abstract class Command {
     public abstract async run(msg: Message, args: string[], client: Mashu, context: ICommandContext): Promise<any>;
 
     /** Tries to find the user in the currently guild */
-    public findMember(msg: Message, str: string): false | Member {
+    findMember(msg: Message, str: string): false | Member {
         if (!str || str === "") return false;
 
         let guild: Guild | null = null;
@@ -66,7 +66,7 @@ export default abstract class Command {
     }
 
     /** Generate violation ID, [ban, kick, warn, note] */
-    public generateId(): string {
+    generateId(): string {
         return `_${Math.random().toString(36).substr(2, 9)}`;
     }
 }

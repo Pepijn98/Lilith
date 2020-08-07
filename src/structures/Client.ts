@@ -5,6 +5,8 @@ import axios from "axios";
 import { Client, ClientOptions } from "eris";
 import { ICommandStats } from "../types/Options";
 
+const hours = 0.5;
+
 function requestToken(client: Lilith): void {
     axios
         .get("https://us.battle.net/oauth/token", {
@@ -29,15 +31,15 @@ function requestToken(client: Lilith): void {
 }
 
 export default class Lilith extends Client {
-    public commands: Collection<Command>;
-    public ready = false;
-    public stats: ICommandStats;
+    commands: Collection<Command>;
+    ready = false;
+    stats: ICommandStats;
 
-    public token?: string;
-    public expiresIn?: number;
-    public lastRequest?: number;
+    token?: string;
+    expiresIn?: number;
+    lastRequest?: number;
 
-    public constructor(token: string, options: ClientOptions) {
+    constructor(token: string, options: ClientOptions) {
         super(token, options);
 
         this.commands = new Collection(Command);
@@ -59,6 +61,6 @@ export default class Lilith extends Client {
                     requestToken(this);
                 }
             }
-        }, 1800000);
+        }, hours * 60 * 60 * 1000);
     }
 }

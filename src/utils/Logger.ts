@@ -6,7 +6,7 @@ import { Logger as WinstonLogger, createLogger, format, transports } from "winst
 export default class Logger {
     private _log: WinstonLogger;
 
-    public constructor() {
+    constructor() {
         this._log = createLogger({
             level: "warn",
             format: format.combine(
@@ -24,19 +24,19 @@ export default class Logger {
         });
     }
 
-    public ready(message: string): void {
+    ready(message: string): void {
         this._log.info(message, { label: "READY" });
     }
 
-    public info(label: string, message: string): void {
+    info(label: string, message: string): void {
         this._log.info(message, { label });
     }
 
-    public warn(label: string, message: string): void {
+    warn(label: string, message: string): void {
         this._log.warn(message, { label });
     }
 
-    public error(label: string, error: Error | string): void {
+    error(label: string, error: Error | string): void {
         if (typeof error === "string") {
             this._log.error(error, { label });
         } else {
