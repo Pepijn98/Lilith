@@ -10,10 +10,10 @@ Click [here][invite-link] to invite the bot
 # TODO (Must Have)
 - ~~switch to typescript~~
 - ~~command handler~~
-- set battle.net account name
-- set region
+- ~~set battle.net account name~~
+- ~~set region~~
+- ~~request specific hero from account~~
 - request account
-- request specific hero from account
 
 # TODO (Add Later)
 - request items
@@ -24,18 +24,16 @@ Click [here][invite-link] to invite the bot
 # Commands
 `[]` - optional parameters \
 `<>` - required parameters \
-If an acronym is provided for any option use that instead of the full name. \
-For example: Europe's acronym is `eu` you'd do `;region eu` and **NOT** `;region europe`. \
-Another example: Demon Hunter's acronym is `dh` so you'd do `;heroes dh` and **NOT** `;heroes demon hunter`.
 
-| name    | parameters              | description                                                                                               |
-|:--------|:------------------------|:----------------------------------------------------------------------------------------------------------|
-| tag     | [battle-tag]            | set battle.net account name                                                                               |
-| region  | [[region][locale-link]] | set your region                                                                                           |
-| locale  | [[locale][locale-link]] | set the locale (setting locale will only change the requested data from the api and not the bot its self) |
-| account |                         | get your account details                                                                                  |
-| hero    | <hero_id>               | get a specific hero                                                                                       |
-| heroes  | [[class][class-link]]   | get a specific hero                                                                                       |
+| name | parameters | description | completed |
+|:-|:-|:-|:-|
+| tag | [battle-tag] | set battle.net account name | no |
+| region | [[region][locale-link]] | set your region | no |
+| locale | [[locale][locale-link]] | set the locale (setting locale will only change the requested data from the api and not the bot its self) | no |
+| account | | get your account details | no |
+| hero | <hero_id> | get a specific hero | yes |
+| heroes | [[class][class-link]] | get a specific hero | yes |
+| setup | | setup your account by specifying your battle tag, region and locale. <br> This is an interactive command and does not require any arguments | yes |
 
 # Regions and their corresponding locale(s)
 | region        | Acronym | host                              | locales                                                                 |
@@ -47,15 +45,15 @@ Another example: Demon Hunter's acronym is `dh` so you'd do `;heroes dh` and **N
 | China         | cn      | https://gateway.battlenet.com.cn/ | zh_CN                                                                   |
 
 # Class list
-| Class        | Acronym |
-|:-------------|:--------|
-| Demon Hunter | dh      |
-| Necromancer  | necro   |
-| Monk         | monk    |
-| Brabarian    | barb    |
-| Witch Doctor | wd      |
-| Wizard       | wiz     |
-| Cursader     | cru     |
+| Class        | Option               |
+|:-------------|:---------------------|
+| Demon Hunter | dh, demon-hunter     |
+| Necromancer  | necro, necromancer   |
+| Monk         | monk                 |
+| Brabarian    | barb, barbarian      |
+| Witch Doctor | wd, witch-doctor     |
+| Wizard       | wiz, wizard          |
+| Cursader     | cru, sader, crusader |
 
 [invite-link]: https://discord.com/oauth2/authorize?client_id=740897738983604284&scope=bot&permissions=379968
 [locale-link]: https://github.com/Pepijn98/Lilith#regions-and-their-corresponding-locales

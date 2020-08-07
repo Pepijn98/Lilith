@@ -44,6 +44,7 @@ export default class Lilith extends Client {
                         this.accessToken = data.token;
                         this.expiresIn = data.expiresIn;
                         this.lastRequest = data.lastRequest;
+                        this.diablo.token = this.accessToken;
                     } catch (e) {
                         this.logger.error("TOKEN_REQUEST", e);
                     }
@@ -62,6 +63,7 @@ export default class Lilith extends Client {
             this.accessToken = data.token;
             this.expiresIn = data.expiresIn;
             this.lastRequest = data.lastRequest;
+            this.diablo = new Diablo(this.accessToken);
         } catch (e) {
             this.logger.error("SETUP", e);
         }

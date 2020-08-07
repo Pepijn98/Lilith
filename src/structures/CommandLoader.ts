@@ -1,7 +1,7 @@
-import Command from "~/Command";
-import Logger from "~/utils/Logger";
 import Collection from "@kurozero/collection";
 import path from "path";
+import Command from "~/Command";
+import Logger from "~/utils/Logger";
 import { promises as fs } from "fs";
 
 export default class CommandLoader {

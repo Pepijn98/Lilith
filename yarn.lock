@@ -738,6 +738,18 @@ eris-additions@^1.4.1:
   dependencies:
     eris "^0.12.0"
 
+eris-pagination@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/eris-pagination/-/eris-pagination-0.5.1.tgz#6f5b9ff68bd5d7f7b173c18618c15a98a3749c8a"
+  integrity sha512-c5+Ye85N0rnsua9UbUh9YinmvwqFGbGrwdzh10wuwZY/REMT6hTb6LAl0CpNACCzO2/fJ5ATZ5z1p0cYcBli6A==
+  dependencies:
+    eris-reactions "^0.1.3"
+
+eris-reactions@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/eris-reactions/-/eris-reactions-0.1.3.tgz#cd0b95d0a947ae173f11f085d744882d2be4a436"
+  integrity sha512-lcqxCconH4Ca5GdUR1qUWQDHHv64JowIpRZZewRTrPHvXbGZyoE1BJZ8LETux+NSye4WIrEiysnzxfPBLZT6wg==
+
 eris@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/eris/-/eris-0.12.0.tgz#4bcb0d4705fe188a59baec0baf6b31fcf5c9f809"
@@ -1600,11 +1612,6 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
-list@^2.0.19:
-  version "2.0.19"
-  resolved "https://registry.yarnpkg.com/list/-/list-2.0.19.tgz#370a3d7d3e24cfd5ced2c89cda2baf28e31e2830"
-  integrity sha512-nnVaRp4RaMAQkCpypTThsdxKqgPMiSwJq93eAm2/IbpUa8sd04XKBhkKu+bMk63HmdjK8b8Cuh4xARHWX2ye/Q==
-
 load-json-file@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-2.0.0.tgz#7947e42149af80d696cbf797bcaabcfe1fe29ca8"
@@ -1773,10 +1780,10 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
-mongoose@^5.9.27:
-  version "5.9.27"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.9.27.tgz#914cbc2a454520934fbbf2c0e366d9c7d8076b3b"
-  integrity sha512-N8zj4pj9J2xJ2BnQ4NiIHEtmjPldtbmbEZOMz4phLTQr3KFWPR0T0I6EzQxNioHwmDbHD4VFzbEd755oD2SJxA==
+mongoose@^5.9.28:
+  version "5.9.28"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.9.28.tgz#07064fbbc224d7fc4616ce82b7ada0e8df788e9c"
+  integrity sha512-A8lNRk4eCQDzk+DagSMYdH94LAYrbTK83LgrUlzqdig3YXvizW3DApJqOWQ5DdhuimvsfiD0Z5NTVzXl/rgi2w==
   dependencies:
     bson "^1.1.4"
     kareem "2.3.1"

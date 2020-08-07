@@ -1,6 +1,6 @@
 {
     "name": "lilith",
-    "version": "1.0.0-dev2",
+    "version": "1.0.0-dev3",
     "description": "Diablo 3 discord bot",
     "engines": {
         "node": ">=14",
@@ -42,10 +42,10 @@
         "chalk": "^4.1.0",
         "eris": "^0.13.3",
         "eris-additions": "^1.4.1",
+        "eris-pagination": "^0.5.1",
         "erlpack": "abalabahaha/erlpack",
-        "list": "^2.0.19",
         "moment": "^2.27.0",
-        "mongoose": "^5.9.27",
+        "mongoose": "^5.9.28",
         "os-utils": "oscmejia/os-utils",
         "winston": "^3.3.3",
         "yukikaze": "^0.3.0",

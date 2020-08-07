@@ -1,7 +1,8 @@
 import axios from "axios";
 import settings from "~/settings";
-import Account from "~/types/Account";
-import { Member } from "eris";
+import Account from "~/types/diablo/Account";
+import Hero from "~/types/diablo/Hero";
+import { User } from "eris";
 import { getDBUser, baseUrl } from "./Helpers";
 
 interface AuthData {
@@ -52,28 +53,60 @@ class Diablo {
         });
     }
 
-    async requestAccount(member: Member): Promise<Account> {
-        const user = await getDBUser(member.id);
-        if (!user) {
+    async getAccount(user: User): Promise<Account> {
+        const dbUser = await getDBUser(user.id);
+        if (!dbUser) {
             throw Error("User not found, use `;setup` to get started");
         }
 
-        if (!user.region) {
+        if (!dbUser.region) {
             throw Error("No region set");
         }
 
-        if (!user.locale) {
+        if (!dbUser.locale) {
             throw Error("No locale set");
         }
 
-        if (!user.battleTag) {
+        if (!dbUser.battleTag) {
             throw Error("No battle tag set");
         }
 
-        const apiUrl = baseUrl.replace(/\{REGION\}/giu, user.region);
-        const { data } = await axios.get<Account>(apiUrl + `/d3/profile/${encodeURIComponent(user.battleTag)}/`, {
+        const apiUrl = baseUrl.replace(/\{REGION\}/giu, dbUser.region);
+        const { data } = await axios.get<Account>(apiUrl + `/d3/profile/${encodeURIComponent(dbUser.battleTag)}/`, {
             params: {
-                locale: user.locale,
+                locale: dbUser.locale,
+                access_token: this.token
+            },
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json;charset=utf-8"
+            }
+        });
+        return data;
+    }
+
+    async getHero(user: User, id: string): Promise<Hero> {
+        const dbUser = await getDBUser(user.id);
+        if (!dbUser) {
+            throw Error("User not found, use `;setup` to get started");
+        }
+
+        if (!dbUser.region) {
+            throw Error("No region set");
+        }
+
+        if (!dbUser.locale) {
+            throw Error("No locale set");
+        }
+
+        if (!dbUser.battleTag) {
+            throw Error("No battle tag set");
+        }
+
+        const apiUrl = baseUrl.replace(/\{REGION\}/giu, dbUser.region);
+        const { data } = await axios.get<Hero>(apiUrl + `/d3/profile/${encodeURIComponent(dbUser.battleTag)}/hero/${id}`, {
+            params: {
+                locale: dbUser.locale,
                 access_token: this.token
             },
             headers: {

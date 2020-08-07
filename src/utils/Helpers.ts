@@ -4,6 +4,51 @@ import { GuildChannel, Channel, PrivateChannel } from "eris";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 
+export const classes = ["dh", "demon-hunter", "necro", "necromancer", "monk", "barb", "barbarian", "wd", "witch-doctor", "wiz", "wizard", "cru", "crusader"];
+
+export const filter: Record<string, string> = {
+    "dh": "demon-hunter",
+    "demon-hunter": "demon-hunter",
+    "necro": "necromancer",
+    "necromancer": "necromancer",
+    "monk": "monk",
+    "barb": "barbarian",
+    "barbarian": "barbarian",
+    "wd": "witch-doctor",
+    "witch-doctor": "witch-doctor",
+    "wiz": "wizard",
+    "wizard": "wizard",
+    "cru": "crusader",
+    "crusader": "crusader"
+};
+
+export const classImageMap: Record<string, string> = {
+    "barbarian-male": "https://files.catbox.moe/b2fa2v.png",
+    "barbarian-female": "https://files.catbox.moe/7yjkuj.png",
+    "demon-hunter-male": "https://files.catbox.moe/0jex4j.png",
+    "demon-hunter-female": "https://files.catbox.moe/1hitu1.png",
+    "monk-male": "https://files.catbox.moe/8sivc4.png",
+    "monk-female": "https://files.catbox.moe/o6n6go.png",
+    "witch-doctor-male": "https://files.catbox.moe/1co1e3.png",
+    "witch-doctor-female": "https://files.catbox.moe/rkeauk.png",
+    "wizard-male": "https://files.catbox.moe/nf5r1s.png",
+    "wizard-female": "https://files.catbox.moe/q9l89i.png",
+    "crusader-male": "https://files.catbox.moe/zxvn8y.png",
+    "crusader-female": "https://files.catbox.moe/aqbp9z.png",
+    "necromancer-male": "https://files.catbox.moe/5w4tvc.png",
+    "necromancer-female": "https://files.catbox.moe/hkftps.png"
+};
+
+export const classColorMap: Record<string, number> = {
+    "demon-hunter": 0xa30090,
+    "necromancer": 0x00d286,
+    "monk": 0xf3e474,
+    "barbarian": 0x8d2a17,
+    "witch-doctor": 0x07a630,
+    "wizard": 0x0b3097,
+    "crusader": 0xe0e0a6
+};
+
 /** Wait x amount of milliseconds */
 export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms));
 
