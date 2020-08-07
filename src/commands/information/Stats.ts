@@ -4,7 +4,7 @@ import { version } from "@/package.json";
 import { formatSeconds } from "~/utils/Helpers";
 import { Message, GuildChannel } from "eris";
 
-export default class Stats extends Command {
+export default class extends Command {
     constructor(category: string) {
         super({
             name: "stats",

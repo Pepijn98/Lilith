@@ -1,7 +1,7 @@
 import Command from "~/Command";
 import { Message } from "eris";
 
-export default class Ping extends Command {
+export default class extends Command {
     constructor(category: string) {
         super({
             name: "ping",

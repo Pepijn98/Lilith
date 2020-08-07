@@ -3,7 +3,7 @@ import Command from "~/Command";
 import { round, formatSeconds } from "~/utils/Helpers";
 import { Message } from "eris";
 
-export default class SysInfo extends Command {
+export default class extends Command {
     constructor(category: string) {
         super({
             name: "sysinfo",

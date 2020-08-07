@@ -2,7 +2,7 @@ import Command from "~/Command";
 import { exec } from "child_process";
 import { Message } from "eris";
 
-export default class Exec extends Command {
+export default class extends Command {
     constructor(category: string) {
         super({
             name: "exec",

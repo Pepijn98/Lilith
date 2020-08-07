@@ -7,7 +7,7 @@ import * as helpers from "~/utils/Helpers";
 import { CommandContext } from "~/types/CommandContext";
 import { Message } from "eris";
 
-export default class Eval extends Command {
+export default class extends Command {
     constructor(category: string) {
         super({
             name: "eval",

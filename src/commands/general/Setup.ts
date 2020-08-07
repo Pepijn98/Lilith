@@ -16,7 +16,7 @@ const localeMap: Record<string, string[]> = {
     cn: ["zh_CN"]
 };
 
-export default class Ping extends Command {
+export default class extends Command {
     constructor(category: string) {
         super({
             name: "setup",

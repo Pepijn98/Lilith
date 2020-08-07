@@ -3,7 +3,7 @@ import Lilith from "~/structures/Client";
 import { Message } from "eris";
 import { CommandContext } from "~/types/CommandContext";
 
-export default class Help extends Command {
+export default class extends Command {
     constructor(category: string) {
         super({
             name: "help",

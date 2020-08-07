@@ -1,4 +1,4 @@
-import Mashu from "./structures/Client";
+import Lilith from "./structures/Client";
 import { ICommandOptions } from "./types/Options";
 import { isGuildChannel } from "./utils/Helpers";
 import { CommandContext } from "./types/CommandContext";
@@ -40,7 +40,7 @@ export default abstract class Command {
     }
 
     /** Function with all the stuff the command needs to do */
-    abstract async run(msg: Message, args: string[], client: Mashu, context: CommandContext): Promise<unknown>;
+    abstract async run(msg: Message, args: string[], client: Lilith, context: CommandContext): Promise<unknown>;
 
     /** Tries to find the user in the currently guild */
     findMember(msg: Message, str: string): false | Member {
