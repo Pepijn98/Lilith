@@ -42,6 +42,7 @@ async function main(): Promise<void> {
 
             // We're ready \o/
             ready = true;
+            client.editStatus("online", { name: "Diablo III", type: 0 });
         }
     });
 
