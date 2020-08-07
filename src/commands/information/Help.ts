@@ -1,7 +1,7 @@
-import Command from "../../Command";
-import Lilith from "../../structures/Client";
+import Command from "~/Command";
+import Lilith from "~/structures/Client";
 import { Message } from "eris";
-import { ICommandContext } from "../../types/ICommandContext";
+import { CommandContext } from "~/types/CommandContext";
 
 export default class Help extends Command {
     constructor(category: string) {
@@ -14,7 +14,7 @@ export default class Help extends Command {
         });
     }
 
-    async run(msg: Message, args: string[], client: Lilith, ctx: ICommandContext): Promise<Message | undefined> {
+    async run(msg: Message, args: string[], client: Lilith, ctx: CommandContext): Promise<Message | undefined> {
         if (args.length === 0) {
             const messageQueue: string[] = [];
             let currentMessage = `\n# Here's a list of my commands. For more info do: ${ctx.settings.prefix}help <command>\n# Prefix: ${ctx.settings.prefix}\n`;
@@ -32,14 +32,18 @@ export default class Help extends Command {
             });
             messageQueue.push(currentMessage);
             msg.channel.addMessageReaction(msg.id, "✅");
-            const dm = await client.getDMChannel(msg.author.id);
-            const sendInOrder = setInterval(async () => {
-                if (messageQueue.length > 0) {
-                    await dm.createMessage(`\`\`\`py${messageQueue.shift()}\`\`\``); // If still messages queued send the next one.
-                } else {
-                    clearInterval(sendInOrder);
-                }
-            }, 300);
+            try {
+                const dm = await client.getDMChannel(msg.author.id);
+                const sendInOrder = setInterval(async () => {
+                    if (messageQueue.length > 0) {
+                        await dm.createMessage(`\`\`\`py${messageQueue.shift()}\`\`\``); // If still messages queued send the next one.
+                    } else {
+                        clearInterval(sendInOrder);
+                    }
+                }, 300);
+            } catch (e) {
+                msg.channel.createMessage("I can't DM you the list of commands, please enable DMs so I can send you the list of commands.");
+            }
         } else {
             const command = this.checkForMatch(args[0], client, ctx);
             if (!command) return await msg.channel.createMessage(`Command \`${ctx.settings.prefix}${args[0]}\` not found`);
@@ -71,11 +75,11 @@ export default class Help extends Command {
         }
     }
 
-    checkForMatch(name: string, client: Lilith, ctx: ICommandContext): Command | undefined {
+    checkForMatch(name: string, client: Lilith, ctx: CommandContext): Command | undefined {
         if (name.startsWith(ctx.settings.prefix)) {
             name = name.substr(1);
         }
 
-        return client.commands.find((cmd) => cmd.name === name || cmd.aliases.indexOf(name) !== -1);
+        return client.commands.find((cmd) => cmd.name === name || cmd.aliases.indexOf(name) !== -1)?.value;
     }
 }

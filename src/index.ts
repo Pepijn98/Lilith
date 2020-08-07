@@ -1,45 +1,38 @@
-// import mongoose from "mongoose";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require("eris-additions")(require("eris"));
+
+import "./utils/Extended";
 import settings from "./settings";
 import Lilith from "./structures/Client";
 import CommandHandler from "./structures/CommandHandler";
 import CommandLoader from "./structures/CommandLoader";
 import Logger from "./utils/Logger";
-import { promises as fs } from "fs";
+// import { promises as fs } from "fs";
 import { isGuildChannel } from "./utils/Helpers";
 
-import "./utils/Extended";
-
-// Whether the bot is ready or not
 let ready = false;
 
-// Initialize discord client
-const client = new Lilith(settings.token, {
-    getAllUsers: true,
-    restMode: true
-});
-
-// Initialize logger, command loader and command handler
 const logger = new Logger();
+const client = new Lilith(logger, settings.token, { restMode: true });
 const commandLoader = new CommandLoader(logger);
 const commandHandler = new CommandHandler({ settings, client, logger });
 
 async function main(): Promise<void> {
+    await client.setup();
+
     // Load events
-    const eventsDir = `${__dirname}/events`;
-    const files = await fs.readdir(eventsDir);
-    for (const file of files) {
-        if (file.endsWith(".ts")) {
-            const temp = await import(`${eventsDir}/${file}`);
-            logger.info("EVENTS", `Loaded ${temp.event.name}`);
-            client.on(temp.event.name, (...args) => temp.event.run(client, settings, args));
-        }
-    }
+    // const eventsDir = `${__dirname}/events`;
+    // const files = await fs.readdir(eventsDir);
+    // for (const file of files) {
+    //     if (file.endsWith(".ts")) {
+    //         const temp = await import(`${eventsDir}/${file}`);
+    //         logger.info("EVENTS", `Loaded ${temp.event.name}`);
+    //         client.on(temp.event.name, (...args) => temp.event.run(client, settings, args));
+    //     }
+    // }
 
     client.on("ready", async () => {
         if (!ready) {
-            // Connect to mongodb
-            // await mongoose.connect(`mongodb://${settings.database.host}:${settings.database.port}/${settings.database.name}`, { useNewUrlParser: true });
-
             // Load commands
             client.commands = await commandLoader.load(`${__dirname}/commands`);
 
@@ -76,7 +69,7 @@ async function main(): Promise<void> {
     });
 
     process.on("unhandledRejection", (reason) => {
-        logger.error("UNHANDLED_REJECTION", reason);
+        logger.error("UNHANDLED_REJECTION", reason as any);
     });
 
     process.on("SIGINT", () => {

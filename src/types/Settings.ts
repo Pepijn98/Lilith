@@ -1,9 +1,9 @@
-export interface BattleNet {
+interface BattleNet {
     id: string;
     secret: string;
 }
 
-export interface IDatabase {
+interface Database {
     user: string;
     password: string;
     host: string;
@@ -11,10 +11,12 @@ export interface IDatabase {
     name: string;
 }
 
-export interface ISettings {
+export interface Settings {
     token: string;
     owner: string;
     prefix: string;
     battlenet: BattleNet;
-    database: IDatabase;
+    database: Database;
 }
+
+export default Settings;

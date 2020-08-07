@@ -1,11 +1,11 @@
-import Lilith from "../structures/Client";
-import Logger from "../utils/Logger";
-import { ISettings } from "./ISettings";
-import { User } from "eris";
 import Collection from "@kurozero/collection";
+import Lilith from "~/structures/Client";
+import Logger from "~/utils/Logger";
+import { Settings } from "./Settings";
+import { User } from "eris";
 
 export interface ICommandHandlerOptions {
-    settings: ISettings;
+    settings: Settings;
     client: Lilith;
     logger: Logger;
 }

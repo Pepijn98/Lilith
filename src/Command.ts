@@ -1,7 +1,7 @@
 import Mashu from "./structures/Client";
 import { ICommandOptions } from "./types/Options";
 import { isGuildChannel } from "./utils/Helpers";
-import { ICommandContext } from "./types/ICommandContext";
+import { CommandContext } from "./types/CommandContext";
 import { Message, Guild, AnyGuildChannel, Member } from "eris";
 
 export default abstract class Command {
@@ -40,7 +40,7 @@ export default abstract class Command {
     }
 
     /** Function with all the stuff the command needs to do */
-    public abstract async run(msg: Message, args: string[], client: Mashu, context: ICommandContext): Promise<any>;
+    abstract async run(msg: Message, args: string[], client: Mashu, context: CommandContext): Promise<unknown>;
 
     /** Tries to find the user in the currently guild */
     findMember(msg: Message, str: string): false | Member {

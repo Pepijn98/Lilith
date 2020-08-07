@@ -1,5 +1,3 @@
-import { User, Member } from "eris";
-
 /** Capitalize the first letter of a string */
 String.prototype.capitalize = function (): string {
     // eslint-disable-line no-extend-native
@@ -20,15 +18,3 @@ Array.prototype.remove = function <T>(item: T): T[] {
     }
     return this;
 };
-
-Object.defineProperty(User.prototype, "tag", {
-    get: function () {
-        return `${this.username}#${this.discriminator}`;
-    }
-});
-
-Object.defineProperty(Member.prototype, "tag", {
-    get: function () {
-        return `${this.username}#${this.discriminator}`;
-    }
-});

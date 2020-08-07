@@ -1,47 +1,31 @@
+import mongoose from "mongoose";
 import Collection from "@kurozero/collection";
-import Command from "../Command";
-import settings from "../settings";
-import axios from "axios";
+import Yukikaze from "yukikaze";
+import settings from "~/settings";
+import Command from "~/Command";
+import Diablo from "~/utils/Diablo";
+import Logger from "~/utils/Logger";
 import { Client, ClientOptions } from "eris";
-import { ICommandStats } from "../types/Options";
+import { ICommandStats } from "~/types/Options";
 
 const hours = 0.5;
-
-function requestToken(client: Lilith): void {
-    axios
-        .get("https://us.battle.net/oauth/token", {
-            params: {
-                client_id: settings.battlenet.id,
-                client_secret: settings.battlenet.secret,
-                grant_type: "client_credentials"
-            }
-        })
-        .then((response) => {
-            switch (response.data.token_type) {
-                case "bearer":
-                    client.expiresIn = response.data.expires_in;
-                    client.token = response.data.access_token;
-                    client.lastRequest = Date.now();
-                    break;
-                default:
-                    break;
-            }
-        })
-        .catch(console.error);
-}
+const interval = new Yukikaze();
 
 export default class Lilith extends Client {
+    logger: Logger;
     commands: Collection<Command>;
-    ready = false;
     stats: ICommandStats;
+    ready = false;
 
-    token?: string;
-    expiresIn?: number;
-    lastRequest?: number;
+    diablo!: Diablo;
+    accessToken!: string;
+    expiresIn!: number;
+    lastRequest!: number;
 
-    constructor(token: string, options: ClientOptions) {
+    constructor(logger: Logger, token: string, options: ClientOptions) {
         super(token, options);
 
+        this.logger = logger;
         this.commands = new Collection(Command);
         this.stats = {
             commandsExecuted: 0,
@@ -49,18 +33,37 @@ export default class Lilith extends Client {
             commandUsage: {}
         };
 
-        // Request access token
-        requestToken(this);
-
-        // Access token expires after 24 hours so check if it's still valid
+        // Access token expires after 24 hours so check if it's still valid every 30 minutes
         // If not valid request new token
-        setInterval(() => {
+        interval.run(async () => {
             if (this.lastRequest && this.expiresIn) {
                 if (this.lastRequest - Date.now() > this.expiresIn) {
-                    console.log("requesting new token");
-                    requestToken(this);
+                    this.logger.info("TOKEN_REQUEST", "requesting new token");
+                    try {
+                        const data = await Diablo.requestToken();
+                        this.accessToken = data.token;
+                        this.expiresIn = data.expiresIn;
+                        this.lastRequest = data.lastRequest;
+                    } catch (e) {
+                        this.logger.error("TOKEN_REQUEST", e);
+                    }
                 }
             }
         }, hours * 60 * 60 * 1000);
+    }
+
+    async setup(): Promise<void> {
+        try {
+            await mongoose.connect(
+                `mongodb://${settings.database.user}:${settings.database.password}@${settings.database.host}:${settings.database.port}/${settings.database.name}`,
+                { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+            );
+            const data = await Diablo.requestToken();
+            this.accessToken = data.token;
+            this.expiresIn = data.expiresIn;
+            this.lastRequest = data.lastRequest;
+        } catch (e) {
+            this.logger.error("SETUP", e);
+        }
     }
 }

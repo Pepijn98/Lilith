@@ -1,13 +1,13 @@
 import Lilith from "./Client";
-import Logger from "../utils/Logger";
-import { ISettings } from "../types/ISettings";
-import { ICommandHandlerOptions } from "../types/Options";
-import { isGuildChannel } from "../utils/Helpers";
+import Logger from "~/utils/Logger";
+import { Settings } from "~/types/Settings";
+import { ICommandHandlerOptions } from "~/types/Options";
+import { isGuildChannel } from "~/utils/Helpers";
 import { Message, AnyGuildChannel, User } from "eris";
 import { Collection } from "@kurozero/collection";
 
 export default class CommandHandler {
-    settings: ISettings;
+    settings: Settings;
     client: Lilith;
     logger: Logger;
 
@@ -21,7 +21,7 @@ export default class CommandHandler {
         const parts = msg.content.split(" ");
         const name = parts[0].slice(this.settings.prefix.length);
 
-        const command = this.client.commands.find((cmd) => cmd.name === name || cmd.aliases.indexOf(name) !== -1);
+        const command = this.client.commands.find((cmd) => cmd.name === name || cmd.aliases.indexOf(name) !== -1)?.value;
         if (!command) return false; // Command doesn't exist
 
         this.client.stats.commandsExecuted++;

@@ -1,4 +1,4 @@
-import Command from "../../Command";
+import Command from "~/Command";
 import { exec } from "child_process";
 import { Message } from "eris";
 
@@ -22,7 +22,7 @@ export default class Exec extends Command {
                 if (stderr) return await msg.channel.createMessage(`\n\`\`\`fix\n${stderr}\n\`\`\``);
                 await msg.channel.createMessage(`\`\`\`fix\n${stdout}\n\`\`\``);
             } catch (e) {
-                msg.channel.createMessage(`\`\`\`${e.toString()}\`\`\``).catch(() => null);
+                msg.channel.createMessage(`\`\`\`${e.toString()}\`\`\``).catch(() => {});
             }
         });
     }

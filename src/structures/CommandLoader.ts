@@ -1,5 +1,5 @@
-import Command from "../Command";
-import Logger from "../utils/Logger";
+import Command from "~/Command";
+import Logger from "~/utils/Logger";
 import Collection from "@kurozero/collection";
 import path from "path";
 import { promises as fs } from "fs";
@@ -31,11 +31,12 @@ export default class CommandLoader {
         try {
             const command = new (await import(commandPath)).default(category) as Command;
             if (this.commands.has(command.name)) {
-                return this.logger.warn("CommandHandler", `A command with the name ${command.name} already exists and has been skipped`);
+                return this.logger.warn("COMMAND_HANDLER", `A command with the name ${command.name} already exists and has been skipped`);
             }
             this.commands.add(command);
+            this.logger.info("COMMAND_HANDLER", `Loaded command ${command.name}`);
         } catch (e) {
-            this.logger.warn("CommandHandler", `${commandPath} - ${e.stack}`);
+            this.logger.warn("COMMAND_HANDLER", `${commandPath} - ${e.stack}`);
         }
     }
 }

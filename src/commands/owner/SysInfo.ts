@@ -1,6 +1,6 @@
-import Command from "../../Command";
 import os from "os-utils";
-import { round, formatSeconds } from "../../utils/Helpers";
+import Command from "~/Command";
+import { round, formatSeconds } from "~/utils/Helpers";
 import { Message } from "eris";
 
 export default class SysInfo extends Command {

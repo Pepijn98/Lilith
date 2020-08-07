@@ -1,7 +1,7 @@
-import Command from "../../Command";
-import Lilith from "../../structures/Client";
-import { version } from "../../../package.json";
-import { formatSeconds } from "../../utils/Helpers";
+import Command from "~/Command";
+import Lilith from "~/structures/Client";
+import { version } from "@/package.json";
+import { formatSeconds } from "~/utils/Helpers";
 import { Message, GuildChannel } from "eris";
 
 export default class Stats extends Command {
