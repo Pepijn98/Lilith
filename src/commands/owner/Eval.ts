@@ -2,8 +2,9 @@ import ts from "typescript";
 import util from "util";
 import settings from "~/settings";
 import Command from "~/Command";
-import Lilith from "~/structures/Client";
-import * as helpers from "~/utils/Helpers";
+import Lilith from "~/utils/Client";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import * as utils from "~/utils/Utils";
 import { CommandContext } from "~/types/CommandContext";
 import { Message } from "eris";
 
@@ -14,7 +15,7 @@ export default class extends Command {
             description: "Evaluate javascript code",
             usage: "eval <code: string>",
             example: "eval 1 + 1",
-            category: category,
+            category,
             ownerOnly: true,
             requiredArgs: 1
         });
@@ -36,8 +37,6 @@ export default class extends Command {
             }
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const utils = helpers;
         const console: any = {
             _lines: [],
             _logger(...things: any[]) {

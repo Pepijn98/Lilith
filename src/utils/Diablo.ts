@@ -3,7 +3,7 @@ import settings from "~/settings";
 import Account from "~/types/diablo/Account";
 import Hero from "~/types/diablo/Hero";
 import { User } from "eris";
-import { getDBUser, baseUrl } from "./Helpers";
+import { getDBUser, baseUrl } from "./Utils";
 
 interface AuthData {
     expiresIn: number;

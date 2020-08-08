@@ -8,6 +8,10 @@ declare module "eris" {
         maxMatches: number;
     }
 
+    interface Client {
+        guildPrefixMap: Map<string, string>;
+    }
+
     interface User {
         tag: string;
     }

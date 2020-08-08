@@ -1,7 +1,7 @@
 import Command from "~/Command";
-import Lilith from "~/structures/Client";
+import Lilith from "~/utils/Client";
 import { version } from "@/package.json";
-import { formatSeconds } from "~/utils/Helpers";
+import { formatSeconds } from "~/utils/Utils";
 import { Message, GuildChannel } from "eris";
 
 export default class extends Command {
@@ -11,8 +11,8 @@ export default class extends Command {
             description: "",
             usage: "stats",
             example: "stats",
-            category: category,
-            guildOnly: true
+            guildOnly: true,
+            category
         });
     }
 

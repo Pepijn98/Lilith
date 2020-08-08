@@ -1,7 +1,7 @@
 import Command from "~/Command";
 import Users from "~/models/User";
 import { Message } from "eris";
-import { sleep } from "~/utils/Helpers";
+import { sleep } from "~/utils/Utils";
 
 const options = {
     time: 10000,
@@ -23,6 +23,7 @@ export default class extends Command {
             description: "Get started using Lilith by setting up your battle tag, region and locale",
             usage: "setup",
             example: "setup",
+            guildOnly: true,
             category
         });
     }

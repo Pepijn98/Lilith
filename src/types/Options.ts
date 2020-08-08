@@ -1,16 +1,16 @@
 import Collection from "@kurozero/collection";
-import Lilith from "~/structures/Client";
+import Lilith from "~/utils/Client";
 import Logger from "~/utils/Logger";
 import { Settings } from "./Settings";
 import { User } from "eris";
 
-export interface ICommandHandlerOptions {
+export interface CommandHandlerOptions {
     settings: Settings;
     client: Lilith;
     logger: Logger;
 }
 
-export interface ICommandOptions {
+export interface CommandOptions {
     name: string;
     description: string;
     usage: string;
@@ -26,7 +26,7 @@ export interface ICommandOptions {
     botPermissions?: string[] | null;
 }
 
-export interface ICommandStats {
+export interface CommandStats {
     commandsExecuted: number;
     messagesSeen: number;
     commandUsage: {

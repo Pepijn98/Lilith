@@ -1,5 +1,5 @@
 import Event from "~/types/Event";
-import Lilith from "~/structures/Client";
+import Lilith from "~/utils/Client";
 
 export default class implements Event {
     name = "disconnect";

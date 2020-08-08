@@ -1,6 +1,6 @@
-import Lilith from "./structures/Client";
-import { ICommandOptions } from "./types/Options";
-import { isGuildChannel } from "./utils/Helpers";
+import Lilith from "./utils/Client";
+import { CommandOptions } from "./types/Options";
+import { isGuildChannel } from "./utils/Utils";
 import { CommandContext } from "./types/CommandContext";
 import { Message, Guild, AnyGuildChannel, Member } from "eris";
 
@@ -21,7 +21,7 @@ export default abstract class Command {
     userPermissions: string[];
     botPermissions: string[];
 
-    constructor(options: ICommandOptions) {
+    constructor(options: CommandOptions) {
         this._key = options.name;
 
         this.name = options.name;

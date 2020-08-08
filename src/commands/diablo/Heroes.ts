@@ -1,9 +1,9 @@
 import EmbedPaginator from "eris-pagination";
 import settings from "~/settings";
 import Command from "~/Command";
-import Lilith from "~/structures/Client";
+import Lilith from "~/utils/Client";
 import { Message, EmbedOptions } from "eris";
-import { classes, classImageMap, classColorMap, filter } from "~/utils/Helpers";
+import { classes, classImageMap, classColorMap, filter } from "~/utils/Utils";
 
 export default class extends Command {
     constructor(category: string) {

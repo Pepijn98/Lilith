@@ -1,5 +1,5 @@
 import Command from "~/Command";
-import Lilith from "~/structures/Client";
+import Lilith from "~/utils/Client";
 import { Message } from "eris";
 import { CommandContext } from "~/types/CommandContext";
 
@@ -10,7 +10,7 @@ export default class extends Command {
             description: "send info about the commands",
             usage: "help [command: string]",
             example: "help ping",
-            category: category
+            category
         });
     }
 

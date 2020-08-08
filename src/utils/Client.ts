@@ -6,7 +6,7 @@ import Command from "~/Command";
 import Diablo from "~/utils/Diablo";
 import Logger from "~/utils/Logger";
 import { Client, ClientOptions } from "eris";
-import { ICommandStats } from "~/types/Options";
+import { CommandStats } from "~/types/Options";
 
 const hours = 0.5;
 const interval = new Yukikaze();
@@ -14,7 +14,7 @@ const interval = new Yukikaze();
 export default class Lilith extends Client {
     logger: Logger;
     commands: Collection<Command>;
-    stats: ICommandStats;
+    stats: CommandStats;
     ready = false;
 
     diablo!: Diablo;
@@ -57,7 +57,7 @@ export default class Lilith extends Client {
         try {
             await mongoose.connect(
                 `mongodb://${settings.database.user}:${settings.database.password}@${settings.database.host}:${settings.database.port}/${settings.database.name}`,
-                { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+                { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }
             );
             const data = await Diablo.requestToken();
             this.accessToken = data.token;

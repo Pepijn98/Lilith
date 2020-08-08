@@ -1,6 +1,6 @@
 import os from "os-utils";
 import Command from "~/Command";
-import { round, formatSeconds } from "~/utils/Helpers";
+import { round, formatSeconds } from "~/utils/Utils";
 import { Message } from "eris";
 
 export default class extends Command {
@@ -10,7 +10,7 @@ export default class extends Command {
             description: "Info about the system the bot runs on",
             usage: "sysinfo",
             example: "sysinfo",
-            category: category,
+            category,
             ownerOnly: true
         });
     }

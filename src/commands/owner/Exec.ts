@@ -9,7 +9,7 @@ export default class extends Command {
             description: "Execute shell shit",
             usage: "exec <command: string>",
             example: "exec pm2 list",
-            category: category,
+            category,
             ownerOnly: true,
             requiredArgs: 1
         });

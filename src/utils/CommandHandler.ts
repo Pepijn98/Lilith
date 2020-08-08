@@ -1,8 +1,8 @@
 import Lilith from "./Client";
 import Logger from "~/utils/Logger";
 import { Settings } from "~/types/Settings";
-import { ICommandHandlerOptions } from "~/types/Options";
-import { isGuildChannel } from "~/utils/Helpers";
+import { CommandHandlerOptions } from "~/types/Options";
+import { isGuildChannel } from "~/utils/Utils";
 import { Message, AnyGuildChannel, User } from "eris";
 import { Collection } from "@kurozero/collection";
 
@@ -11,7 +11,7 @@ export default class CommandHandler {
     client: Lilith;
     logger: Logger;
 
-    constructor(options: ICommandHandlerOptions) {
+    constructor(options: CommandHandlerOptions) {
         this.settings = options.settings;
         this.client = options.client;
         this.logger = options.logger;

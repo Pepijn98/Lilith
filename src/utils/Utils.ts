@@ -1,6 +1,7 @@
 import User from "~/types/mongo/User";
 import Users from "~/models/User";
 import { GuildChannel, Channel, PrivateChannel } from "eris";
+import Guilds from "~/models/Guild";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 
@@ -102,4 +103,13 @@ export const round = (value: number, precision: number): number => {
 
 export const getDBUser = async (id: string): Promise<User | null> => {
     return await Users.findOne({ uid: id }).exec();
+};
+
+export const loadPrefixes = async (): Promise<Map<string, string>> => {
+    const guilds = await Guilds.find({}).exec();
+    const prefixes = new Map<string, string>();
+    for (const guild of guilds) {
+        prefixes.set(guild.uid, guild.prefix);
+    }
+    return prefixes;
 };

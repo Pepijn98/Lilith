@@ -1,7 +1,7 @@
 import Command from "~/Command";
-import Lilith from "~/structures/Client";
+import Lilith from "~/utils/Client";
 import { Message } from "eris";
-import { classImageMap, classColorMap } from "~/utils/Helpers";
+import { classImageMap, classColorMap } from "~/utils/Utils";
 
 export default class extends Command {
     constructor(category: string) {

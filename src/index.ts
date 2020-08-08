@@ -2,40 +2,45 @@
 require("eris-additions")(require("eris"));
 
 import "./utils/Extended";
+import path from "path";
 import settings from "./settings";
-import Lilith from "./structures/Client";
-import CommandHandler from "./structures/CommandHandler";
-import CommandLoader from "./structures/CommandLoader";
+import Lilith from "./utils/Client";
+import CommandHandler from "./utils/CommandHandler";
+import CommandLoader from "./utils/CommandLoader";
+import EventLoader from "./utils/EventLoader";
 import Logger from "./utils/Logger";
-import { promises as fs } from "fs";
-import { isGuildChannel } from "./utils/Helpers";
-import Event from "./types/Event";
+// import Event from "./types/Event";
+// import { promises as fs } from "fs";
+import { isGuildChannel, loadPrefixes, isDMChannel } from "./utils/Utils";
 
 let ready = false;
 
 const logger = new Logger();
 const client = new Lilith(logger, settings.token, { restMode: true });
+const eventLoader = new EventLoader(client, logger);
 const commandLoader = new CommandLoader(logger);
 const commandHandler = new CommandHandler({ settings, client, logger });
 
 async function main(): Promise<void> {
     await client.setup();
 
-    // Load events
-    const eventsDir = `${__dirname}/events`;
-    const files = await fs.readdir(eventsDir);
-    for (const file of files) {
-        if (/\.(t|j)s$/iu.test(file)) {
-            const event = new (await import(`${eventsDir}/${file}`)).default() as Event;
-            logger.info("EVENTS", `Loaded ${event.name}`);
-            client.on(event.name, (...args: any[]) => event.run(client, ...args));
-        }
-    }
+    // Load all events besides ready and messageCreate
+    await eventLoader.load(path.join(__dirname, "events"));
+    // const eventsDir = `${__dirname}/events`;
+    // const files = await fs.readdir(eventsDir);
+    // for (const file of files) {
+    //     if (/\.(t|j)s$/iu.test(file)) {
+    //         const event = new (await import(`${eventsDir}/${file}`)).default() as Event;
+    //         logger.info("EVENTS", `Loaded ${event.name}`);
+    //         client.on(event.name, (...args: any[]) => event.run(client, ...args));
+    //     }
+    // }
 
     client.on("ready", async () => {
         if (!ready) {
             // Load commands
-            client.commands = await commandLoader.load(`${__dirname}/commands`);
+            client.guildPrefixMap = await loadPrefixes();
+            client.commands = await commandLoader.load(path.join(__dirname, "commands"));
 
             // Log some info
             logger.ready(`Logged in as ${client.user.tag}`);
@@ -53,16 +58,19 @@ async function main(): Promise<void> {
         if (!ready) return; // Bot not ready yet
         if (!msg.author) return; // Probably system message
         if (msg.author.discriminator === "0000") return; // Probably a webhook
+        if (msg.author.id === client.user.id) return; // Ignore our own messages
 
         client.stats.messagesSeen++;
 
-        // If message starts with our prefix check if it's a valid command, then execute the command if valid
-        if (msg.content.startsWith(settings.prefix)) {
-            if (isGuildChannel(msg.channel) && msg.author.id !== client.user.id) {
+        // Check if message was send in a guild channel
+        if (isGuildChannel(msg.channel)) {
+            const prefix = client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+            // If message starts with configured prefix handleCommand
+            if (msg.content.startsWith(prefix)) {
                 await commandHandler.handleCommand(msg, false);
-            } else if (msg.channel.type === 1) {
-                await commandHandler.handleCommand(msg, true);
             }
+        } else if (isDMChannel(msg.channel) && msg.content.startsWith(settings.prefix)) {
+            await commandHandler.handleCommand(msg, true);
         }
     });
 

@@ -8,7 +8,7 @@ export default class extends Command {
             description: "Testing the bot",
             usage: "ping",
             example: "ping",
-            category: category
+            category
         });
     }
 
