@@ -63,7 +63,7 @@ export default class extends Command {
                 `Category           ::  ${command.category}\n` +
                 `Aliases            ::  ${command.aliases.join(", ")}\n` +
                 `Usage              ::  ${ctx.settings.prefix}${command.usage}\n` +
-                `Example            ::  ${command.example}\n` +
+                `Example            ::  ${ctx.settings.prefix}${command.example}\n` +
                 `Sub Commands       ::  ${command.subCommands.join(", ")}\n` +
                 `Hidden             ::  ${command.hidden ? "yes" : "no"}\n` +
                 `Guild Only         ::  ${command.guildOnly ? "yes" : "no"}\n` +

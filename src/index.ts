@@ -7,8 +7,9 @@ import Lilith from "./structures/Client";
 import CommandHandler from "./structures/CommandHandler";
 import CommandLoader from "./structures/CommandLoader";
 import Logger from "./utils/Logger";
-// import { promises as fs } from "fs";
+import { promises as fs } from "fs";
 import { isGuildChannel } from "./utils/Helpers";
+import Event from "./types/Event";
 
 let ready = false;
 
@@ -21,15 +22,15 @@ async function main(): Promise<void> {
     await client.setup();
 
     // Load events
-    // const eventsDir = `${__dirname}/events`;
-    // const files = await fs.readdir(eventsDir);
-    // for (const file of files) {
-    //     if (file.endsWith(".ts")) {
-    //         const temp = await import(`${eventsDir}/${file}`);
-    //         logger.info("EVENTS", `Loaded ${temp.event.name}`);
-    //         client.on(temp.event.name, (...args) => temp.event.run(client, settings, args));
-    //     }
-    // }
+    const eventsDir = `${__dirname}/events`;
+    const files = await fs.readdir(eventsDir);
+    for (const file of files) {
+        if (/\.(t|j)s$/iu.test(file)) {
+            const event = new (await import(`${eventsDir}/${file}`)).default() as Event;
+            logger.info("EVENTS", `Loaded ${event.name}`);
+            client.on(event.name, (...args: any[]) => event.run(client, ...args));
+        }
+    }
 
     client.on("ready", async () => {
         if (!ready) {
@@ -45,11 +46,6 @@ async function main(): Promise<void> {
         }
 
         client.editStatus("online", { name: "Diablo III", type: 0 });
-    });
-
-    // Handle disconnects
-    client.on("disconnect", () => {
-        logger.warn("DISCONNECT", "Client disconnected");
     });
 
     // Handle commands

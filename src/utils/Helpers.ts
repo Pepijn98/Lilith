@@ -1,4 +1,4 @@
-import User from "~/types/User";
+import User from "~/types/mongo/User";
 import Users from "~/models/User";
 import { GuildChannel, Channel, PrivateChannel } from "eris";
 

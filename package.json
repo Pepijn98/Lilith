@@ -1,6 +1,6 @@
 {
     "name": "lilith",
-    "version": "1.0.0-dev3",
+    "version": "1.0.0-dev4",
     "description": "Diablo 3 discord bot",
     "engines": {
         "node": ">=14",
