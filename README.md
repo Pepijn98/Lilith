@@ -19,7 +19,7 @@ Click [here][invite-link] to invite the bot
 - request items
 - character class/skills
 - request season/era leaderboards
-- changable prefix per guild
+- ~~changable prefix per guild~~
 
 # Commands
 `[]` - optional parameters \
