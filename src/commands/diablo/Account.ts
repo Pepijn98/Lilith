@@ -5,9 +5,9 @@ export default class extends Command {
     constructor(category: string) {
         super({
             name: "account",
-            description: "",
+            description: "Get details about your d3 account",
             usage: "",
-            example: "",
+            example: "account",
             category: category
         });
     }

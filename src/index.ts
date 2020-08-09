@@ -17,24 +17,15 @@ let ready = false;
 
 const logger = new Logger();
 const client = new Lilith(logger, settings.token, { restMode: true });
-const eventLoader = new EventLoader(client, logger);
-const commandLoader = new CommandLoader(logger);
-const commandHandler = new CommandHandler({ settings, client, logger });
+const eventLoader = new EventLoader(client);
+const commandLoader = new CommandLoader(client);
+const commandHandler = new CommandHandler(client);
 
 async function main(): Promise<void> {
     await client.setup();
 
     // Load all events besides ready and messageCreate
     await eventLoader.load(path.join(__dirname, "events"));
-    // const eventsDir = `${__dirname}/events`;
-    // const files = await fs.readdir(eventsDir);
-    // for (const file of files) {
-    //     if (/\.(t|j)s$/iu.test(file)) {
-    //         const event = new (await import(`${eventsDir}/${file}`)).default() as Event;
-    //         logger.info("EVENTS", `Loaded ${event.name}`);
-    //         client.on(event.name, (...args: any[]) => event.run(client, ...args));
-    //     }
-    // }
 
     client.on("ready", async () => {
         if (!ready) {
@@ -63,14 +54,15 @@ async function main(): Promise<void> {
         client.stats.messagesSeen++;
 
         // Check if message was send in a guild channel
+        let prefix = settings.prefix;
         if (isGuildChannel(msg.channel)) {
-            const prefix = client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+            prefix = client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
             // If message starts with configured prefix handleCommand
             if (msg.content.startsWith(prefix)) {
-                await commandHandler.handleCommand(msg, false);
+                await commandHandler.handleCommand(msg, prefix, false);
             }
         } else if (isDMChannel(msg.channel) && msg.content.startsWith(settings.prefix)) {
-            await commandHandler.handleCommand(msg, true);
+            await commandHandler.handleCommand(msg, prefix, true);
         }
     });
 

@@ -1,16 +1,17 @@
 import os from "os-utils";
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import { round, formatSeconds } from "~/utils/Utils";
 import { Message } from "eris";
 
 export default class extends Command {
-    constructor(category: string) {
+    constructor(ctx: CommandContext) {
         super({
             name: "sysinfo",
             description: "Info about the system the bot runs on",
             usage: "sysinfo",
             example: "sysinfo",
-            category,
+            category: ctx.category,
             ownerOnly: true
         });
     }

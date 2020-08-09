@@ -2,15 +2,18 @@ import Collection from "@kurozero/collection";
 import path from "path";
 import Command from "~/Command";
 import Logger from "~/utils/Logger";
+import Lilith from "./Client";
 import { promises as fs } from "fs";
 
 export default class CommandLoader {
     commands: Collection<Command>;
+    client: Lilith;
     logger: Logger;
 
-    constructor(logger: Logger) {
+    constructor(client: Lilith) {
         this.commands = new Collection(Command);
-        this.logger = logger;
+        this.client = client;
+        this.logger = client.logger;
     }
 
     /** Load all the commands */
@@ -29,7 +32,7 @@ export default class CommandLoader {
 
     private async _add(commandPath: string, category: string): Promise<void> {
         try {
-            const command = new (await import(commandPath)).default(category) as Command;
+            const command = new (await import(commandPath)).default({ client: this.client, category }) as Command;
             if (this.commands.has(command.name)) {
                 return this.logger.warn("COMMAND_HANDLER", `A command with the name ${command.name} already exists and has been skipped`);
             }

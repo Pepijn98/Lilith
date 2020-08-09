@@ -1,4 +1,5 @@
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import Users from "~/models/User";
 import { Message } from "eris";
 import { sleep } from "~/utils/Utils";
@@ -17,14 +18,14 @@ const localeMap: Record<string, string[]> = {
 };
 
 export default class extends Command {
-    constructor(category: string) {
+    constructor(ctx: CommandContext) {
         super({
             name: "setup",
             description: "Get started using Lilith by setting up your battle tag, region and locale",
             usage: "setup",
             example: "setup",
             guildOnly: true,
-            category
+            category: ctx.category
         });
     }
 

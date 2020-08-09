@@ -1,14 +1,15 @@
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import { Message } from "eris";
 
 export default class extends Command {
-    constructor(category: string) {
+    constructor(ctx: CommandContext) {
         super({
             name: "ping",
             description: "Testing the bot",
             usage: "ping",
             example: "ping",
-            category
+            category: ctx.category
         });
     }
 

@@ -1,25 +1,22 @@
+import settings from "~/settings";
 import Lilith from "./Client";
 import Logger from "~/utils/Logger";
-import { Settings } from "~/types/Settings";
-import { CommandHandlerOptions } from "~/types/Options";
 import { isGuildChannel } from "~/utils/Utils";
 import { Message, AnyGuildChannel, User } from "eris";
 import { Collection } from "@kurozero/collection";
 
 export default class CommandHandler {
-    settings: Settings;
     client: Lilith;
     logger: Logger;
 
-    constructor(options: CommandHandlerOptions) {
-        this.settings = options.settings;
-        this.client = options.client;
-        this.logger = options.logger;
+    constructor(client: Lilith) {
+        this.client = client;
+        this.logger = client.logger;
     }
 
-    async handleCommand(msg: Message, dm: boolean): Promise<boolean | undefined> {
+    async handleCommand(msg: Message, prefix: string, dm: boolean): Promise<boolean | undefined> {
         const parts = msg.content.split(" ");
-        const name = parts[0].slice(this.settings.prefix.length);
+        const name = parts[0].slice(prefix.length);
 
         const command = this.client.commands.find((cmd) => cmd.name === name || cmd.aliases.indexOf(name) !== -1)?.value;
         if (!command) return false; // Command doesn't exist
@@ -30,10 +27,6 @@ export default class CommandHandler {
         this.client.stats.commandUsage[name].users.set(msg.author.id, msg.author);
 
         const args = parts.splice(1);
-        const context = {
-            settings: this.settings,
-            logger: this.logger
-        };
 
         // Let the user know the command can only be run in a guild
         if (command.guildOnly && dm) {
@@ -46,13 +39,13 @@ export default class CommandHandler {
         // Check command args count
         if (command.requiredArgs > args.length) {
             try {
-                await msg.channel.createMessage(`Invalid argument count, check \`${this.settings.prefix}help ${command.name}\` to see how this command works.`);
+                await msg.channel.createMessage(`Invalid argument count, check \`${prefix}help ${command.name}\` to see how this command works.`);
             } catch (e) {}
             return false;
         }
 
         // Check if command is owner only
-        if (command.ownerOnly && msg.author.id !== this.settings.owner) {
+        if (command.ownerOnly && msg.author.id !== settings.owner) {
             try {
                 await msg.channel.createMessage("Only the owner can execute this command.");
             } catch (e) {}
@@ -102,7 +95,7 @@ export default class CommandHandler {
         }
 
         try {
-            await command.run(msg, args, this.client, context);
+            await command.run(msg, args);
             return true;
         } catch (error) {
             console.error(error);

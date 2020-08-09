@@ -1,7 +1,5 @@
-import Lilith from "./utils/Client";
 import { CommandOptions } from "./types/Options";
 import { isGuildChannel } from "./utils/Utils";
-import { CommandContext } from "./types/CommandContext";
 import { Message, Guild, AnyGuildChannel, Member } from "eris";
 
 export default abstract class Command {
@@ -40,7 +38,7 @@ export default abstract class Command {
     }
 
     /** Function with all the stuff the command needs to do */
-    abstract async run(msg: Message, args: string[], client: Lilith, context: CommandContext): Promise<unknown>;
+    abstract async run(msg: Message, args: string[]): Promise<unknown>;
 
     /** Tries to find the user in the currently guild */
     findMember(msg: Message, str: string): false | Member {

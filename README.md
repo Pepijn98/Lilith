@@ -56,6 +56,12 @@ Click [here][invite-link] to invite the bot
 | Wizard       | wiz, wizard          |
 | Cursader     | cru, sader, crusader |
 
+# Links
+Thanks you to [eris-additions](https://github.com/minemidnight/eris-additions) and [eris-pagination](https://github.com/riyacchi/eris-pagination) for allowing me to stay lazy while still having nice paginated embeds and being able to await messages! \
+Check out my website: [vdbroek.dev](https://vdbroek.dev) \
+[![discord](https://discordapp.com/api/v6/guilds/240059867744698368/widget.png?style=banner2)](https://discord.gg/p895czC)
+
+
 [invite-link]: https://discord.com/oauth2/authorize?client_id=740897738983604284&scope=bot&permissions=388160
 [locale-link]: https://github.com/Pepijn98/Lilith#regions-and-their-corresponding-locales
 [class-link]: https://github.com/Pepijn98/Lilith#class-list

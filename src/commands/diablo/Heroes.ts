@@ -1,24 +1,29 @@
 import EmbedPaginator from "eris-pagination";
 import settings from "~/settings";
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import Lilith from "~/utils/Client";
 import { Message, EmbedOptions } from "eris";
 import { classes, classImageMap, classColorMap, filter } from "~/utils/Utils";
 
 export default class extends Command {
-    constructor(category: string) {
+    client: Lilith;
+
+    constructor(ctx: CommandContext) {
         super({
             name: "heroes",
             description: "Get a list of your heroes",
             usage: "heroes [class]",
             example: "heroes dh",
             botPermissions: ["embedLinks", "addReactions", "manageMessages"],
-            category
+            category: ctx.category
         });
+
+        this.client = ctx.client;
     }
 
-    async run(msg: Message, args: string[], client: Lilith): Promise<void> {
-        const account = await client.diablo.getAccount(msg.author);
+    async run(msg: Message, args: string[]): Promise<void> {
+        const account = await this.client.diablo.getAccount(msg.author);
         const embeds: EmbedOptions[] = [];
         const heroes = args.length >= 1 && classes.includes(args[0]) ? account.heroes.filter((hero) => hero.classSlug === filter[args[0]]) : account.heroes;
 

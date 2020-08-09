@@ -1,44 +1,49 @@
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import Lilith from "~/utils/Client";
 import { version } from "@/package.json";
 import { formatSeconds } from "~/utils/Utils";
 import { Message, GuildChannel } from "eris";
 
 export default class extends Command {
-    constructor(category: string) {
+    client: Lilith;
+
+    constructor(ctx: CommandContext) {
         super({
             name: "stats",
             description: "",
             usage: "stats",
             example: "stats",
             guildOnly: true,
-            category
+            category: ctx.category
         });
+
+        this.client = ctx.client;
     }
 
-    async run(msg: Message, _args: string[], client: Lilith): Promise<Message | undefined> {
+    async run(msg: Message): Promise<Message | undefined> {
         return msg.channel.createMessage({
             embed: {
                 color: 0,
                 author: {
                     name: "Lilith",
                     url: "https://github.com/Pepijn98/Lilith",
-                    icon_url: client.user.avatarURL
+                    icon_url: this.client.user.avatarURL
                 },
                 thumbnail: {
-                    url: client.user.avatarURL
+                    url: this.client.user.avatarURL
                 },
                 fields: [
                     { name: "Memory", value: `${Math.round(process.memoryUsage().rss / 1024 / 1000)}MB`, inline: true },
-                    { name: "Shards", value: `Current: ${(msg.channel as GuildChannel).guild.shard.id}\nTotal: ${client.shards.size}`, inline: true },
+                    { name: "Shards", value: `Current: ${(msg.channel as GuildChannel).guild.shard.id}\nTotal: ${this.client.shards.size}`, inline: true },
                     { name: "Version", value: version, inline: true },
                     { name: "Node Version", value: process.version, inline: true },
-                    { name: "Guilds", value: String(client.guilds.size), inline: true },
-                    { name: "Channels", value: String(Object.keys(client.channelGuildMap).length), inline: true },
-                    { name: "Users", value: String(client.users.size), inline: true },
-                    { name: "Average Users/Guild", value: String((client.users.size / client.guilds.size).toFixed(2)), inline: true },
-                    { name: "Commands Used", value: String(client.stats.commandsExecuted), inline: true },
-                    { name: "Average Cmd/Min", value: `${(client.stats.commandsExecuted / (client.uptime / (1000 * 60))).toFixed(2)}/min`, inline: true }
+                    { name: "Guilds", value: String(this.client.guilds.size), inline: true },
+                    { name: "Channels", value: String(Object.keys(this.client.channelGuildMap).length), inline: true },
+                    { name: "Users", value: String(this.client.users.size), inline: true },
+                    { name: "Average Users/Guild", value: String((this.client.users.size / this.client.guilds.size).toFixed(2)), inline: true },
+                    { name: "Commands Used", value: String(this.client.stats.commandsExecuted), inline: true },
+                    { name: "Average Cmd/Min", value: `${(this.client.stats.commandsExecuted / (this.client.uptime / (1000 * 60))).toFixed(2)}/min`, inline: true }
                 ],
                 footer: {
                     text: `Uptime: ${formatSeconds(process.uptime())}`

@@ -1,14 +1,5 @@
 import Collection from "@kurozero/collection";
-import Lilith from "~/utils/Client";
-import Logger from "~/utils/Logger";
-import { Settings } from "./Settings";
 import { User } from "eris";
-
-export interface CommandHandlerOptions {
-    settings: Settings;
-    client: Lilith;
-    logger: Logger;
-}
 
 export interface CommandOptions {
     name: string;

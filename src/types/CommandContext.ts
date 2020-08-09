@@ -1,7 +1,8 @@
-import Logger from "~/utils/Logger";
-import Settings from "./Settings";
+import Lilith from "~/utils/Client";
 
 export interface CommandContext {
-    settings: Settings;
-    logger: Logger;
+    client: Lilith;
+    category: string;
 }
+
+export default CommandContext;

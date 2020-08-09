@@ -2,27 +2,31 @@ import ts from "typescript";
 import util from "util";
 import settings from "~/settings";
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import Lilith from "~/utils/Client";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as utils from "~/utils/Utils";
-import { CommandContext } from "~/types/CommandContext";
 import { Message } from "eris";
 
 export default class extends Command {
-    constructor(category: string) {
+    client: Lilith;
+
+    constructor(ctx: CommandContext) {
         super({
             name: "eval",
             description: "Evaluate javascript code",
             usage: "eval <code: string>",
             example: "eval 1 + 1",
-            category,
+            category: ctx.category,
             ownerOnly: true,
             requiredArgs: 1
         });
+
+        this.client = ctx.client;
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async run(msg: Message, args: string[], client: Lilith, ctx: CommandContext): Promise<void> {
+    async run(msg: Message, args: string[]): Promise<void> {
         const prefix = settings.prefix;
         let isTypescript = false;
         let content = msg.content.replace(`${prefix}eval`, "").replace(/^\s+/, "").replace(/\s*$/, "");

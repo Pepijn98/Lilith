@@ -1,10 +1,13 @@
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import Lilith from "~/utils/Client";
 import { Message } from "eris";
 import { classImageMap, classColorMap } from "~/utils/Utils";
 
 export default class extends Command {
-    constructor(category: string) {
+    client: Lilith;
+
+    constructor(ctx: CommandContext) {
         super({
             name: "hero",
             description: "Get more detailed info about a hero",
@@ -12,12 +15,14 @@ export default class extends Command {
             example: "hero 123456789",
             requiredArgs: 1,
             botPermissions: ["embedLinks"],
-            category
+            category: ctx.category
         });
+
+        this.client = ctx.client;
     }
 
-    async run(msg: Message, args: string[], client: Lilith): Promise<void> {
-        const hero = await client.diablo.getHero(msg.author, args[0]);
+    async run(msg: Message, args: string[]): Promise<void> {
+        const hero = await this.client.diablo.getHero(msg.author, args[0]);
         await msg.channel.createMessage({
             embed: {
                 author: {

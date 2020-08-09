@@ -8,9 +8,9 @@ export default class CommandLoader {
     client: Lilith;
     logger: Logger;
 
-    constructor(client: Lilith, logger: Logger) {
+    constructor(client: Lilith) {
         this.client = client;
-        this.logger = logger;
+        this.logger = client.logger;
     }
 
     /** Load all the commands */

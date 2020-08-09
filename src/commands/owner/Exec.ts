@@ -1,15 +1,16 @@
 import Command from "~/Command";
+import CommandContext from "~/types/CommandContext";
 import { exec } from "child_process";
 import { Message } from "eris";
 
 export default class extends Command {
-    constructor(category: string) {
+    constructor(ctx: CommandContext) {
         super({
             name: "exec",
             description: "Execute shell shit",
             usage: "exec <command: string>",
             example: "exec pm2 list",
-            category,
+            category: ctx.category,
             ownerOnly: true,
             requiredArgs: 1
         });
