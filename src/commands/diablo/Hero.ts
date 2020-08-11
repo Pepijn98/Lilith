@@ -22,7 +22,7 @@ export default class extends Command {
     }
 
     async run(msg: Message, args: string[]): Promise<void> {
-        const hero = await this.client.diablo.getHero(msg.author, args[0]);
+        const hero = await this.client.diablo.getHero(msg.author.id, args[0]);
         await msg.channel.createMessage({
             embed: {
                 author: {
@@ -47,18 +47,23 @@ export default class extends Command {
                         inline: true
                     },
                     {
-                        name: "Paragon",
-                        value: hero.paragonLevel.toString(),
-                        inline: true
-                    },
-                    {
                         name: "\u200B",
                         value: "\u200B",
                         inline: true
                     },
                     {
+                        name: "Paragon",
+                        value: hero.paragonLevel.toString(),
+                        inline: true
+                    },
+                    {
                         name: "Season",
                         value: hero.seasonCreated.toString(),
+                        inline: true
+                    },
+                    {
+                        name: "\u200B",
+                        value: "\u200B",
                         inline: true
                     },
                     {

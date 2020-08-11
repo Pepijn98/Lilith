@@ -50,7 +50,7 @@ interface Account {
     guildName: string; // Empty if not in a guild
     heroes: Array<Hero>;
     lastHeroPlayed: bigint;
-    lastUpdated: bigint;
+    lastUpdated: number;
     kills: Kills;
     highestHardcoreLevel: number;
     timePlayed: TimePlayed;

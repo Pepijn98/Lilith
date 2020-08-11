@@ -53,8 +53,8 @@ class Diablo {
         });
     }
 
-    async getAccount(user: User): Promise<Account> {
-        const dbUser = await getDBUser(user.id);
+    async getAccount(userID: string): Promise<Account> {
+        const dbUser = await getDBUser(userID);
         if (!dbUser) {
             throw Error("User not found, use `;setup` to get started");
         }
@@ -85,8 +85,8 @@ class Diablo {
         return data;
     }
 
-    async getHero(user: User, id: string): Promise<Hero> {
-        const dbUser = await getDBUser(user.id);
+    async getHero(userID: string, id: string): Promise<Hero> {
+        const dbUser = await getDBUser(userID);
         if (!dbUser) {
             throw Error("User not found, use `;setup` to get started");
         }

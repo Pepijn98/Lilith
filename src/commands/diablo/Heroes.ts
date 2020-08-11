@@ -23,7 +23,7 @@ export default class extends Command {
     }
 
     async run(msg: Message, args: string[]): Promise<void> {
-        const account = await this.client.diablo.getAccount(msg.author);
+        const account = await this.client.diablo.getAccount(msg.author.id);
         const embeds: EmbedOptions[] = [];
         const heroes = args.length >= 1 && classes.includes(args[0]) ? account.heroes.filter((hero) => hero.classSlug === filter[args[0]]) : account.heroes;
 

@@ -8,18 +8,20 @@ Default prefix will be `;` \
 Click [here][invite-link] to invite the bot
 
 # TODO (Must Have)
-- ~~switch to typescript~~
-- ~~command handler~~
-- ~~set battle.net account name~~
-- ~~set region~~
-- ~~request specific hero from account~~
-- request account
 
 # TODO (Add Later)
 - request items
 - character class/skills
 - request season/era leaderboards
-- ~~changable prefix per guild~~
+
+# TODO (Completed)
+- switch to typescript
+- command handler
+- set battle.net account name
+- set region
+- request specific hero from account
+- request account
+- changable prefix per guild
 
 # Commands
 `[]` - optional parameters \

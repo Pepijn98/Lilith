@@ -1,6 +1,6 @@
 {
     "name": "lilith",
-    "version": "1.0.0-dev6",
+    "version": "1.0.0-dev7",
     "description": "Diablo 3 discord bot",
     "engines": {
         "node": ">=14",
@@ -48,7 +48,7 @@
         "mongoose": "^5.9.28",
         "os-utils": "oscmejia/os-utils",
         "winston": "^3.3.3",
-        "yukikaze": "^0.3.0",
+        "yukikaze": "^1.0.0",
         "zlib-sync": "^0.1.7"
     },
     "devDependencies": {
