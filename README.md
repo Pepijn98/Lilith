@@ -29,9 +29,9 @@ Click [here][invite-link] to invite the bot
 
 | name | parameters | description | completed |
 |:-|:-|:-|:-|
-| tag | [battle-tag] | set battle.net account name | no |
-| region | [[region][locale-link]] | set your region | no |
-| locale | [[locale][locale-link]] | set the locale (setting locale will only change the requested data from the api and not the bot its self) | no |
+| tag | [battle-tag] | set battle.net account name | yes |
+| region | [[region][locale-link]] | set your region | yes |
+| locale | [[locale][locale-link]] | set the locale (setting locale will only change the requested data from the api and not the bot its self) | yes |
 | account || get your account details | yes |
 | hero | <hero_id> | get a specific hero | yes |
 | heroes | [[class][class-link]] | get a list of all your heroes | yes |
