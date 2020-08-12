@@ -32,11 +32,11 @@ Click [here][invite-link] to invite the bot
 | tag | [battle-tag] | set battle.net account name | yes |
 | region | [[region][locale-link]] | set your region | yes |
 | locale | [[locale][locale-link]] | set the locale (setting locale will only change the requested data from the api and not the bot its self) | yes |
-| account || get your account details | yes |
-| hero | <hero_id> | get a specific hero | yes |
-| heroes | [[class][class-link]] | get a list of all your heroes | yes |
+| account | [<[region][locale-link]> <[battleTag][tag-link]>] | get your account details | yes |
+| hero | <id> [<[region][locale-link]> <[battleTag][tag-link]>] | get a specific hero | yes |
+| heroes | [[class][class-link]] [<[region][locale-link]> <[battleTag][tag-link]>] | get a list of all your heroes | yes |
 | setup || setup your account by specifying your battle tag, region and locale. <br> This is an interactive command and does not require any arguments | yes |
-| prefix || set custom prefix for the server (requires the user to have the manage server permission) | yes |
+| prefix | [new_prefix] | set custom prefix for the server (requires the user to have the manage server permission) | yes |
 
 # Regions and their corresponding locale(s)
 | region        | Acronym | host                              | locales                                                                 |
@@ -67,3 +67,4 @@ Check out my website: [vdbroek.dev](https://vdbroek.dev) \
 [invite-link]: https://discord.com/oauth2/authorize?client_id=740897738983604284&scope=bot&permissions=388160
 [locale-link]: https://github.com/Pepijn98/Lilith#regions-and-their-corresponding-locales
 [class-link]: https://github.com/Pepijn98/Lilith#class-list
+[tag-link]: https://eu.battle.net/support/en/article/75767
