@@ -15,7 +15,6 @@ export default class extends Command {
             description: "Update the battle tag you set",
             usage: "tag [tag]",
             example: "tag Kurozero#21247",
-            requiredArgs: 1,
             category: ctx.category
         });
 

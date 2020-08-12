@@ -15,7 +15,6 @@ export default class extends Command {
             description: "Update the region you set",
             usage: "region <region>",
             example: "locale eu",
-            requiredArgs: 1,
             category: ctx.category
         });
 
