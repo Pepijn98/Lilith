@@ -40,7 +40,7 @@ export default class extends Command {
                 return;
             }
 
-            await user.update({ region }).exec();
+            await user.updateOne({ region }).exec();
             await msg.channel.createMessage("Updated region");
         } else {
             await msg.channel.createMessage(`Your current region is \`${user.region}\``);

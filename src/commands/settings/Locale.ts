@@ -41,7 +41,7 @@ export default class extends Command {
                 return;
             }
 
-            await user.update({ locale }).exec();
+            await user.updateOne({ locale }).exec();
             await msg.channel.createMessage("Updated locale");
         } else {
             await msg.channel.createMessage(`Your current locale is \`${user.locale}\``);

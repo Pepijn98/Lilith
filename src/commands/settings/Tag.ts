@@ -40,7 +40,7 @@ export default class extends Command {
                 return;
             }
 
-            await user.update({ battleTag: tag }).exec();
+            await user.updateOne({ battleTag: tag }).exec();
             await msg.channel.createMessage("Updated battle tag");
         } else {
             await msg.channel.createMessage(`Your current battle tag is \`${user.battleTag}\``);
