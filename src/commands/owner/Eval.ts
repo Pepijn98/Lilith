@@ -27,7 +27,11 @@ export default class extends Command {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async run(msg: Message, args: string[]): Promise<void> {
-        const prefix = settings.prefix;
+        let prefix = settings.prefix;
+        if (utils.isGuildChannel(msg.channel)) {
+            prefix = msg.channel.guild.prefix;
+        }
+
         let isTypescript = false;
         let content = msg.content.replace(`${prefix}eval`, "").replace(/^\s+/, "").replace(/\s*$/, "");
 

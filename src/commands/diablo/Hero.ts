@@ -26,7 +26,7 @@ export default class extends Command {
     async run(msg: Message, args: string[]): Promise<void> {
         let prefix = settings.prefix;
         if (isGuildChannel(msg.channel)) {
-            prefix = this.client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+            prefix = msg.channel.guild.prefix;
         }
 
         const heroID = args[0].trim();

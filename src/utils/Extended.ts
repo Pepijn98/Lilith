@@ -24,6 +24,10 @@ Object.defineProperty(Guild.prototype, "prefix", {
         return this._client.guildPrefixMap.get(this.id) || settings.prefix;
     },
     set: function (prefix: string) {
+        if (!prefix) {
+            this._client.guildPrefixMap.delete(this.id);
+            return;
+        }
         this._client.guildPrefixMap.set(this.id, prefix);
     }
 });

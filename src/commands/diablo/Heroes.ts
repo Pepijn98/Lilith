@@ -28,7 +28,7 @@ export default class extends Command {
 
         let prefix = settings.prefix;
         if (isGuildChannel(msg.channel)) {
-            prefix = this.client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+            prefix = msg.channel.guild.prefix;
         }
 
         let account: Account;

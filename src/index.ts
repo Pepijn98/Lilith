@@ -56,7 +56,7 @@ async function main(): Promise<void> {
         // Check if message was send in a guild channel
         let prefix = settings.prefix;
         if (isGuildChannel(msg.channel)) {
-            prefix = client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+            prefix = msg.channel.guild.prefix;
             // If message starts with configured prefix handleCommand
             if (msg.content.startsWith(prefix)) {
                 await commandHandler.handleCommand(msg, prefix, false);

@@ -23,7 +23,7 @@ export default class extends Command {
     async run(msg: Message, args: string[]): Promise<Message | undefined> {
         let prefix = settings.prefix;
         if (isGuildChannel(msg.channel)) {
-            prefix = this.client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+            prefix = msg.channel.guild.prefix;
         }
 
         if (args.length === 0) {

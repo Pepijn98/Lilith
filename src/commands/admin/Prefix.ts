@@ -34,14 +34,14 @@ export default class extends Command {
             // If reset, reset the prefix to the default one
             if (args[0] === "reset") {
                 await Guilds.findOneAndUpdate({ uid: msg.channel.guild.id }, { prefix: settings.prefix }).exec();
-                this.client.guildPrefixMap.set(msg.channel.guild.id, settings.prefix);
+                msg.channel.guild.prefix = settings.prefix;
                 await msg.channel.createMessage(`Resetted prefix to the default \`${settings.prefix}\``);
                 return;
             }
 
             // Set new prefix
             await Guilds.findOneAndUpdate({ uid: msg.channel.guild.id }, { prefix: args.join(" ") }).exec();
-            this.client.guildPrefixMap.set(msg.channel.guild.id, args.join(" "));
+            msg.channel.guild.prefix = args.join(" ");
             await msg.channel.createMessage(`Prefix has been set to \`${args.join(" ")}\``);
         }
     }
