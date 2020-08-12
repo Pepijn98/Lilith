@@ -13,9 +13,8 @@ export default class extends Command {
         super({
             name: "locale",
             description: "Update the locale you set",
-            usage: "locale <locale>",
+            usage: "locale [locale]",
             example: "locale en_US",
-            requiredArgs: 1,
             category: ctx.category
         });
 
@@ -34,14 +33,18 @@ export default class extends Command {
             return;
         }
 
-        const locales = localeMap[user.region];
-        const locale = args[0].trim();
-        if (!locales.includes(locale)) {
-            await msg.channel.createMessage(`Invalid locale, your region is \`${user.region}\` all the available locales in this region are ${locales.map((l) => `\`${l}\``).join(", ")}`);
-            return;
-        }
+        if (args.length >= 1) {
+            const locales = localeMap[user.region];
+            const locale = args[0].trim();
+            if (!locales.includes(locale)) {
+                await msg.channel.createMessage(`Invalid locale, your region is \`${user.region}\` all the available locales in this region are ${locales.map((l) => `\`${l}\``).join(", ")}`);
+                return;
+            }
 
-        await user.update({ locale }).exec();
-        await msg.channel.createMessage("Updated locale");
+            await user.update({ locale }).exec();
+            await msg.channel.createMessage("Updated locale");
+        } else {
+            await msg.channel.createMessage(`Your current locale is \`${user.locale}\``);
+        }
     }
 }

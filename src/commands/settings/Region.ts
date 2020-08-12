@@ -1,10 +1,14 @@
 import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
-import { Message } from "eris";
-import { regions } from "~/utils/Utils";
 import Users from "~/models/User";
+import Lilith from "~/utils/Client";
+import settings from "~/settings";
+import { Message } from "eris";
+import { regions, isGuildChannel } from "~/utils/Utils";
 
 export default class extends Command {
+    client: Lilith;
+
     constructor(ctx: CommandContext) {
         super({
             name: "region",
@@ -14,16 +18,33 @@ export default class extends Command {
             requiredArgs: 1,
             category: ctx.category
         });
+
+        this.client = ctx.client;
     }
 
     async run(msg: Message, args: string[]): Promise<void> {
-        const region = args[0].trim();
-        if (!regions.includes(region)) {
-            await msg.channel.createMessage("Invalid region");
+        let prefix = settings.prefix;
+        if (isGuildChannel(msg.channel)) {
+            prefix = this.client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+        }
+
+        const user = await Users.findOne({ uid: msg.author.id }).exec();
+        if (!user) {
+            await msg.channel.createMessage(`Please use \`${prefix}setup\` before using this command`);
             return;
         }
 
-        await Users.findOneAndUpdate({ uid: msg.author.id }, { region }).exec();
-        await msg.channel.createMessage("Updated region");
+        if (args.length >= 1) {
+            const region = args[0].trim();
+            if (!regions.includes(region)) {
+                await msg.channel.createMessage("Invalid region");
+                return;
+            }
+
+            await user.update({ region }).exec();
+            await msg.channel.createMessage("Updated region");
+        } else {
+            await msg.channel.createMessage(`Your current region is \`${user.region}\``);
+        }
     }
 }
