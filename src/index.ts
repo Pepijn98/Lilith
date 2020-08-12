@@ -9,8 +9,6 @@ import CommandHandler from "./utils/CommandHandler";
 import CommandLoader from "./utils/CommandLoader";
 import EventLoader from "./utils/EventLoader";
 import Logger from "./utils/Logger";
-// import Event from "./types/Event";
-// import { promises as fs } from "fs";
 import { isGuildChannel, loadPrefixes, isDMChannel } from "./utils/Utils";
 
 let ready = false;

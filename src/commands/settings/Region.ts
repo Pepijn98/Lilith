@@ -1,14 +1,11 @@
 import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import Users from "~/models/User";
-import Lilith from "~/utils/Client";
 import settings from "~/settings";
 import { Message } from "eris";
 import { regions, isGuildChannel } from "~/utils/Utils";
 
 export default class extends Command {
-    client: Lilith;
-
     constructor(ctx: CommandContext) {
         super({
             name: "region",
@@ -17,8 +14,6 @@ export default class extends Command {
             example: "locale eu",
             category: ctx.category
         });
-
-        this.client = ctx.client;
     }
 
     async run(msg: Message, args: string[]): Promise<void> {

@@ -2,13 +2,10 @@ import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import Users from "~/models/User";
 import settings from "~/settings";
-import Lilith from "~/utils/Client";
 import { Message } from "eris";
 import { rbattleTag, isGuildChannel } from "~/utils/Utils";
 
 export default class extends Command {
-    client: Lilith;
-
     constructor(ctx: CommandContext) {
         super({
             name: "tag",
@@ -17,8 +14,6 @@ export default class extends Command {
             example: "tag Kurozero#21247",
             category: ctx.category
         });
-
-        this.client = ctx.client;
     }
 
     async run(msg: Message, args: string[]): Promise<void> {
