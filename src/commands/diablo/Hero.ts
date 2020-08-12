@@ -31,7 +31,7 @@ export default class extends Command {
 
         const heroID = args[0].trim();
         if (!/^\d+$/iu.test(heroID)) {
-            msg.channel.createMessage("Invalid hero id");
+            await msg.channel.createMessage("Invalid hero id");
             return;
         }
 
@@ -48,19 +48,19 @@ export default class extends Command {
                 tag = args[2].trim();
 
                 if (!regions.includes(region)) {
-                    msg.channel.createMessage("Invalid region");
+                    await msg.channel.createMessage("Invalid region");
                     return;
                 }
 
                 if (!rbattleTag.test(tag)) {
-                    msg.channel.createMessage("Invalid battle tag");
+                    await msg.channel.createMessage("Invalid battle tag");
                     return;
                 }
 
                 hero = await this.client.diablo.getHeroByTag(heroID, region, tag);
                 break;
             default:
-                msg.channel.createMessage(`Invalid command usage, check \`${prefix}\`help ${this.name} to see how it's used.`);
+                await msg.channel.createMessage(`Invalid command usage, check \`${prefix}\`help ${this.name} to see how it's used.`);
                 return;
         }
 

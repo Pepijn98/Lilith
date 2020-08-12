@@ -2,7 +2,7 @@ import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import Users from "~/models/User";
 import { Message } from "eris";
-import { sleep, rbattleTag, localeMap } from "~/utils/Utils";
+import { sleep, rbattleTag, localeMap, regions } from "~/utils/Utils";
 
 const options = {
     time: 10000,
@@ -52,13 +52,12 @@ export default class extends Command {
         // Avoid spamming the channel
         await sleep(500);
 
+        // prettier-ignore
         // Set region
-        await msg.channel.createMessage(
-            `[2/3] ${msg.member?.mention || msg.author.tag}, What region do you want to use?\nThis can be one of \`us\`, \`eu\`, \`kr\`, \`tw\`, \`cn\``
-        );
+        await msg.channel.createMessage(`[2/3] ${msg.member?.mention || msg.author.tag}, What region do you want to use?\nThis can be one of \`us\`, \`eu\`, \`kr\`, \`tw\`, \`cn\``);
         const region = await msg.channel.awaitMessages((m) => m.author.id === msg.author.id, options);
         if (region.length >= 1) {
-            if (["us", "eu", "kr", "tw", "cn"].includes(region[0].content.trim())) {
+            if (regions.includes(region[0].content.trim())) {
                 await Users.findOneAndUpdate({ uid: msg.author.id }, { region: region[0].content.trim() }).exec();
                 await msg.channel.createMessage("Region successfully updated!");
             } else {

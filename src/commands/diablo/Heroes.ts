@@ -75,12 +75,12 @@ export default class extends Command {
                 tag = args[2].trim();
 
                 if (!regions.includes(region)) {
-                    msg.channel.createMessage("Invalid region");
+                    await msg.channel.createMessage("Invalid region");
                     return;
                 }
 
                 if (!rbattleTag.test(tag)) {
-                    msg.channel.createMessage("Invalid battle tag");
+                    await msg.channel.createMessage("Invalid battle tag");
                     return;
                 }
 
@@ -88,7 +88,7 @@ export default class extends Command {
                 heroes = account.heroes.filter((hero) => hero.classSlug === acronymClassMap[filter]) || [];
                 break;
             default:
-                msg.channel.createMessage(`Invalid command usage, check \`${prefix}\`help ${this.name} to see how it's used.`);
+                await msg.channel.createMessage(`Invalid command usage, check \`${prefix}\`help ${this.name} to see how it's used.`);
                 return;
         }
 
@@ -118,10 +118,10 @@ export default class extends Command {
         }
 
         if (!embeds.length) {
-            msg.channel.createMessage("No heroes found");
+            await msg.channel.createMessage("No heroes found");
             return;
         } else if (embeds.length === 1) {
-            msg.channel.createMessage({
+            await msg.channel.createMessage({
                 embed: embeds[0]
             });
         } else {
