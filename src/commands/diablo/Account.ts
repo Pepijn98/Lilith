@@ -1,11 +1,11 @@
 import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import EmbedPaginator from "eris-pagination";
-import { Message, EmbedOptions } from "eris";
 import Lilith from "~/utils/Client";
-import { round, classImageMap, classColorMap, regions, rbattleTag } from "~/utils/Utils";
 import Account from "~/types/diablo/Account";
 import Hero from "~/types/diablo/Hero";
+import { Message, EmbedOptions } from "eris";
+import { round, classImageMap, classColorMap, regions, rbattleTag } from "~/utils/Utils";
 
 export default class extends Command {
     client: Lilith;

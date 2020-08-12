@@ -1,10 +1,10 @@
 import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import Lilith from "~/utils/Client";
-import { Message } from "eris";
-import { classImageMap, classColorMap, isGuildChannel, regions, rbattleTag } from "~/utils/Utils";
 import Hero from "~/types/diablo/Hero";
 import settings from "~/settings";
+import { Message } from "eris";
+import { classImageMap, classColorMap, isGuildChannel, regions, rbattleTag } from "~/utils/Utils";
 
 export default class extends Command {
     client: Lilith;

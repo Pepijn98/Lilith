@@ -26,5 +26,7 @@ declare module "eris" {
 
     interface Guild {
         prefix: string;
+        getPrefix(): Promise<string>;
+        setPrefix(prefix: string): Promise<void>;
     }
 }

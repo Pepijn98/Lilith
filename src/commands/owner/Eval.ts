@@ -4,7 +4,6 @@ import settings from "~/settings";
 import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import Lilith from "~/utils/Client";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as utils from "~/utils/Utils";
 import { Message } from "eris";
 

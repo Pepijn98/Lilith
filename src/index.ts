@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("eris-additions")(require("eris"));
 
-import "./utils/Extended";
+import "./utils/Extensions";
 import path from "path";
 import settings from "./settings";
 import Lilith from "./utils/Client";

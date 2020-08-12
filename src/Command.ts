@@ -62,9 +62,4 @@ export default abstract class Command {
 
         return false;
     }
-
-    /** Generate violation ID, [ban, kick, warn, note] */
-    generateId(): string {
-        return `_${Math.random().toString(36).substr(2, 9)}`;
-    }
 }
