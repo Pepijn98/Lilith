@@ -1,3 +1,6 @@
+import { Guild } from "eris";
+import settings from "~/settings";
+
 /** Capitalize the first letter of a string */
 String.prototype.capitalize = function (): string {
     // eslint-disable-line no-extend-native
@@ -18,3 +21,12 @@ Array.prototype.remove = function <T>(item: T): T[] {
     }
     return this;
 };
+
+Object.defineProperty(Guild.prototype, "prefix", {
+    get: function () {
+        return this._client.guildPrefixMap.get(this.id) || settings.prefix;
+    },
+    set: function (prefix: string) {
+        this._client.guildPrefixMap.set(this.id, prefix);
+    }
+});

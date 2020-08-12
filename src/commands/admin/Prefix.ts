@@ -27,7 +27,7 @@ export default class extends Command {
         if (isGuildChannel(msg.channel)) {
             // If no args show current prefix
             if (!args.length) {
-                await msg.channel.createMessage(`Current prefix is \`${this.client.guildPrefixMap.get(msg.channel.guild.id)}\``);
+                await msg.channel.createMessage(`Current prefix is \`${msg.channel.guild.prefix}\``);
                 return;
             }
 

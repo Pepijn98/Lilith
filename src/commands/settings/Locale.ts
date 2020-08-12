@@ -37,7 +37,9 @@ export default class extends Command {
             const locales = localeMap[user.region];
             const locale = args[0].trim();
             if (!locales.includes(locale)) {
-                await msg.channel.createMessage(`Invalid locale, your region is \`${user.region}\` all the available locales in this region are ${locales.map((l) => `\`${l}\``).join(", ")}`);
+                await msg.channel.createMessage(
+                    `Invalid locale, your region is \`${user.region}\` all the available locales in this region are ${locales.map((l) => `\`${l}\``).join(", ")}`
+                );
                 return;
             }
 

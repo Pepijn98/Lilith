@@ -23,4 +23,8 @@ declare module "eris" {
     interface Channel {
         awaitMessages(filter: FilterFN, options: AwaitOptions): Promise<Message[]>;
     }
+
+    interface Guild {
+        prefix: string;
+    }
 }
