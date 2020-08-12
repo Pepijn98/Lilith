@@ -2,19 +2,19 @@
     <img height="250" src="./assets/avatar-round.png">
 </div>
 
-# Lilith (WIP)
+# Lilith
 Diablo 3 discord bot \
 Default prefix will be `;` \
 Click [here][invite-link] to invite the bot
 
-# TODO (Must Have)
+<!-- # TODO (Must Have) -->
 
 # TODO (Add Later)
 - request items
 - character class/skills
 - request season/era leaderboards
 
-# TODO (Completed)
+# Completed
 - switch to typescript
 - command handler
 - set battle.net account name
