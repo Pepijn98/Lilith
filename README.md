@@ -25,16 +25,16 @@ Click [here][invite-link] to invite the bot
 
 # Commands
 `[]` - optional parameters \
-`<>` - required parameters \
+`<>` - required parameters
 
 | name | parameters | description | completed |
 |:-|:-|:-|:-|
-| tag | [battle-tag] | set battle.net account name | yes |
+| tag | [[battle-tag][tag-link]] | set battle.net account name | yes |
 | region | [[region][locale-link]] | set your region | yes |
 | locale | [[locale][locale-link]] | set the locale (setting locale will only change the requested data from the api and not the bot its self) | yes |
-| account | [<[region][locale-link]> <[battleTag][tag-link]>] | get your account details | yes |
-| hero | <id> [<[region][locale-link]> <[battleTag][tag-link]>] | get a specific hero | yes |
-| heroes | [[class][class-link]] [<[region][locale-link]> <[battleTag][tag-link]>] | get a list of all your heroes | yes |
+| account | [<[region][locale-link]> <[battle-tag][tag-link]>] | get your account details | yes |
+| hero | <id> [<[region][locale-link]> <[battle-tag][tag-link]>] | get a specific hero | yes |
+| heroes | [[class][class-link]] [<[region][locale-link]> <[battle-tag][tag-link]>] | get a list of all your heroes | yes |
 | setup || setup your account by specifying your battle tag, region and locale. <br> This is an interactive command and does not require any arguments | yes |
 | prefix | [new_prefix] | set custom prefix for the server (requires the user to have the manage server permission) | yes |
 
