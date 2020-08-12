@@ -1,13 +1,17 @@
 import User from "~/types/mongo/User";
 import Users from "~/models/User";
-import { GuildChannel, Channel, PrivateChannel } from "eris";
 import Guilds from "~/models/Guild";
+import { GuildChannel, Channel, PrivateChannel } from "eris";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 
-export const classes = ["dh", "demon-hunter", "necro", "necromancer", "monk", "barb", "barbarian", "wd", "witch-doctor", "wiz", "wizard", "cru", "crusader"];
+export const classes = ["dh", "demon-hunter", "necro", "necromancer", "monk", "barb", "barbarian", "wd", "witch-doctor", "wiz", "wizard", "cru", "sader", "crusader"];
 
-export const filter: Record<string, string> = {
+export const regions = ["us", "eu", "kr", "tw", "cn"];
+
+export const rbattleTag = /^\w+#\d+$/iu;
+
+export const acronymClassMap: Record<string, string> = {
     "dh": "demon-hunter",
     "demon-hunter": "demon-hunter",
     "necro": "necromancer",
@@ -20,6 +24,7 @@ export const filter: Record<string, string> = {
     "wiz": "wizard",
     "wizard": "wizard",
     "cru": "crusader",
+    "sader": "crusader",
     "crusader": "crusader"
 };
 
@@ -50,6 +55,22 @@ export const classColorMap: Record<string, number> = {
     "crusader": 0xe0e0a6
 };
 
+export const localeMap: Record<string, string[]> = {
+    us: ["en_US", "es_MX", "pt_BR"],
+    eu: ["en_GB", "es_ES", "fr_FR", "ru_RU", "de_DE", "pt_PT", "it_IT"],
+    kr: ["ko_KR"],
+    tw: ["zh_TW"],
+    cn: ["zh_CN"]
+};
+
+export const defaultLocaleMap: Record<string, string> = {
+    us: "en_US",
+    eu: "en_GB",
+    kr: "ko_KR",
+    tw: "zh_TW",
+    cn: "zh_CN"
+};
+
 /** Wait x amount of milliseconds */
 export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms));
 
@@ -72,16 +93,16 @@ export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTim
 // };
 
 /** Check whether channel is guild channel */
-export function isGuildChannel(channel: Channel): channel is GuildChannel {
+export const isGuildChannel = (channel: Channel): channel is GuildChannel => {
     if (channel instanceof GuildChannel) return true;
     return false;
-}
+};
 
 /** Check whether channel is DM channel */
-export function isDMChannel(channel: Channel): channel is PrivateChannel {
+export const isDMChannel = (channel: Channel): channel is PrivateChannel => {
     if (channel instanceof PrivateChannel) return true;
     return false;
-}
+};
 
 /** Convert seconds to human readable form */
 export const formatSeconds = (time: number): string => {

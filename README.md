@@ -32,7 +32,7 @@ Click [here][invite-link] to invite the bot
 | tag | [battle-tag] | set battle.net account name | no |
 | region | [[region][locale-link]] | set your region | no |
 | locale | [[locale][locale-link]] | set the locale (setting locale will only change the requested data from the api and not the bot its self) | no |
-| account || get your account details | no |
+| account || get your account details | yes |
 | hero | <hero_id> | get a specific hero | yes |
 | heroes | [[class][class-link]] | get a list of all your heroes | yes |
 | setup || setup your account by specifying your battle tag, region and locale. <br> This is an interactive command and does not require any arguments | yes |

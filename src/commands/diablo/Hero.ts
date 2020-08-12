@@ -2,7 +2,9 @@ import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import Lilith from "~/utils/Client";
 import { Message } from "eris";
-import { classImageMap, classColorMap } from "~/utils/Utils";
+import { classImageMap, classColorMap, isGuildChannel, regions, rbattleTag } from "~/utils/Utils";
+import Hero from "~/types/diablo/Hero";
+import settings from "~/settings";
 
 export default class extends Command {
     client: Lilith;
@@ -11,7 +13,7 @@ export default class extends Command {
         super({
             name: "hero",
             description: "Get more detailed info about a hero",
-            usage: "hero <id>",
+            usage: "hero <id> [<region> <battleTag>]",
             example: "hero 123456789",
             requiredArgs: 1,
             botPermissions: ["embedLinks"],
@@ -22,7 +24,46 @@ export default class extends Command {
     }
 
     async run(msg: Message, args: string[]): Promise<void> {
-        const hero = await this.client.diablo.getHero(msg.author.id, args[0]);
+        let prefix = settings.prefix;
+        if (isGuildChannel(msg.channel)) {
+            prefix = this.client.guildPrefixMap.get(msg.channel.guild.id) || settings.prefix;
+        }
+
+        const heroID = args[0].trim();
+        if (!/^\d+$/iu.test(heroID)) {
+            msg.channel.createMessage("Invalid hero id");
+            return;
+        }
+
+        let hero: Hero;
+        let region: string;
+        let tag: string;
+
+        switch (args.length) {
+            case 1:
+                hero = await this.client.diablo.getHero(msg.author.id, heroID);
+                break;
+            case 3:
+                region = args[1].trim();
+                tag = args[2].trim();
+
+                if (!regions.includes(region)) {
+                    msg.channel.createMessage("Invalid region");
+                    return;
+                }
+
+                if (!rbattleTag.test(tag)) {
+                    msg.channel.createMessage("Invalid battle tag");
+                    return;
+                }
+
+                hero = await this.client.diablo.getHeroByTag(heroID, region, tag);
+                break;
+            default:
+                msg.channel.createMessage(`Invalid command usage, check \`${prefix}\`help ${this.name} to see how it's used.`);
+                return;
+        }
+
         await msg.channel.createMessage({
             embed: {
                 author: {

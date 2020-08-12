@@ -3,7 +3,9 @@ import CommandContext from "~/types/CommandContext";
 import EmbedPaginator from "eris-pagination";
 import { Message, EmbedOptions } from "eris";
 import Lilith from "~/utils/Client";
-import { round, classImageMap, classColorMap } from "~/utils/Utils";
+import { round, classImageMap, classColorMap, regions, rbattleTag } from "~/utils/Utils";
+import Account from "~/types/diablo/Account";
+import Hero from "~/types/diablo/Hero";
 
 export default class extends Command {
     client: Lilith;
@@ -12,17 +14,39 @@ export default class extends Command {
         super({
             name: "account",
             description: "Get details about your d3 account",
-            usage: "",
-            example: "account",
+            usage: "account [<region> <battleTag>]",
+            example: "account eu Kurozero#21247",
             category: ctx.category
         });
 
         this.client = ctx.client;
     }
 
-    async run(msg: Message): Promise<void> {
-        const account = await this.client.diablo.getAccount(msg.author.id);
-        const lastPlayed = await this.client.diablo.getHero(msg.author.id, account.lastHeroPlayed.toString());
+    async run(msg: Message, args: string[]): Promise<void> {
+        let account: Account;
+        let lastPlayed: Hero;
+
+        if (args.length >= 2) {
+            const region = args[0].trim();
+            const tag = args[1].trim();
+
+            if (!regions.includes(region)) {
+                msg.channel.createMessage("Invalid region");
+                return;
+            }
+
+            if (!rbattleTag.test(tag)) {
+                msg.channel.createMessage("Invalid battle tag");
+                return;
+            }
+
+            account = await this.client.diablo.getAccountByTag(region, tag);
+            lastPlayed = await this.client.diablo.getHeroByTag(account.lastHeroPlayed.toString(), region, tag);
+        } else {
+            account = await this.client.diablo.getAccount(msg.author.id);
+            lastPlayed = await this.client.diablo.getHero(msg.author.id, account.lastHeroPlayed.toString());
+        }
+
         const embeds: EmbedOptions[] = [
             {
                 title: account.battleTag,
@@ -227,7 +251,7 @@ export default class extends Command {
                         name: "\u200B",
                         value: "**__Active Skills__**"
                     },
-                    ...lastPlayed.skills.active.map((active) => ({ name: active.skill.name, value: active.rune.name, inline: true })),
+                    ...lastPlayed.skills.active.map((active) => ({ name: active.skill.name, value: active.rune?.name || "\u200B", inline: true })),
                     {
                         name: "\u200B",
                         value: `**__Passive Skills__**\n${lastPlayed.skills.passive.map((active) => active.skill.name).join("\n")}`

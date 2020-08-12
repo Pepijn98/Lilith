@@ -2,19 +2,11 @@ import Command from "~/Command";
 import CommandContext from "~/types/CommandContext";
 import Users from "~/models/User";
 import { Message } from "eris";
-import { sleep } from "~/utils/Utils";
+import { sleep, rbattleTag, localeMap } from "~/utils/Utils";
 
 const options = {
     time: 10000,
     maxMatches: 1
-};
-
-const localeMap: Record<string, string[]> = {
-    us: ["en_US", "es_MX", "pt_BR"],
-    eu: ["en_GB", "es_ES", "fr_FR", "ru_RU", "de_DE", "pt_PT", "it_IT"],
-    kr: ["ko_KR"],
-    tw: ["zh_TW"],
-    cn: ["zh_CN"]
 };
 
 export default class extends Command {
@@ -42,7 +34,7 @@ export default class extends Command {
         await msg.channel.createMessage(`[1/3] ${msg.member?.mention || msg.author.tag}, Please tell me your battle tag using this format \`Name#1234\``);
         const battleTag = await msg.channel.awaitMessages((m) => m.author.id === msg.author.id, options);
         if (battleTag.length >= 1) {
-            const isValidTag = /\w+#\d+/iu.test(battleTag[0].content.trim());
+            const isValidTag = rbattleTag.test(battleTag[0].content.trim());
             if (isValidTag) {
                 await Users.findOneAndUpdate({ uid: msg.author.id }, { battleTag: battleTag[0].content.trim() }).exec();
                 await msg.channel.createMessage("Battle tag successfully updated!");

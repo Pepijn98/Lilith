@@ -2,7 +2,7 @@ interface HeroKills {
     elites: number;
 }
 
-interface Hero {
+export interface Hero {
     "id": bigint;
     "name": string;
     "class": string;
@@ -41,7 +41,7 @@ interface Progression {
     act5: boolean;
 }
 
-interface Account {
+export interface Account {
     battleTag: string;
     paragonLevel: number;
     paragonLevelHardcore: number;
