@@ -9,7 +9,7 @@ import CommandHandler from "./utils/CommandHandler";
 import CommandLoader from "./utils/CommandLoader";
 import EventLoader from "./utils/EventLoader";
 import Logger from "./utils/Logger";
-import { isGuildChannel, loadPrefixes, isDMChannel } from "./utils/Utils";
+import { isGuildChannel, loadPrefixes, isDMChannel, postGuildCount } from "./utils/Utils";
 
 let ready = false;
 
@@ -34,6 +34,8 @@ async function main(): Promise<void> {
             // Log some info
             logger.ready(`Logged in as ${client.user.tag}`);
             logger.ready(`Loaded [${client.commands.size}] commands`);
+
+            await postGuildCount(client);
 
             // We're ready \o/
             ready = true;

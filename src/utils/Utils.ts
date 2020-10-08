@@ -1,3 +1,7 @@
+import axios from "axios";
+import Yukikaze from "yukikaze";
+import settings from "~/settings";
+import Lilith from "./Client";
 import User from "~/types/mongo/User";
 import Users from "~/models/User";
 import Guilds from "~/models/Guild";
@@ -134,3 +138,42 @@ export const loadPrefixes = async (): Promise<Map<string, string>> => {
     }
     return prefixes;
 };
+
+async function topgg(client: Lilith): Promise<void> {
+    try {
+        await axios.post(`https://top.gg/api/bots/${client.user.id}/stats`, {
+            server_count: client.guilds.size
+        }, {
+            headers: {
+                Authorization: settings.botLists.topgg,
+                "Content-Type": "application/json"
+            }
+        });
+    } catch (e) {
+        client.logger.error("TOPGG", "Failed sending guild count to top.gg");
+    }
+}
+
+// Not yet approved
+// async function botsondiscord(client: Lilith): Promise<void> {
+//     try {
+//         await axios.post(`https://bots.ondiscord.xyz/bot-api/bots/${client.user.id}/guilds`, {
+//             guildCount: client.guilds.size
+//         }, {
+//             headers: {
+//                 Authorization: settings.botLists.bod,
+//                 "Content-Type": "application/json"
+//             }
+//         });
+//     } catch (e) {
+//         client.logger.error("BOD", "Failed sending guild count to bots.ondiscord.xyz");
+//     }
+// }
+
+export async function postGuildCount(client: Lilith): Promise<void> {
+    const interval = new Yukikaze();
+    interval.run(async () => {
+        await topgg(client);
+        // await botsondiscord(client);
+    }, 30 * 60 * 1000, false);
+}

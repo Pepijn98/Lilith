@@ -9,6 +9,7 @@
         "esModuleInterop": true,
         "noImplicitAny": true,
         "moduleResolution": "node",
+        "skipLibCheck": true,
         "sourceMap": false,
         "noImplicitReturns": false,
         "resolveJsonModule": true,

@@ -11,12 +11,18 @@ interface Database {
     name: string;
 }
 
+interface BotLists {
+    topgg: string;
+    bod: string;
+}
+
 export interface Settings {
     token: string;
     owner: string;
     prefix: string;
     battlenet: BattleNet;
     database: Database;
+    botLists: BotLists;
 }
 
 export default Settings;
