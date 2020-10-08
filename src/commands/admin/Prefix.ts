@@ -26,6 +26,14 @@ export default class extends Command {
                 return;
             }
 
+            const exists = await Guilds.exists({ uid: msg.channel.guild.id });
+            if (!exists) {
+                await Guilds.create({
+                    uid: msg.channel.guild.id,
+                    prefix: settings.prefix
+                });
+            }
+
             // If reset, reset the prefix to the default one
             if (args[0] === "reset") {
                 await Guilds.findOneAndUpdate({ uid: msg.channel.guild.id }, { prefix: settings.prefix }).exec();
