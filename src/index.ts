@@ -14,7 +14,16 @@ import { isGuildChannel, loadPrefixes, isDMChannel, postGuildCount } from "./uti
 let ready = false;
 
 const logger = new Logger();
-const client = new Lilith(logger, settings.token, { restMode: true });
+
+const client = new Lilith(logger, settings.token, {
+    autoreconnect: true,
+    compress: true,
+    getAllUsers: true,
+    restMode: true,
+    defaultImageFormat: "webp",
+    defaultImageSize: 2048
+});
+
 const eventLoader = new EventLoader(client);
 const commandLoader = new CommandLoader(client);
 const commandHandler = new CommandHandler(client);
@@ -57,6 +66,14 @@ client.on("messageCreate", async (msg) => {
         }
     } else if (isDMChannel(msg.channel) && msg.content.startsWith(settings.prefix)) {
         await commandHandler.handleCommand(msg, prefix, true);
+    }
+});
+
+client.on("error", (e: any) => {
+    if (e.code === 1001) {
+        client.disconnect({ reconnect: true });
+        // client.disconnect({ reconnect: false });
+        // client.connect().catch((e) => logger.error("CONNECT", e));
     }
 });
 
