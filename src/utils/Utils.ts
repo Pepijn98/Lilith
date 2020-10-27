@@ -5,7 +5,11 @@ import Lilith from "./Client";
 import User from "~/types/mongo/User";
 import Users from "~/models/User";
 import Guilds from "~/models/Guild";
-import { GuildChannel, Channel, PrivateChannel } from "eris";
+import { GuildChannel, Channel, PrivateChannel, Constants } from "eris";
+
+const { Intents } = Constants;
+
+export const clientIntents = Intents.guilds | Intents.guildEmojis | Intents.guildMessages | Intents.guildMessageReactions | Intents.directMessages | Intents.directMessageReactions;
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 
@@ -77,24 +81,6 @@ export const defaultLocaleMap: Record<string, string> = {
 
 /** Wait x amount of milliseconds */
 export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms));
-
-/** Check whether channel is guild channel */
-// export const isGuildChannel = (channel: Channel): channel is GuildChannel => {
-//     switch (channel.type) {
-//         case 0:
-//             return true; // TextChannel
-//         case 2:
-//             return true; // VoiceChannel
-//         case 4:
-//             return true; // CategoryChannel
-//         case 5:
-//             return true; // NewsChannel
-//         case 6:
-//             return true; // StoreChannel
-//         default:
-//             return false;
-//     }
-// };
 
 /** Check whether channel is guild channel */
 export const isGuildChannel = (channel: Channel): channel is GuildChannel => {

@@ -9,7 +9,7 @@ import CommandHandler from "./utils/CommandHandler";
 import CommandLoader from "./utils/CommandLoader";
 import EventLoader from "./utils/EventLoader";
 import Logger from "./utils/Logger";
-import { isGuildChannel, loadPrefixes, isDMChannel, postGuildCount } from "./utils/Utils";
+import { isGuildChannel, loadPrefixes, isDMChannel, postGuildCount, clientIntents } from "./utils/Utils";
 
 let ready = false;
 
@@ -18,10 +18,10 @@ const logger = new Logger();
 const client = new Lilith(logger, settings.token, {
     autoreconnect: true,
     compress: true,
-    // getAllUsers: true,
     restMode: true,
     defaultImageFormat: "webp",
-    defaultImageSize: 2048
+    defaultImageSize: 2048,
+    intents: clientIntents
 });
 
 const eventLoader = new EventLoader(client);
