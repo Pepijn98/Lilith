@@ -141,14 +141,18 @@ export const loadPrefixes = async (): Promise<Map<string, string>> => {
 
 async function topgg(client: Lilith): Promise<void> {
     try {
-        await axios.post(`https://top.gg/api/bots/${client.user.id}/stats`, {
-            server_count: client.guilds.size
-        }, {
-            headers: {
-                Authorization: settings.botLists.topgg,
-                "Content-Type": "application/json"
+        await axios.post(
+            `https://top.gg/api/bots/${client.user.id}/stats`,
+            {
+                server_count: client.guilds.size
+            },
+            {
+                headers: {
+                    "Authorization": settings.botLists.topgg,
+                    "Content-Type": "application/json"
+                }
             }
-        });
+        );
     } catch (e) {
         client.logger.error("TOPGG", "Failed sending guild count to top.gg");
     }
@@ -172,8 +176,12 @@ async function topgg(client: Lilith): Promise<void> {
 
 export async function postGuildCount(client: Lilith): Promise<void> {
     const interval = new Yukikaze();
-    interval.run(async () => {
-        await topgg(client);
-        // await botsondiscord(client);
-    }, 30 * 60 * 1000, false);
+    interval.run(
+        async () => {
+            await topgg(client);
+            // await botsondiscord(client);
+        },
+        30 * 60 * 1000,
+        false
+    );
 }
