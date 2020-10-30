@@ -60,7 +60,8 @@ client.on("messageCreate", async (msg) => {
     // Check if message was send in a guild channel
     let prefix = settings.prefix;
     if (isGuildChannel(msg.channel)) {
-        prefix = msg.channel.guild.prefix;
+        // Use guild specific prefixes on production
+        if (process.env.NODE_ENV === "production") prefix = msg.channel.guild.prefix;
         // If message starts with configured prefix handleCommand
         if (msg.content.startsWith(prefix)) {
             await commandHandler.handleCommand(msg, prefix, false);

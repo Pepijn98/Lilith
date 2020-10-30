@@ -5,7 +5,8 @@ import Lilith from "./Client";
 import User from "~/types/mongo/User";
 import Users from "~/models/User";
 import Guilds from "~/models/Guild";
-import { GuildChannel, Channel, PrivateChannel, Constants } from "eris";
+import { GuildChannel, Channel, PrivateChannel, Constants, Guild } from "eris";
+import { Population } from "~/types/Types";
 
 const { Intents } = Constants;
 
@@ -108,8 +109,8 @@ export const formatSeconds = (time: number): string => {
     return `${days} Days, ${hours} Hours, ${minutes} Minutes and ${seconds} Seconds`;
 };
 
-export const round = (value: number, precision: number): number => {
-    const multiplier = Math.pow(10, precision || 0);
+export const round = (value: number, precision = 0): number => {
+    const multiplier = Math.pow(10, precision);
     return Math.round(value * multiplier) / multiplier;
 };
 
@@ -171,4 +172,18 @@ export async function postGuildCount(client: Lilith): Promise<void> {
         30 * 60 * 1000,
         false
     );
+}
+
+export function checkPopulation(guild: Guild): Population {
+    const total = guild.memberCount;
+    const bots = guild.members.filter((member) => member.user.bot).length - 1; // Lets be fair and not count this bot
+    const humans = total - bots;
+
+    return {
+        humans: (humans / total) * 100,
+        bots: (bots / total) * 100,
+        totalCount: total,
+        humanCount: humans,
+        botCount: bots
+    };
 }
