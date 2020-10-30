@@ -1,6 +1,6 @@
 import settings from "~/settings";
-import { Guild } from "eris";
 import Guilds from "~/models/Guild";
+import { Guild } from "eris";
 
 /** Capitalize the first letter of a string */
 String.prototype.capitalize = function (): string {
