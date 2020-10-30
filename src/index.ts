@@ -19,6 +19,7 @@ const client = new Lilith(logger, settings.token, {
     autoreconnect: true,
     compress: true,
     restMode: true,
+    getAllUsers: true,
     defaultImageFormat: "webp",
     defaultImageSize: 2048,
     intents: clientIntents
