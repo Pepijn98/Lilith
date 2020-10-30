@@ -1,6 +1,6 @@
 {
     "name": "lilith",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Diablo 3 discord bot",
     "engines": {
         "node": ">=14",
@@ -38,7 +38,7 @@
     },
     "dependencies": {
         "@kurozero/collection": "^0.5.1",
-        "axios": "^0.20.0",
+        "axios": "^0.21.0",
         "bufferutil": "^4.0.1",
         "chalk": "^4.1.0",
         "eris": "^0.13.3",
@@ -46,7 +46,7 @@
         "eris-pagination": "^0.5.1",
         "erlpack": "abalabahaha/erlpack",
         "moment": "^2.29.1",
-        "mongoose": "^5.10.8",
+        "mongoose": "^5.10.11",
         "os-utils": "oscmejia/os-utils",
         "winston": "^3.3.3",
         "yukikaze": "^1.0.0",
@@ -54,17 +54,17 @@
     },
     "devDependencies": {
         "@types/mongoose": "^5.7.36",
-        "@types/node": "^14.11.5",
-        "@typescript-eslint/eslint-plugin": "^4.4.0",
-        "@typescript-eslint/parser": "^4.4.0",
+        "@types/node": "^14.14.6",
+        "@typescript-eslint/eslint-plugin": "^4.6.0",
+        "@typescript-eslint/parser": "^4.6.0",
         "cross-env": "^7.0.2",
-        "eslint": "^7.10.0",
-        "eslint-config-prettier": "^6.12.0",
+        "eslint": "^7.12.1",
+        "eslint-config-prettier": "^6.15.0",
         "eslint-plugin-import": "^2.22.1",
-        "gts": "^3.0.0",
+        "gts": "^3.0.2",
         "prettier": "^2.1.2",
         "ts-node": "^9.0.0",
         "tsconfig-paths": "^3.9.0",
-        "typescript": "^4.0.3"
+        "typescript": "^4.0.5"
     }
 }
