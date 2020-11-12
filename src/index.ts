@@ -2,6 +2,7 @@
 require("eris-additions")(require("eris"));
 
 import "./utils/Extensions";
+
 import path from "path";
 import settings from "./settings";
 import Lilith from "./utils/Client";
