@@ -1,13 +1,17 @@
 import chalk from "chalk";
 import moment from "moment";
+import settings from "~/settings";
+import Lilith from "./Client";
 import { Logger as WinstonLogger, createLogger, format, transports } from "winston";
 
 /** Custom logger, you know, this logs stuff to the terminal with pretty colors and timestamps :O */
 export default class Logger {
-    private _log: WinstonLogger;
+    #client: Lilith;
+    #log: WinstonLogger;
 
-    constructor() {
-        this._log = createLogger({
+    constructor(client: Lilith) {
+        this.#client = client;
+        this.#log = createLogger({
             level: "warn",
             format: format.combine(
                 format.timestamp(),
@@ -25,22 +29,31 @@ export default class Logger {
     }
 
     ready(message: string): void {
-        this._log.info(message, { label: "READY" });
+        this.#log.info(message, { label: "READY" });
     }
 
     info(label: string, message: string): void {
-        this._log.info(message, { label });
+        this.#log.info(message, { label });
     }
 
     warn(label: string, message: string): void {
-        this._log.warn(message, { label });
+        this.#log.warn(message, { label });
     }
 
-    error(label: string, error: Error | string): void {
-        if (typeof error === "string") {
-            this._log.error(error, { label });
-        } else {
-            this._log.error(error.stack ? error.stack : error.toString(), { label });
+    error(label: string, error: Error | string, webhook = false): void {
+        let message = typeof error === "string" ? error : error.stack ? error.stack : error.toString();
+        this.#log.error(message, { label });
+
+        if (message.length > 1980) {
+            message = message.substring(0, 1980) + "...";
+        }
+
+        if (webhook) {
+            this.#client.executeWebhook(settings.webhook.id, settings.webhook.token, {
+                username: this.#client.user.username,
+                avatarURL: this.#client.user.dynamicAvatarURL(),
+                content: `\`\`\`diff\n- ${message}\n\`\`\``
+            });
         }
     }
 

@@ -16,6 +16,11 @@ interface BotLists {
     bod: string;
 }
 
+interface Webhook {
+    id: string;
+    token: string;
+}
+
 export interface Settings {
     token: string;
     owner: string;
@@ -23,6 +28,7 @@ export interface Settings {
     battlenet: BattleNet;
     database: Database;
     botLists: BotLists;
+    webhook: Webhook;
 }
 
 export default Settings;

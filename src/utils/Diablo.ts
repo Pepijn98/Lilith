@@ -1,14 +1,10 @@
 import axios from "axios";
+import Interval from "yukikaze";
 import settings from "~/settings";
 import Account from "~/types/diablo/Account";
 import Hero from "~/types/diablo/Hero";
+import Logger from "./Logger";
 import { getDBUser, baseUrl, defaultLocaleMap } from "./Utils";
-
-interface AuthData {
-    expiresIn: number;
-    token: string;
-    lastRequest: number;
-}
 
 interface AuthResponse {
     token_type: string;
@@ -17,42 +13,54 @@ interface AuthResponse {
 }
 
 class Diablo {
-    token: string;
+    logger: Logger;
 
-    constructor(token: string) {
-        this.token = token;
+    token!: string;
+    lastModified!: number;
+
+    constructor(logger: Logger) {
+        this.logger = logger;
+
+        const hours = 12;
+        const interval = new Interval();
+        interval.run(async () => await this.requestToken(), hours * 60 * 60 * 1000, true);
     }
 
-    static requestToken(): Promise<AuthData> {
-        return new Promise((resolve, reject) => {
-            axios
-                .get<AuthResponse>("https://eu.battle.net/oauth/token", {
-                    params: {
-                        client_id: settings.battlenet.id,
-                        client_secret: settings.battlenet.secret,
-                        grant_type: "client_credentials"
-                    }
-                })
-                .then((response) => {
-                    switch (response.data.token_type) {
-                        case "bearer":
-                            resolve({
-                                expiresIn: response.data.expires_in,
-                                token: response.data.access_token,
-                                lastRequest: Date.now()
-                            });
-                            break;
-                        default:
-                            reject(Error("Invalid token type"));
-                            break;
-                    }
-                    reject(Error("Invalid token type"));
-                })
-                .catch(reject);
-        });
+    async requestToken(): Promise<void> {
+        try {
+            const response = await axios.get<AuthResponse>("https://eu.battle.net/oauth/token", {
+                params: {
+                    client_id: settings.battlenet.id,
+                    client_secret: settings.battlenet.secret,
+                    grant_type: "client_credentials"
+                }
+            });
+
+            switch (response.data.token_type) {
+                case "bearer":
+                    this.token = response.data.access_token;
+                    this.lastModified = Date.now();
+                    break;
+                default:
+                    this.logger.error("[REQUEST_TOKEN]", "Invalid token type", true);
+                    break;
+            }
+            this.logger.error("[REQUEST_TOKEN]", "Invalid token type", true);
+        } catch (e) {
+            this.logger.error("[REQUEST_TOKEN]", e, true);
+        }
+    }
+
+    async validateToken(): Promise<void> {
+        // If last modified is more than 12 hours ago, get a new access token
+        if (((Date.now() - this.lastModified) / 1000 / 60 / 60) > 12) {
+            await this.requestToken();
+        }
     }
 
     async getAccount(userID: string): Promise<Account> {
+        await this.validateToken();
+
         const user = await getDBUser(userID);
         if (!user) {
             throw Error("User not found, use `;setup` to get started");
@@ -90,6 +98,8 @@ class Diablo {
     }
 
     async getAccountByTag(region: string, battleTag: string): Promise<Account> {
+        await this.validateToken();
+
         let apiUrl = baseUrl.replace(/\{REGION\}/giu, region);
         if (region === "cn") {
             apiUrl = "https://gateway.battlenet.com.cn";
@@ -110,6 +120,8 @@ class Diablo {
     }
 
     async getHero(userID: string, heroID: string): Promise<Hero> {
+        await this.validateToken();
+
         const user = await getDBUser(userID);
         if (!user) {
             throw Error("User not found, use `;setup` to get started");
@@ -147,6 +159,8 @@ class Diablo {
     }
 
     async getHeroByTag(heroID: string, region: string, battleTag: string): Promise<Hero> {
+        await this.validateToken();
+
         let apiUrl = baseUrl.replace(/\{REGION\}/giu, region);
         if (region === "cn") {
             apiUrl = "https://gateway.battlenet.com.cn";
