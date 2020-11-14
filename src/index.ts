@@ -72,8 +72,6 @@ client.on("messageCreate", async (msg) => {
 client.on("error", (e: any) => {
     if (e.code === 1001) {
         client.disconnect({ reconnect: true });
-        // client.disconnect({ reconnect: false });
-        // client.connect().catch((e) => logger.error("CONNECT", e));
     } else {
         client.logger.error("ERROR", e);
     }
