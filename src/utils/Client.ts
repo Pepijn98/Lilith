@@ -15,10 +15,10 @@ export default class Lilith extends Client {
 
     diablo!: Diablo;
 
-    constructor(logger: Logger, token: string, options: ClientOptions) {
+    constructor(token: string, options: ClientOptions) {
         super(token, options);
 
-        this.logger = logger;
+        this.logger = new Logger(this);
         this.commands = new Collection(Command);
         this.stats = {
             commandsExecuted: 0,

@@ -9,14 +9,11 @@ import Lilith from "./utils/Client";
 import CommandHandler from "./utils/CommandHandler";
 import CommandLoader from "./utils/CommandLoader";
 import EventLoader from "./utils/EventLoader";
-import Logger from "./utils/Logger";
 import { isGuildChannel, loadPrefixes, isDMChannel, postGuildCount, clientIntents } from "./utils/Utils";
 
 let ready = false;
 
-const logger = new Logger();
-
-const client = new Lilith(logger, settings.token, {
+const client = new Lilith(settings.token, {
     autoreconnect: true,
     compress: true,
     restMode: true,
@@ -37,8 +34,8 @@ client.on("ready", async () => {
         client.commands = await commandLoader.load(path.join(__dirname, "commands"));
 
         // Log some info
-        logger.ready(`Logged in as ${client.user.tag}`);
-        logger.ready(`Loaded [${client.commands.size}] commands`);
+        client.logger.ready(`Logged in as ${client.user.tag}`);
+        client.logger.ready(`Loaded [${client.commands.size}] commands`);
 
         client.editStatus("online", { name: "Diablo III", type: 0 });
 
@@ -78,13 +75,13 @@ client.on("error", (e: any) => {
         // client.disconnect({ reconnect: false });
         // client.connect().catch((e) => logger.error("CONNECT", e));
     } else {
-        logger.error("ERROR", e);
+        client.logger.error("ERROR", e);
     }
 });
 
 // Handle disconnects
 client.on("disconnect", () => {
-    logger.warn("DISCONNECT", "Client disconnected");
+    client.logger.warn("DISCONNECT", "Client disconnected");
 });
 
 /**
@@ -99,11 +96,11 @@ client.on("shardResume", (id: number) => {
 });
 
 process.on("unhandledRejection", (reason) => {
-    logger.error("UNHANDLED_REJECTION", reason as any);
+    client.logger.error("UNHANDLED_REJECTION", reason as any);
 });
 
 process.on("uncaughtException", (e) => {
-    logger.error("UNCAUGHT_EXCEPTION", e);
+    client.logger.error("UNCAUGHT_EXCEPTION", e);
 });
 
 process.on("SIGINT", () => {
@@ -118,7 +115,7 @@ async function main(): Promise<void> {
     await eventLoader.load(path.join(__dirname, "events"));
 
     // Connect to discord OwO
-    client.connect().catch((e) => logger.error("CONNECT", e));
+    client.connect().catch((e) => client.logger.error("CONNECT", e));
 }
 
-main().catch((e) => logger.error("MAIN", e));
+main().catch((e) => client.logger.error("MAIN", e));

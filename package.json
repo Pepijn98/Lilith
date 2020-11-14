@@ -31,6 +31,7 @@
         "prepare": "yarn build",
         "prebuild": "rm -rf dist",
         "build": "tsc",
+        "build:test": "tsc --noEmit",
         "clean": "rm -rf ./node_modules ./yarn.lock ./package-lock.json",
         "format": "prettier --write \"src/**/*.{ts,js}\" \"./*.{ts,js}\"",
         "lint": "eslint \"src/**/*.{ts,js}\" \"./*.{ts,js}\" --fix",
