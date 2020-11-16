@@ -11,7 +11,7 @@ export default class extends Command {
     constructor(ctx: CommandContext) {
         super({
             name: "stats",
-            description: "",
+            description: "Show bot statistics",
             usage: "stats",
             example: "stats",
             guildOnly: true,

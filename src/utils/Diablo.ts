@@ -1,56 +1,68 @@
 import axios from "axios";
 import settings from "~/settings";
+import Interval from "yukikaze";
 import Account from "~/types/diablo/Account";
 import Hero from "~/types/diablo/Hero";
 import Logger from "./Logger";
-import { AccessToken, ClientCredentials } from "simple-oauth2";
 import { getDBUser, baseUrl, defaultLocaleMap } from "./Utils";
 
 interface AuthResponse {
     token_type: string;
     expires_in: number;
     access_token: string;
-    expires_at: Date;
 }
 
-const oauth2 = new ClientCredentials({
-    client: {
-        id: settings.battlenet.id,
-        secret: settings.battlenet.secret
-    },
-    auth: {
-        tokenHost: "https://eu.battle.net"
-    }
-});
+interface Auth extends AuthResponse {
+    expires_at: Date;
+}
 
 class Diablo {
     logger: Logger;
 
-    auth?: AccessToken;
-    lastModified!: number;
+    timeout = 5 * 60 * 1000;
+    interval: Interval;
+
+    auth!: Auth;
 
     constructor(logger: Logger) {
         this.logger = logger;
+
+        this.interval = new Interval();
+        this.interval.run(async () => await this.updateToken(), this.timeout, true);
     }
 
-    async getToken(): Promise<AuthResponse> {
-        if (!this.auth) {
-            const auth = await oauth2.getToken({});
-            this.auth = oauth2.createToken(auth);
-            return this.auth.token.token;
-        }
+    async updateToken(): Promise<void> {
+        try {
+            const response = await axios.get<AuthResponse>("https://eu.battle.net/oauth/token", {
+                params: {
+                    client_id: settings.battlenet.id,
+                    client_secret: settings.battlenet.secret,
+                    grant_type: "client_credentials"
+                }
+            });
 
-        if (this.auth.expired()) {
-            this.auth = await this.auth.refresh();
-            return this.auth.token.token;
+            switch (response.data.token_type) {
+                case "bearer":
+                    const expiresAt = new Date();
+                    expiresAt.setSeconds(expiresAt.getSeconds() + response.data.expires_in);
+                    this.auth = {
+                        token_type: response.data.token_type,
+                        expires_in: response.data.expires_in,
+                        access_token: response.data.access_token,
+                        expires_at: expiresAt
+                    };
+                    this.logger.info("REQUEST_TOKEN", "Request successful");
+                    break;
+                default:
+                    this.logger.error("REQUEST_TOKEN", "Invalid token type", true);
+                    break;
+            }
+        } catch (e) {
+            this.logger.error("REQUEST_TOKEN", e, true);
         }
-
-        return this.auth.token.token;
     }
 
     async getAccount(userID: string): Promise<Account> {
-        const response = await this.getToken();
-
         const user = await getDBUser(userID);
         if (!user) {
             throw Error("User not found, use `;setup` to get started");
@@ -76,7 +88,7 @@ class Diablo {
         const { data } = await axios.get<Account>(`${apiUrl}/d3/profile/${encodeURIComponent(user.battleTag)}/`, {
             params: {
                 locale: user.locale,
-                access_token: response.access_token
+                access_token: this.auth.access_token
             },
             headers: {
                 "Accept": "application/json",
@@ -88,8 +100,6 @@ class Diablo {
     }
 
     async getAccountByTag(region: string, battleTag: string): Promise<Account> {
-        const response = await this.getToken();
-
         let apiUrl = baseUrl.replace(/\{REGION\}/giu, region);
         if (region === "cn") {
             apiUrl = "https://gateway.battlenet.com.cn";
@@ -98,7 +108,7 @@ class Diablo {
         const { data } = await axios.get<Account>(`${apiUrl}/d3/profile/${encodeURIComponent(battleTag)}/`, {
             params: {
                 locale: defaultLocaleMap[region],
-                access_token: response.access_token
+                access_token: this.auth.access_token
             },
             headers: {
                 "Accept": "application/json",
@@ -110,8 +120,6 @@ class Diablo {
     }
 
     async getHero(userID: string, heroID: string): Promise<Hero> {
-        const response = await this.getToken();
-
         const user = await getDBUser(userID);
         if (!user) {
             throw Error("User not found, use `;setup` to get started");
@@ -137,7 +145,7 @@ class Diablo {
         const { data } = await axios.get<Hero>(`${apiUrl}/d3/profile/${encodeURIComponent(user.battleTag)}/hero/${heroID}`, {
             params: {
                 locale: user.locale,
-                access_token: response.access_token
+                access_token: this.auth.access_token
             },
             headers: {
                 "Accept": "application/json",
@@ -149,8 +157,6 @@ class Diablo {
     }
 
     async getHeroByTag(heroID: string, region: string, battleTag: string): Promise<Hero> {
-        const response = await this.getToken();
-
         let apiUrl = baseUrl.replace(/\{REGION\}/giu, region);
         if (region === "cn") {
             apiUrl = "https://gateway.battlenet.com.cn";
@@ -159,7 +165,7 @@ class Diablo {
         const { data } = await axios.get<Hero>(`${apiUrl}/d3/profile/${encodeURIComponent(battleTag)}/hero/${heroID}`, {
             params: {
                 locale: defaultLocaleMap[region],
-                access_token: response.access_token
+                access_token: this.auth.access_token
             },
             headers: {
                 "Accept": "application/json",
