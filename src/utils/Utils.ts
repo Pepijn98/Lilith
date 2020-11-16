@@ -10,8 +10,15 @@ import { Population } from "~/types/Types";
 
 const { Intents } = Constants;
 
-export const clientIntents =
-    Intents.guilds | Intents.guildMembers | Intents.guildEmojis | Intents.guildMessages | Intents.guildMessageReactions | Intents.directMessages | Intents.directMessageReactions;
+// prettier-ignore
+export const intents =
+    Intents.guilds |
+    Intents.guildMembers |
+    Intents.guildEmojis |
+    Intents.guildMessages |
+    Intents.guildMessageReactions |
+    Intents.directMessages |
+    Intents.directMessageReactions;
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 

@@ -38,7 +38,7 @@ export default abstract class Command {
     }
 
     /** Function with all the stuff the command needs to do */
-    abstract async run(msg: Message, args: string[]): Promise<unknown>;
+    abstract run(msg: Message, args: string[]): Promise<unknown>;
 
     /** Tries to find the user in the currently guild */
     findMember(msg: Message, str: string): false | Member {
