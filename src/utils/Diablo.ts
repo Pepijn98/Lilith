@@ -23,6 +23,7 @@ class Diablo {
     interval: Interval;
 
     auth!: Auth;
+    hasError = 0;
 
     constructor(logger: Logger) {
         this.logger = logger;
@@ -57,8 +58,17 @@ class Diablo {
                     this.logger.error("REQUEST_TOKEN", "Invalid token type", true);
                     break;
             }
+
+            // Reset error after successful request
+            this.hasError = 0;
         } catch (e) {
-            this.logger.error("REQUEST_TOKEN", e, true);
+            // Increment error after failed request
+            this.hasError++;
+
+            // Only log error on the first failed attempt
+            if (this.hasError === 1) {
+                this.logger.error("REQUEST_TOKEN", e, true);
+            }
         }
     }
 
