@@ -17,13 +17,12 @@ interface Auth extends AuthResponse {
 }
 
 class Diablo {
-    logger: Logger;
-
     timeout = 5 * 60 * 1000;
-    interval: Interval;
-
-    auth!: Auth;
     hasError = 0;
+
+    logger: Logger;
+    interval: Interval;
+    auth!: Auth;
 
     constructor(logger: Logger) {
         this.logger = logger;
@@ -64,6 +63,11 @@ class Diablo {
         } catch (e) {
             // Increment error after failed request
             this.hasError++;
+
+            // Reset error count if error is a ECONNRESET, we can ignore it.
+            if (e.toString().includes("ECONNRESET")) {
+                this.hasError = 0;
+            }
 
             // Only log error on the first failed attempt
             if (this.hasError === 1) {
