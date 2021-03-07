@@ -17,7 +17,7 @@ interface Auth extends AuthResponse {
 }
 
 class Diablo {
-    timeout = 5 * 60 * 1000;
+    timeout = 60 * 1000; // Check every minute
     hasError = 0;
 
     logger: Logger;
@@ -64,8 +64,11 @@ class Diablo {
             // Increment error after failed request
             this.hasError++;
 
+            this.logger.warn("REQUEST_TOKEN", e.message || e.toString()); // TODO : Remove temp logging
+
             // Reset error count if error is a ECONNRESET, we can ignore it.
             if (e.toString().includes("ECONNRESET")) {
+                this.logger.error("REQUEST_TOKEN", "ECONNRESET"); // TODO : Remove temp logging
                 this.hasError = 0;
             }
 
