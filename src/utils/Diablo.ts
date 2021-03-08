@@ -33,7 +33,9 @@ class Diablo {
 
     async updateToken(): Promise<void> {
         try {
-            const response = await axios.get<AuthResponse>("https://eu.battle.net/oauth/token", {
+            this.logger.info("REQUEST_TOKEN", "Making api request...");
+            // prettier-ignore
+            const response = await axios.post<AuthResponse>("https://eu.battle.net/oauth/token", {}, {
                 params: {
                     client_id: settings.battlenet.id,
                     client_secret: settings.battlenet.secret,

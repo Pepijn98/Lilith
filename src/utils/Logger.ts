@@ -12,7 +12,7 @@ export default class Logger {
     constructor(client: Lilith) {
         this.#client = client;
         this.#log = createLogger({
-            level: "warn",
+            level: "info",
             format: format.combine(
                 format.timestamp(),
                 format.printf(
@@ -50,22 +50,23 @@ export default class Logger {
 
         if (webhook) {
             this.#client.executeWebhook(settings.webhook.id, settings.webhook.token, {
-                username: this.#client.user.username,
-                avatarURL: this.#client.user.dynamicAvatarURL(),
+                username: this.#client.ready ? this.#client.user.username : "Lilith",
+                avatarURL: this.#client.ready ? this.#client.user.dynamicAvatarURL() : "https://discord.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png",
                 content: `\`\`\`diff\n- ${message}\n\`\`\``
             });
         }
     }
 
     private _getColored(logLevel: string): string {
-        if (logLevel === "error") {
-            return chalk.red.bold(logLevel);
-        } else if (logLevel === "warn") {
-            return chalk.yellow.bold(logLevel);
-        } else if (logLevel === "info") {
-            return chalk.blue.bold(logLevel);
+        switch (logLevel) {
+            case "error":
+                return chalk.red.bold(logLevel);
+            case "warn":
+                return chalk.yellow.bold(logLevel);
+            case "info":
+                return chalk.blue.bold(logLevel);
+            default:
+                return chalk.white(logLevel);
         }
-
-        return chalk.white(logLevel);
     }
 }
