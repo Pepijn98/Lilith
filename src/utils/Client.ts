@@ -29,10 +29,13 @@ export default class Lilith extends Client {
 
     async setup(): Promise<void> {
         try {
-            await mongoose.connect(
-                `mongodb://${settings.database.user}:${settings.database.password}@${settings.database.host}:${settings.database.port}/${settings.database.name}`,
-                { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false }
-            );
+            await mongoose.connect(`mongodb+srv://${settings.database.user}:${settings.database.password}@${settings.database.host}/?retryWrites=true&w=majority`, {
+                dbName: settings.database.name,
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                useCreateIndex: true,
+                useFindAndModify: false
+            });
             this.diablo = new Diablo(this.logger);
         } catch (e) {
             this.logger.error("SETUP", e);

@@ -89,7 +89,7 @@ export const defaultLocaleMap: Record<string, string> = {
 };
 
 /** Wait x amount of milliseconds */
-export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms));
+export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms, null));
 
 /** Check whether channel is guild channel */
 export const isGuildChannel = (channel: Channel): channel is GuildChannel => {
