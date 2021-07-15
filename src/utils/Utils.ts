@@ -13,7 +13,7 @@ const { Intents } = Constants;
 // prettier-ignore
 export const intents =
     Intents.guilds |
-    Intents.guildMembers |
+    // Intents.guildMembers |
     Intents.guildEmojis |
     Intents.guildMessages |
     Intents.guildMessageReactions |
