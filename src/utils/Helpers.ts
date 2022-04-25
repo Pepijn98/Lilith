@@ -1,30 +1,41 @@
 import axios from "axios";
-import Yukikaze from "yukikaze";
 import settings from "~/settings";
-import Lilith from "./Client";
-import User from "~/types/mongo/User";
+import Yukikaze from "yukikaze";
+import Lilith from "./Lilith";
+import User from "~/types/db/User";
 import Users from "~/models/User";
-import Guilds from "~/models/Guild";
-import { GuildChannel, Channel, PrivateChannel, Constants, Guild } from "eris";
-import { Population } from "~/types/Types";
-
-const { Intents } = Constants;
-
-// prettier-ignore
-export const intents =
-    Intents.guilds |
-    // Intents.guildMembers |
-    Intents.guildEmojis |
-    Intents.guildMessages |
-    Intents.guildMessageReactions |
-    Intents.directMessages |
-    Intents.directMessageReactions;
+import { GuildChannel, Channel, PrivateChannel, Guild } from "eris";
+import { Population } from "~/types/General";
+import { AutocompleteChoice } from "slash-create";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 
 export const classes = ["dh", "demon-hunter", "necro", "necromancer", "monk", "barb", "barbarian", "wd", "witch-doctor", "wiz", "wizard", "cru", "sader", "crusader"];
 
-export const regions = ["us", "eu", "kr", "tw", "cn"];
+// export const regions = ["us", "eu", "kr", "tw", "cn"];
+
+export const regions: AutocompleteChoice[] = [
+    {
+        name: "United States",
+        value: "us"
+    },
+    {
+        name: "Europe",
+        value: "eu"
+    },
+    {
+        name: "Korea",
+        value: "kr"
+    },
+    {
+        name: "Taiwan",
+        value: "tw"
+    },
+    {
+        name: "China",
+        value: "cn"
+    }
+];
 
 export const rbattleTag = /^\w+#\d+$/iu;
 
@@ -89,50 +100,43 @@ export const defaultLocaleMap: Record<string, string> = {
 };
 
 /** Wait x amount of milliseconds */
-export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms, null));
+export function sleep(ms: number): Promise<unknown> {
+    return new Promise((r) => setTimeout(r, ms, null));
+}
 
 /** Check whether channel is guild channel */
-export const isGuildChannel = (channel: Channel): channel is GuildChannel => {
+export function isGuildChannel(channel: Channel): channel is GuildChannel {
     if (channel instanceof GuildChannel) return true;
     return false;
-};
+}
 
 /** Check whether channel is DM channel */
-export const isDMChannel = (channel: Channel): channel is PrivateChannel => {
+export function isDMChannel(channel: Channel): channel is PrivateChannel {
     if (channel instanceof PrivateChannel) return true;
     return false;
-};
+}
 
 /** Convert seconds to human readable form */
-export const formatSeconds = (time: number): string => {
-    let days = Math.floor((time % 31536000) / 86400);
-    let hours = Math.floor(((time % 31536000) % 86400) / 3600);
-    let minutes = Math.floor((((time % 31536000) % 86400) % 3600) / 60);
-    let seconds = Math.round((((time % 31536000) % 86400) % 3600) % 60);
-    days = days > 9 ? days : days;
-    hours = hours > 9 ? hours : hours;
-    minutes = minutes > 9 ? minutes : minutes;
-    seconds = seconds > 9 ? seconds : seconds;
+export function formatSeconds(time: number): string {
+    const days = Math.floor((time % 31536000) / 86400);
+    const hours = Math.floor(((time % 31536000) % 86400) / 3600);
+    const minutes = Math.floor((((time % 31536000) % 86400) % 3600) / 60);
+    const seconds = Math.round((((time % 31536000) % 86400) % 3600) % 60);
+    // days = days > 9 ? days : days;
+    // hours = hours > 9 ? hours : hours;
+    // minutes = minutes > 9 ? minutes : minutes;
+    // seconds = seconds > 9 ? seconds : seconds;
     return `${days} Days, ${hours} Hours, ${minutes} Minutes and ${seconds} Seconds`;
-};
+}
 
-export const round = (value: number, precision = 0): number => {
+export function round(value: number, precision = 0): number {
     const multiplier = Math.pow(10, precision);
     return Math.round(value * multiplier) / multiplier;
-};
+}
 
-export const getDBUser = async (id: string): Promise<User | null> => {
+export async function getDBUser(id: string): Promise<User | null> {
     return await Users.findOne({ uid: id }).exec();
-};
-
-export const loadPrefixes = async (): Promise<Map<string, string>> => {
-    const guilds = await Guilds.find({}).exec();
-    const prefixes = new Map<string, string>();
-    for (const guild of guilds) {
-        prefixes.set(guild.uid, guild.prefix);
-    }
-    return prefixes;
-};
+}
 
 async function topgg(client: Lilith): Promise<void> {
     try {

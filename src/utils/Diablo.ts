@@ -4,17 +4,8 @@ import Interval from "yukikaze";
 import Account from "~/types/diablo/Account";
 import Hero from "~/types/diablo/Hero";
 import Logger from "./Logger";
-import { getDBUser, baseUrl, defaultLocaleMap } from "./Utils";
-
-interface AuthResponse {
-    token_type: string;
-    expires_in: number;
-    access_token: string;
-}
-
-interface Auth extends AuthResponse {
-    expires_at: Date;
-}
+import { Auth, AuthResponse } from "~/types/diablo/Auth";
+import { getDBUser, baseUrl, defaultLocaleMap } from "./Helpers";
 
 class Diablo {
     timeout = 60 * 1000; // Check every minute
@@ -37,8 +28,8 @@ class Diablo {
             // prettier-ignore
             const response = await axios.post<AuthResponse>("https://eu.battle.net/oauth/token", {}, {
                 params: {
-                    client_id: settings.battlenet.id,
-                    client_secret: settings.battlenet.secret,
+                    client_id: settings.blizzard.id,
+                    client_secret: settings.blizzard.secret,
                     grant_type: "client_credentials"
                 }
             });

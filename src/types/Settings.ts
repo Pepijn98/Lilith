@@ -1,4 +1,4 @@
-interface BattleNet {
+interface Blizzard {
     id: string;
     secret: string;
 }
@@ -18,13 +18,17 @@ interface BotLists {
 interface Webhook {
     id: string;
     token: string;
+    pastebinKey: string;
 }
 
 export interface Settings {
+    debug: boolean;
+    appID: string;
+    publicKey: string;
     token: string;
     owner: string;
-    prefix: string;
-    battlenet: BattleNet;
+    devGuildID: string;
+    blizzard: Blizzard;
     database: Database;
     botLists: BotLists;
     webhook: Webhook;

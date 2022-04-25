@@ -1,52 +1,78 @@
 {
     "root": true,
     "env": {
+        "commonjs": true,
+        "es6": true,
         "node": true
+    },
+    "globals": {
+        "NodeJS": true,
+        "BigInt": true
     },
     "parserOptions": {
         "ecmaVersion": 10,
-        "parser": "@typescript-eslint/parser"
+        "sourceType": "module"
+        // "parser": "@typescript-eslint/parser"
     },
-    "plugins": [
-        "@typescript-eslint/eslint-plugin"
-    ],
-    "extends": [
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "prettier"
-    ],
+    "plugins": ["@typescript-eslint"],
+    "extends": ["plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "prettier"],
     "rules": {
         // TypeScript eslint options
-        "@typescript-eslint/explicit-function-return-type": ["error", {
-            "allowExpressions": true
-        }],
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowExpressions": true
+            }
+        ],
         "@typescript-eslint/explicit-member-accessibility": "off",
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
-
         // General eslint options
         "eol-last": ["error", "always"],
-        "indent": ["error", 4, {
-            "SwitchCase": 1
-        }],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
         "no-undef": "off",
-        "quotes": ["error", "double", {
-            "avoidEscape": true
-        }],
+        "quotes": [
+            "error",
+            "double",
+            {
+                "avoidEscape": true
+            }
+        ],
         "semi": ["error", "always"],
         "semi-spacing": "error",
         "semi-style": ["error", "last"]
     },
     "overrides": [
         {
+            "files": ["*.js", "*.jsx"],
+            "rules": {
+                "@typescript-eslint/no-var-requires": "off"
+            }
+        },
+        {
             // enable the rule specifically for TypeScript files
             "files": ["*.ts", "*.tsx"],
             "rules": {
-                "@typescript-eslint/explicit-member-accessibility": ["error", {
-                    "accessibility": "no-public"
-                }]
+                "@typescript-eslint/explicit-member-accessibility": [
+                    "error",
+                    {
+                        "accessibility": "no-public"
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["slash-up.config.js"],
+            "env": {
+                "node": true
             }
         }
     ]

@@ -8,10 +8,6 @@ declare module "eris" {
         maxMatches: number;
     }
 
-    interface Client {
-        guildPrefixMap: Map<string, string>;
-    }
-
     interface User {
         tag: string;
     }
@@ -22,11 +18,5 @@ declare module "eris" {
 
     interface Channel {
         awaitMessages(filter: FilterFN, options: AwaitOptions): Promise<Message[]>;
-    }
-
-    interface Guild {
-        prefix: string;
-        getPrefix(): Promise<string>;
-        setPrefix(prefix: string): Promise<void>;
     }
 }

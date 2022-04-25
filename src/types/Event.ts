@@ -1,4 +1,4 @@
-import Lilith from "~/utils/Client";
+import Lilith from "~/utils/Lilith";
 
 interface Event {
     name: string;

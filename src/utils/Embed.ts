@@ -1,3 +1,5 @@
+// TODO : Use for logging (maybe)
+
 import { Message } from "eris";
 
 type Colors = {

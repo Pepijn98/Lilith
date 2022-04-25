@@ -1,10 +1,10 @@
 import path from "path";
-import Lilith from "./Client";
+import Lilith from "./Lilith";
 import Logger from "~/utils/Logger";
 import Event from "~/types/Event";
 import { promises as fs } from "fs";
 
-export default class CommandLoader {
+export default class EventLoader {
     client: Lilith;
     logger: Logger;
 

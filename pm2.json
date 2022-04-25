@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "Lilith",
+            "script": "node",
+            "args": "dist/index.js"
+        }
+    ]
+}

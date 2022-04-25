@@ -1,7 +1,8 @@
+import axios from "axios";
 import chalk from "chalk";
 import moment from "moment";
 import settings from "~/settings";
-import Lilith from "./Client";
+import Lilith from "./Lilith";
 import { Logger as WinstonLogger, createLogger, format, transports } from "winston";
 
 /** Custom logger, you know, this logs stuff to the terminal with pretty colors and timestamps :O */
@@ -21,8 +22,7 @@ export default class Logger {
             ),
             transports: [
                 new transports.Console({
-                    level: "info" //,
-                    // handleExceptions: true
+                    level: "info"
                 })
             ]
         });
@@ -36,19 +36,40 @@ export default class Logger {
         this.#log.info(message, { label });
     }
 
-    warn(label: string, message: string): void {
+    warn(label: string, error: Error | string): void {
+        const message = typeof error === "string" ? error : error.stack ? error.stack : error.toString();
         this.#log.warn(message, { label });
     }
 
-    error(label: string, error: Error | string, webhook = false): void {
+    async error(label: string, error: Error | string, webhook = false): Promise<void> {
         let message = typeof error === "string" ? error : error.stack ? error.stack : error.toString();
         this.#log.error(message, { label });
 
-        if (message.length > 1980) {
-            message = message.substring(0, 1980) + "...";
-        }
-
         if (webhook) {
+            // If message is too long for discord try to post it to pastebin instead.
+            // If the post request fails to pastebin, just cut the message and continue as planned.
+            if (message.length > 1980) {
+                const params = new URLSearchParams({
+                    api_dev_key: settings.webhook.pastebinKey,
+                    api_option: "paste",
+                    api_paste_name: label,
+                    api_paste_code: message,
+                    api_paste_private: "1"
+                });
+
+                try {
+                    const resp = await axios.post("https://pastebin.com/api/api_post.php", params, {
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        }
+                    });
+
+                    message = resp.data;
+                } catch (_) {
+                    message = message.substring(0, 1980) + "...";
+                }
+            }
+
             this.#client.executeWebhook(settings.webhook.id, settings.webhook.token, {
                 username: this.#client.ready ? this.#client.user.username : "Lilith",
                 avatarURL: this.#client.ready ? this.#client.user.dynamicAvatarURL() : "https://discord.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png",
