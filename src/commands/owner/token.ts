@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext, ApplicationCommandPermissionType } from "slash-create";
+import { SlashCommand, SlashCreator, CommandContext } from "slash-create";
 import settings from "~/settings";
 
 export default class TokenCommand extends SlashCommand {
@@ -6,17 +6,12 @@ export default class TokenCommand extends SlashCommand {
         super(creator, {
             name: "token",
             description: "Something about this command",
-            guildIDs: settings.devGuildID,
-            permissions: {
-                [settings.devGuildID]: [
-                    {
-                        type: ApplicationCommandPermissionType.USER,
-                        id: settings.owner,
-                        permission: true
-                    }
-                ]
-            }
+            guildIDs: settings.devGuildID
         });
+    }
+
+    hasPermission(ctx: CommandContext): string | boolean {
+        return ctx.user.id === settings.owner;
     }
 
     async run(ctx: CommandContext): Promise<string> {
