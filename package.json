@@ -1,9 +1,13 @@
 {
-    "name": "slash-create-template",
-    "version": "1.0.0",
-    "description": "A template for slash-create",
+    "name": "lilith",
+    "version": "2.0.0",
+    "description": "Diablo 3 discord bot",
     "license": "MIT",
     "main": "dist/index.js",
+    "engines": {
+        "node": ">=16",
+        "yarn": ">=1.22.0"
+    },
     "scripts": {
         "sync": "slash-up sync",
         "sync:dev": "slash-up sync -e development",
@@ -24,12 +28,14 @@
         "eris": "^0.16.1",
         "eris-additions": "^1.4.1",
         "eris-pagination": "^0.5.2",
+        "erlpack": "abalabahaha/erlpack",
         "moment": "^2.29.3",
         "mongoose": "^6.3.1",
         "os-utils": "^0.0.14",
         "slash-create": "^5.2.0",
         "winston": "^3.7.2",
-        "yukikaze": "^1.0.0"
+        "yukikaze": "^1.0.0",
+        "zlib-sync": "^0.1.7"
     },
     "devDependencies": {
         "@types/mongoose": "^5.11.97",

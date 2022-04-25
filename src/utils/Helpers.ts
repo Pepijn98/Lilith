@@ -14,29 +14,6 @@ export const classes = ["dh", "demon-hunter", "necro", "necromancer", "monk", "b
 
 // export const regions = ["us", "eu", "kr", "tw", "cn"];
 
-export const regions: AutocompleteChoice[] = [
-    {
-        name: "United States",
-        value: "us"
-    },
-    {
-        name: "Europe",
-        value: "eu"
-    },
-    {
-        name: "Korea",
-        value: "kr"
-    },
-    {
-        name: "Taiwan",
-        value: "tw"
-    },
-    {
-        name: "China",
-        value: "cn"
-    }
-];
-
 export const rbattleTag = /^\w+#\d+$/iu;
 
 export const acronymClassMap: Record<string, string> = {
@@ -83,12 +60,92 @@ export const classColorMap: Record<string, number> = {
     "crusader": 0xe0e0a6
 };
 
-export const localeMap: Record<string, string[]> = {
-    us: ["en_US", "es_MX", "pt_BR"],
-    eu: ["en_GB", "es_ES", "fr_FR", "ru_RU", "de_DE", "pt_PT", "it_IT"],
-    kr: ["ko_KR"],
-    tw: ["zh_TW"],
-    cn: ["zh_CN"]
+export const regions: AutocompleteChoice[] = [
+    {
+        name: "United States",
+        value: "us"
+    },
+    {
+        name: "Europe",
+        value: "eu"
+    },
+    {
+        name: "Korea",
+        value: "kr"
+    },
+    {
+        name: "Taiwan",
+        value: "tw"
+    },
+    {
+        name: "China",
+        value: "cn"
+    }
+];
+
+export const localeMap: Record<string, AutocompleteChoice[]> = {
+    us: [
+        {
+            name: "	English (United States)",
+            value: "en_US"
+        },
+        {
+            name: "Spanish (Mexico)",
+            value: "es_MX"
+        },
+        {
+            name: "Portuguese (Brazil)",
+            value: "pt_BR"
+        }
+    ],
+    eu: [
+        {
+            name: "English (United Kingdom)",
+            value: "en_GB"
+        },
+        {
+            name: "Spanish",
+            value: "es_ES"
+        },
+        {
+            name: "French",
+            value: "fr_FR"
+        },
+        {
+            name: "Russian",
+            value: "ru_RU"
+        },
+        {
+            name: "German",
+            value: "de_DE"
+        },
+        {
+            name: "Portuguese",
+            value: "pt_PT"
+        },
+        {
+            name: "Italian",
+            value: "it_IT"
+        }
+    ],
+    kr: [
+        {
+            name: "Korean (South Korea)",
+            value: "ko_KR"
+        }
+    ],
+    tw: [
+        {
+            name: "Chinese (Taiwan)",
+            value: "zh_TW"
+        }
+    ],
+    cn: [
+        {
+            name: "Chinese",
+            value: "zh_CN"
+        }
+    ]
 };
 
 export const defaultLocaleMap: Record<string, string> = {
