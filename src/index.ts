@@ -37,7 +37,8 @@ client.on("ready", async () => {
         client.logger.ready(`Logged in as ${client.user.tag}`);
         client.logger.ready(`Loaded [${client.commands.size}] commands`);
 
-        client.editStatus("online", { name: "Diablo III", type: 0 });
+        // client.editStatus("online", { name: "Diablo III", type: 0 });
+        client.editStatus("online", { name: "v2.0 soon! More info: https://github.com/Pepijn98/Lilith/wiki/v2.0", type: 0 });
 
         await postGuildCount(client);
 
@@ -89,7 +90,8 @@ client.on("disconnect", () => {
 client.on("shardResume", (id: number) => {
     const shard = client.shards.get(id);
     if (shard) {
-        shard.editStatus("online", { name: "Diablo III", type: 0 });
+        // shard.editStatus("online", { name: "Diablo III", type: 0 });
+        shard.editStatus("online", { name: "v2.0 soon! More info: https://github.com/Pepijn98/Lilith/wiki/v2.0", type: 0 });
     }
 });
 
