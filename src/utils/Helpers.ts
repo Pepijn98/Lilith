@@ -8,6 +8,7 @@ import { Population } from "../types/General";
 import { AnyComponent, ComponentActionRow, ComponentType } from "slash-create";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
+export const rbattleTag = /^\w+#\d+$/iu;
 
 export const classes = [
     "dh",
@@ -26,11 +27,7 @@ export const classes = [
     "crusader"
 ];
 
-// export const regions = ["us", "eu", "kr", "tw", "cn"];
-
-export const rbattleTag = /^\w+#\d+$/iu;
-
-export const acronymClassMap: Record<string, string> = {
+export const acronymClass: Record<string, string> = {
     "dh": "demon-hunter",
     "demon-hunter": "demon-hunter",
     "necro": "necromancer",
@@ -47,7 +44,7 @@ export const acronymClassMap: Record<string, string> = {
     "crusader": "crusader"
 };
 
-export const classImageMap: Record<string, string> = {
+export const classImages: Record<string, string> = {
     "barbarian-male": "https://files.catbox.moe/b2fa2v.png",
     "barbarian-female": "https://files.catbox.moe/7yjkuj.png",
     "demon-hunter-male": "https://files.catbox.moe/0jex4j.png",
@@ -64,7 +61,7 @@ export const classImageMap: Record<string, string> = {
     "necromancer-female": "https://files.catbox.moe/hkftps.png"
 };
 
-export const classColorMap: Record<string, number> = {
+export const classColors: Record<string, number> = {
     "demon-hunter": 0xa30090,
     "necromancer": 0x00d286,
     "monk": 0xf3e474,
@@ -72,6 +69,14 @@ export const classColorMap: Record<string, number> = {
     "witch-doctor": 0x07a630,
     "wizard": 0x0b3097,
     "crusader": 0xe0e0a6
+};
+
+export const defaultLocales: Record<string, string> = {
+    us: "en_US",
+    eu: "en_GB",
+    kr: "ko_KR",
+    tw: "zh_TW",
+    cn: "zh_CN"
 };
 
 /** Wait x amount of milliseconds */

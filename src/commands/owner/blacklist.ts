@@ -4,23 +4,17 @@ import settings from "../../settings";
 import Guilds from "../../models/Guild";
 import Configs from "../../models/Config";
 
-export default class LeaveCommand extends SlashCommand {
+export default class BlacklistCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
-            name: "leave",
-            description: "Make the bot leave a guild",
+            name: "blacklist",
+            description: "Backlist guild from inviting the bot",
             guildIDs: settings.devGuildID,
             options: [
                 {
                     type: CommandOptionType.NUMBER,
                     name: "id",
                     description: "Guild ID",
-                    required: true
-                },
-                {
-                    type: CommandOptionType.BOOLEAN,
-                    name: "blacklist",
-                    description: "Add guild id to blacklist",
                     required: true
                 }
             ]
@@ -32,17 +26,15 @@ export default class LeaveCommand extends SlashCommand {
     }
 
     async run(ctx: CommandContext): Promise<void> {
+        // Unlike leave, here we blacklist regardless of finding the guild
+        await Configs.findOneAndUpdate({ name: "blacklist" }, { $push: { guilds: ctx.options.id } }, { new: true }).exec();
+
         const client = this.creator.client as Lilith;
         const guild = client.guilds.get(ctx.options.id);
         if (guild) {
-            if (ctx.options.blacklist) {
-                await Configs.findOneAndUpdate({ name: "blacklist" }, { $push: { guilds: ctx.options.id } }, { new: true }).exec();
-            }
             await guild.leave();
             await Guilds.findOneAndDelete({ uid: ctx.options.id }).exec();
             await ctx.send(`Left guild **${guild.name}**`, { ephemeral: true });
-        } else {
-            await ctx.send(`Could not find guild with id **${ctx.options.id}**`, { ephemeral: true });
         }
     }
 }

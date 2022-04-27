@@ -5,7 +5,7 @@ import Account from "../types/diablo/Account";
 import Hero from "../types/diablo/Hero";
 import Logger from "./Logger";
 import { Auth, AuthResponse } from "../types/diablo/Auth";
-import { getDBUser, baseUrl, defaultLocaleMap } from "./Helpers";
+import { getDBUser, baseUrl, defaultLocales } from "./Helpers";
 
 class Diablo {
     timeout = 60 * 1000; // Check every minute
@@ -117,7 +117,7 @@ class Diablo {
 
         const { data } = await axios.get<Account>(`${apiUrl}/d3/profile/${encodeURIComponent(battleTag)}/`, {
             params: {
-                locale: defaultLocaleMap[region],
+                locale: defaultLocales[region],
                 access_token: this.auth.access_token
             },
             headers: {
@@ -174,7 +174,7 @@ class Diablo {
 
         const { data } = await axios.get<Hero>(`${apiUrl}/d3/profile/${encodeURIComponent(battleTag)}/hero/${heroID}`, {
             params: {
-                locale: defaultLocaleMap[region],
+                locale: defaultLocales[region],
                 access_token: this.auth.access_token
             },
             headers: {

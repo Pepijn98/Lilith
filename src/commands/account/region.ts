@@ -1,5 +1,5 @@
 import { SlashCommand, SlashCreator, CommandContext, CommandOptionType, AutocompleteContext, AutocompleteChoice } from "slash-create";
-import { getDBUser } from "../../utils/Helpers";
+import { getDBUser, defaultLocales } from "../../utils/Helpers";
 
 const regions: AutocompleteChoice[] = [
     {
@@ -23,14 +23,6 @@ const regions: AutocompleteChoice[] = [
         value: "cn"
     }
 ];
-
-const defaultLocales: Record<string, string> = {
-    us: "en_US",
-    eu: "en_GB",
-    kr: "ko_KR",
-    tw: "zh_TW",
-    cn: "zh_CN"
-};
 
 export default class RegionCommand extends SlashCommand {
     constructor(creator: SlashCreator) {

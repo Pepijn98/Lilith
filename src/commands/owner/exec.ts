@@ -1,12 +1,21 @@
-import { SlashCommand, SlashCreator, CommandContext } from "slash-create";
 import settings from "../../settings";
+import { exec } from "child_process";
+import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from "slash-create";
 
 export default class ExecCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "exec",
-            description: "Something about this command",
-            guildIDs: settings.devGuildID
+            description: "Execute shell commands",
+            guildIDs: settings.devGuildID,
+            options: [
+                {
+                    type: CommandOptionType.STRING,
+                    name: "command",
+                    description: "Command to execute",
+                    required: true
+                }
+            ]
         });
     }
 
@@ -14,8 +23,21 @@ export default class ExecCommand extends SlashCommand {
         return ctx.user.id === settings.owner;
     }
 
-    async run(ctx: CommandContext): Promise<string> {
+    async run(ctx: CommandContext): Promise<void> {
         await ctx.defer();
-        return "Not implemented yet";
+
+        exec(ctx.options.command, { maxBuffer: Infinity }, async (error, stdout, stderr) => {
+            try {
+                if (error) {
+                    await ctx.send(`\`\`\`fix\n${error}\n\`\`\``);
+                } else if (stderr) {
+                    await ctx.send(`\`\`\`fix\n${stderr}\n\`\`\``);
+                } else {
+                    await ctx.send(`\`\`\`fix\n${stdout}\n\`\`\``);
+                }
+            } catch (e) {
+                await ctx.send(`\`\`\`fix\n${e instanceof Error ? e.stack ? e.stack : e.message : e}\n\`\`\``);
+            }
+        });
     }
 }
