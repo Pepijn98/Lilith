@@ -5,6 +5,7 @@
         "module": "commonjs",
         "outDir": "dist",
         "strict": false,
+        "allowJs": true,
         "esModuleInterop": true,
         "noImplicitAny": true,
         "moduleResolution": "node",
@@ -15,12 +16,7 @@
         "declaration": false,
         "removeComments": true,
         "allowSyntheticDefaultImports": true,
-        "typeRoots": ["./node_modules/@types", "@types"],
-        "paths": {
-            "*": ["node_modules/*"],
-            "~/*": ["src/*"],
-            "@/*": ["*"]
-        }
+        "typeRoots": ["./node_modules/@types", "@types"]
     },
     "include": ["./src/**/*"],
     "exclude": ["node_modules", "dist", "testing"]

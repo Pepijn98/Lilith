@@ -1,7 +1,7 @@
 import axios from "axios";
 import chalk from "chalk";
 import moment from "moment";
-import settings from "~/settings";
+import settings from "../settings";
 import Lilith from "./Lilith";
 import { Logger as WinstonLogger, createLogger, format, transports } from "winston";
 

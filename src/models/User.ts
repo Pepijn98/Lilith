@@ -1,4 +1,4 @@
-import User from "~/types/db/User";
+import User from "../types/db/User";
 import { Document, Schema, Model, model } from "mongoose";
 
 export interface UserModel extends User, Document {}

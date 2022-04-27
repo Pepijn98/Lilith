@@ -1,6 +1,6 @@
-import Event from "~/types/Event";
-import Lilith from "~/utils/Lilith";
-import Guilds from "~/models/Guild";
+import Event from "../types/Event";
+import Lilith from "../utils/Lilith";
+import Guilds from "../models/Guild";
 import { Guild } from "eris";
 
 export default class implements Event {

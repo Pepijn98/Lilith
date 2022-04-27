@@ -1,16 +1,30 @@
 import axios from "axios";
-import settings from "~/settings";
+import settings from "../settings";
 import Yukikaze from "yukikaze";
 import Lilith from "./Lilith";
-import User from "~/types/db/User";
-import Users from "~/models/User";
-import { GuildChannel, Channel, PrivateChannel, Guild } from "eris";
-import { Population } from "~/types/General";
-import { AutocompleteChoice } from "slash-create";
+import { Users, UserModel } from "../models/User";
+import { GuildChannel, Channel, PrivateChannel, Guild, DiscordHTTPError, DiscordRESTError } from "eris";
+import { Population } from "../types/General";
+import { AnyComponent, ComponentActionRow, ComponentType } from "slash-create";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 
-export const classes = ["dh", "demon-hunter", "necro", "necromancer", "monk", "barb", "barbarian", "wd", "witch-doctor", "wiz", "wizard", "cru", "sader", "crusader"];
+export const classes = [
+    "dh",
+    "demon-hunter",
+    "necro",
+    "necromancer",
+    "monk",
+    "barb",
+    "barbarian",
+    "wd",
+    "witch-doctor",
+    "wiz",
+    "wizard",
+    "cru",
+    "sader",
+    "crusader"
+];
 
 // export const regions = ["us", "eu", "kr", "tw", "cn"];
 
@@ -60,105 +74,17 @@ export const classColorMap: Record<string, number> = {
     "crusader": 0xe0e0a6
 };
 
-export const regions: AutocompleteChoice[] = [
-    {
-        name: "United States",
-        value: "us"
-    },
-    {
-        name: "Europe",
-        value: "eu"
-    },
-    {
-        name: "Korea",
-        value: "kr"
-    },
-    {
-        name: "Taiwan",
-        value: "tw"
-    },
-    {
-        name: "China",
-        value: "cn"
-    }
-];
-
-export const localeMap: Record<string, AutocompleteChoice[]> = {
-    us: [
-        {
-            name: "	English (United States)",
-            value: "en_US"
-        },
-        {
-            name: "Spanish (Mexico)",
-            value: "es_MX"
-        },
-        {
-            name: "Portuguese (Brazil)",
-            value: "pt_BR"
-        }
-    ],
-    eu: [
-        {
-            name: "English (United Kingdom)",
-            value: "en_GB"
-        },
-        {
-            name: "Spanish",
-            value: "es_ES"
-        },
-        {
-            name: "French",
-            value: "fr_FR"
-        },
-        {
-            name: "Russian",
-            value: "ru_RU"
-        },
-        {
-            name: "German",
-            value: "de_DE"
-        },
-        {
-            name: "Portuguese",
-            value: "pt_PT"
-        },
-        {
-            name: "Italian",
-            value: "it_IT"
-        }
-    ],
-    kr: [
-        {
-            name: "Korean (South Korea)",
-            value: "ko_KR"
-        }
-    ],
-    tw: [
-        {
-            name: "Chinese (Taiwan)",
-            value: "zh_TW"
-        }
-    ],
-    cn: [
-        {
-            name: "Chinese",
-            value: "zh_CN"
-        }
-    ]
-};
-
-export const defaultLocaleMap: Record<string, string> = {
-    us: "en_US",
-    eu: "en_GB",
-    kr: "ko_KR",
-    tw: "zh_TW",
-    cn: "zh_CN"
-};
-
 /** Wait x amount of milliseconds */
 export function sleep(ms: number): Promise<unknown> {
     return new Promise((r) => setTimeout(r, ms, null));
+}
+
+export function isActionRow(component: AnyComponent): component is ComponentActionRow {
+    return component.type === ComponentType.ACTION_ROW;
+}
+
+export function isDiscordError(error: Error): error is DiscordHTTPError | DiscordRESTError {
+    return error instanceof DiscordHTTPError || error instanceof DiscordRESTError;
 }
 
 /** Check whether channel is guild channel */
@@ -191,11 +117,15 @@ export function round(value: number, precision = 0): number {
     return Math.round(value * multiplier) / multiplier;
 }
 
-export async function getDBUser(id: string): Promise<User | null> {
+export async function getDBUser(id: string): Promise<UserModel | null> {
     return await Users.findOne({ uid: id }).exec();
 }
 
 async function topgg(client: Lilith): Promise<void> {
+    if (settings.debug) {
+        return;
+    }
+
     try {
         await axios.post(
             `https://top.gg/api/bots/${client.user.id}/stats`,
@@ -216,15 +146,23 @@ async function topgg(client: Lilith): Promise<void> {
 
 // Not yet approved
 // async function botsondiscord(client: Lilith): Promise<void> {
+//     if (settings.debug) {
+//         return;
+//     }
+
 //     try {
-//         await axios.post(`https://bots.ondiscord.xyz/bot-api/bots/${client.user.id}/guilds`, {
-//             guildCount: client.guilds.size
-//         }, {
-//             headers: {
-//                 Authorization: settings.botLists.bod,
-//                 "Content-Type": "application/json"
+//         await axios.post(
+//             `https://bots.ondiscord.xyz/bot-api/bots/${client.user.id}/guilds`,
+//             {
+//                 guildCount: client.guilds.size
+//             },
+//             {
+//                 headers: {
+//                     "Authorization": settings.botLists.bod,
+//                     "Content-Type": "application/json"
+//                 }
 //             }
-//         });
+//         );
 //     } catch (e) {
 //         client.logger.error("BOD", "Failed sending guild count to bots.ondiscord.xyz");
 //     }

@@ -1,11 +1,12 @@
 import "./utils/Extensions";
+
 import path from "path";
 import settings from "./settings";
 import Lilith from "./utils/Lilith";
 import EventLoader from "./utils/EventLoader";
 import { Constants } from "eris";
 import { SlashCreator, GatewayServer } from "slash-create";
-import { postGuildCount } from "./utils/Helpers";
+import { isDiscordError, postGuildCount } from "./utils/Helpers";
 
 let botReady = false;
 
@@ -30,7 +31,7 @@ creator.on("debug", (message) => client.logger.info("SLASH:DEBUG", message));
 creator.on("warn", (message) => client.logger.warn("SLASH:WARN", message));
 creator.on("error", (error) => client.logger.error("SLASH:ERROR", error));
 creator.on("synced", () => client.logger.info("SLASH:SYNC", "Commands synced!"));
-creator.on("commandRun", (command, _, ctx) => client.logger.info("SLASH:CMD", `${ctx.user.username}#${ctx.user.discriminator} (${ctx.user.id}) ran command ${command.commandName}`));
+creator.on("commandRun", (command, _, ctx) => client.logger.info("SLASH:CMD", `${ctx.user.tag} (${ctx.user.id}) ran command ${command.commandName}`));
 creator.on("commandRegister", (command) => client.logger.info(`CMD:${command.commandName.toUpperCase()}`, "Registered!"));
 creator.on("commandError", (command, error) => client.logger.error(`CMD:${command.commandName.toUpperCase()}`, error));
 
@@ -58,8 +59,8 @@ client.on("ready", async () => {
     }
 });
 
-client.on("error", (e: any) => {
-    if (e.code === 1001) {
+client.on("error", (e: Error) => {
+    if (isDiscordError(e) && e.code === 1001) {
         client.disconnect({ reconnect: true });
     } else {
         client.logger.error("ERROR", e);

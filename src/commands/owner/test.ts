@@ -1,4 +1,5 @@
 import { SlashCommand, SlashCreator, CommandContext, ComponentType, Message, MessageOptions, ComponentSelectMenu, ComponentSelectOption } from "slash-create";
+import settings from "../../settings";
 
 export default class RegionCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -6,6 +7,10 @@ export default class RegionCommand extends SlashCommand {
             name: "test",
             description: "Just a test"
         });
+    }
+
+    hasPermission(ctx: CommandContext): string | boolean {
+        return ctx.user.id === settings.owner;
     }
 
     async run(ctx: CommandContext): Promise<void> {

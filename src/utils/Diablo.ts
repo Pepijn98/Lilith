@@ -1,10 +1,10 @@
 import axios from "axios";
-import settings from "~/settings";
+import settings from "../settings";
 import Interval from "yukikaze";
-import Account from "~/types/diablo/Account";
-import Hero from "~/types/diablo/Hero";
+import Account from "../types/diablo/Account";
+import Hero from "../types/diablo/Hero";
 import Logger from "./Logger";
-import { Auth, AuthResponse } from "~/types/diablo/Auth";
+import { Auth, AuthResponse } from "../types/diablo/Auth";
 import { getDBUser, baseUrl, defaultLocaleMap } from "./Helpers";
 
 class Diablo {

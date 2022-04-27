@@ -1,5 +1,5 @@
 import { SlashCommand, SlashCreator, CommandContext } from "slash-create";
-import settings from "~/settings";
+import settings from "../../settings";
 
 export default class SysinfoCommand extends SlashCommand {
     constructor(creator: SlashCreator) {

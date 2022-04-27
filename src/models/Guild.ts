@@ -1,4 +1,4 @@
-import Guild from "~/types/db/Guild";
+import Guild from "../types/db/Guild";
 import { Document, Schema, Model, model } from "mongoose";
 
 export interface GuildModel extends Guild, Document {}
