@@ -1,6 +1,6 @@
 // TODO : Use for logging (maybe)
 
-import { CommandContext, MessageOptions, Message } from "slash-create";
+import { CommandContext, Message, MessageOptions } from "slash-create";
 
 type Colors = {
     default: number;

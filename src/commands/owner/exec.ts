@@ -1,6 +1,6 @@
 import settings from "../../settings";
 import { exec } from "child_process";
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from "slash-create";
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 
 export default class ExecCommand extends SlashCommand {
     constructor(creator: SlashCreator) {

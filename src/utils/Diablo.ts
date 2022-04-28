@@ -5,7 +5,7 @@ import Account from "../types/diablo/Account";
 import Hero from "../types/diablo/Hero";
 import Logger from "./Logger";
 import { Auth, AuthResponse } from "../types/diablo/Auth";
-import { getDBUser, baseUrl, defaultLocales } from "./Helpers";
+import { baseUrl, defaultLocales, getDBUser } from "./Helpers";
 
 class Diablo {
     timeout = 60 * 1000; // Check every minute

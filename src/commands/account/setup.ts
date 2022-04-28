@@ -2,7 +2,7 @@ import Users from "../../models/User";
 import Lilith from "../../utils/Lilith";
 import { Embed } from "../../utils/Embed";
 import { getDBUser, rbattleTag } from "../../utils/Helpers";
-import { SlashCommand, SlashCreator, CommandContext, ComponentSelectOption, ComponentType, TextInputStyle } from "slash-create";
+import { CommandContext, ComponentSelectOption, ComponentType, SlashCommand, SlashCreator, TextInputStyle } from "slash-create";
 
 const regions: ComponentSelectOption[] = [
     {
@@ -159,7 +159,7 @@ export default class SetupCommand extends SlashCommand<Lilith> {
 
         const user = await getDBUser(ctx.user.id);
         if (user) {
-            return ctx.send("⚠️ Account already setup, use `/locale`, `/region` or `/tag` to modify your info.", { ephemeral: true });
+            return Embed.Warning(ctx, "⚠️ Account already setup, use `/locale`, `/region` or `/tag` to modify your info.", { ephemeral: true });
         }
 
         let region = "";
@@ -188,7 +188,7 @@ export default class SetupCommand extends SlashCommand<Lilith> {
             "region",
             async (regionCtx) => {
                 if (ctx.user.id !== regionCtx.user.id) {
-                    return regionCtx.send("⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
+                    return Embed.Warning(ctx, "⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
                         ephemeral: true
                     });
                 }
@@ -224,7 +224,7 @@ export default class SetupCommand extends SlashCommand<Lilith> {
             "locale",
             async (localeCtx) => {
                 if (ctx.user.id !== localeCtx.user.id) {
-                    return localeCtx.send("⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
+                    return Embed.Warning(ctx, "⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
                         ephemeral: true
                     });
                 }
@@ -275,7 +275,7 @@ export default class SetupCommand extends SlashCommand<Lilith> {
             },
             1000 * 60,
             async () => {
-                await ctx.send("ℹ️ You took too long to answer, command has expired.", { ephemeral: true });
+                await Embed.Info(ctx, "ℹ️ You took too long to answer, command has expired.", { ephemeral: true });
                 await ctx.delete();
             }
         );

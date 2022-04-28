@@ -1,7 +1,8 @@
+import { Embed } from "../../utils/Embed";
 import Lilith from "../../utils/Lilith";
 import settings from "../../settings";
-import { Embed } from "../../utils/Embed";
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from "slash-create";
+
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 
 export default class TokenCommand extends SlashCommand {
     constructor(creator: SlashCreator) {

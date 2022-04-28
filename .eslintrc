@@ -48,7 +48,17 @@
         ],
         "semi": ["error", "always"],
         "semi-spacing": "error",
-        "semi-style": ["error", "last"]
+        "semi-style": ["error", "last"],
+        "sort-imports": [
+            "error",
+            {
+                "ignoreCase": false,
+                "ignoreDeclarationSort": false,
+                "ignoreMemberSort": false,
+                "memberSyntaxSortOrder": ["none", "all", "single", "multiple"],
+                "allowSeparatedGroups": false
+            }
+        ]
     },
     "overrides": [
         {

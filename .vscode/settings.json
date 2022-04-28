@@ -1,6 +1,14 @@
 {
     "deepscan.enable": true,
     "typescript.tsdk": "node_modules/typescript/lib",
+    "eslint.enable": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.validate": [
+        "javascript",
+        "typescript"
+    ],
     "files.associations": {
         ".babelrc": "jsonc",
         ".eslintrc": "jsonc",

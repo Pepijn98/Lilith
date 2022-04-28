@@ -1,5 +1,5 @@
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType, AutocompleteContext, AutocompleteChoice } from "slash-create";
-import { getDBUser, defaultLocales } from "../../utils/Helpers";
+import { AutocompleteChoice, AutocompleteContext, CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
+import { defaultLocales, getDBUser } from "../../utils/Helpers";
 
 const regions: AutocompleteChoice[] = [
     {

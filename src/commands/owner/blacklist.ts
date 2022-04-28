@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from "slash-create";
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import Lilith from "../../utils/Lilith";
 import settings from "../../settings";
 import Guilds from "../../models/Guild";

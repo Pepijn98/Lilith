@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext } from "slash-create";
+import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
 import { getDBUser } from "../../utils/Helpers";
 
 export default class DeleteCommand extends SlashCommand {

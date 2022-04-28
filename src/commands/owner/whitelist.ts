@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from "slash-create";
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import settings from "../../settings";
 import Configs from "../../models/Config";
 

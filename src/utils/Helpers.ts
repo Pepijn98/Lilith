@@ -2,8 +2,8 @@ import axios from "axios";
 import settings from "../settings";
 import Yukikaze from "yukikaze";
 import Lilith from "./Lilith";
-import { Users, UserModel } from "../models/User";
-import { GuildChannel, Channel, PrivateChannel, Guild, DiscordHTTPError, DiscordRESTError } from "eris";
+import { UserModel, Users } from "../models/User";
+import { Channel, DiscordHTTPError, DiscordRESTError, Guild, GuildChannel, PrivateChannel } from "eris";
 import { Population } from "../types/General";
 import { AnyComponent, ComponentActionRow, ComponentType } from "slash-create";
 

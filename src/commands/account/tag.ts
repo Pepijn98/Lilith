@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from "slash-create";
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import { getDBUser, rbattleTag } from "../../utils/Helpers";
 
 export default class TagCommand extends SlashCommand {

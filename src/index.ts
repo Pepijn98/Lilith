@@ -5,7 +5,7 @@ import settings from "./settings";
 import Lilith from "./utils/Lilith";
 import EventLoader from "./utils/EventLoader";
 import { Constants } from "eris";
-import { SlashCreator, GatewayServer } from "slash-create";
+import { GatewayServer, SlashCreator } from "slash-create";
 import { isDiscordError, postGuildCount } from "./utils/Helpers";
 
 let botReady = false;

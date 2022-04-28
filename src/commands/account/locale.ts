@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType, AutocompleteContext, AutocompleteChoice } from "slash-create";
+import { AutocompleteChoice, AutocompleteContext, CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import { getDBUser } from "../../utils/Helpers";
 
 const locales: Record<string, AutocompleteChoice[]> = {

@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext } from "slash-create";
+import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
 import settings from "../../settings";
 
 export default class SyncCommand extends SlashCommand {

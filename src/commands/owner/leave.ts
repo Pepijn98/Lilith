@@ -1,8 +1,9 @@
-import { SlashCommand, SlashCreator, CommandContext, CommandOptionType } from "slash-create";
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import Lilith from "../../utils/Lilith";
 import settings from "../../settings";
 import Guilds from "../../models/Guild";
 import Configs from "../../models/Config";
+import { Embed } from "src/utils/Embed";
 
 export default class LeaveCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -33,6 +34,8 @@ export default class LeaveCommand extends SlashCommand {
     }
 
     async run(ctx: CommandContext): Promise<void> {
+        ctx.defer();
+
         const client = this.creator.client as Lilith;
         const guild = client.guilds.get(ctx.options.id);
         if (guild) {
@@ -41,9 +44,9 @@ export default class LeaveCommand extends SlashCommand {
             }
             await guild.leave();
             await Guilds.findOneAndDelete({ uid: ctx.options.id }).exec();
-            await ctx.send(`Left guild **${guild.name}**`, { ephemeral: true });
+            await Embed.Success(ctx, `✅ Left guild **${guild.name}**`);
         } else {
-            await ctx.send(`Could not find guild with id **${ctx.options.id}**`, { ephemeral: true });
+            await Embed.Danger(ctx, `❌ Could not find guild with id **${ctx.options.id}**`);
         }
     }
 }

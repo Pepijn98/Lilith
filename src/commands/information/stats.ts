@@ -1,4 +1,4 @@
-import { SlashCommand, SlashCreator, CommandContext } from "slash-create";
+import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
 
 export default class StatsCommand extends SlashCommand {
     constructor(creator: SlashCreator) {

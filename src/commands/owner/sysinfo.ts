@@ -1,7 +1,7 @@
 import os from "os-utils";
 import settings from "../../settings";
-import { round, formatSeconds } from "../../utils/Helpers";
-import { SlashCommand, SlashCreator, CommandContext } from "slash-create";
+import { formatSeconds, round } from "../../utils/Helpers";
+import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
 
 export default class SysinfoCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
