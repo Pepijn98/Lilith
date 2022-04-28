@@ -255,7 +255,16 @@ export default class SetupCommand extends SlashCommand<Lilith> {
                         },
                         async (mctx) => {
                             if (!rbattleTag.test(mctx.values.battletag)) {
-                                localeCtx.editOriginal("❌ Invalid BattleTag (example: AbcXyz#12345).", { components: [] });
+                                localeCtx.editOriginal({
+                                    content: "",
+                                    components: [],
+                                    embeds: [
+                                        {
+                                            color: Embed.Colors.danger,
+                                            description: "❌ Invalid BattleTag (example: AbcXyz#12345)."
+                                        }
+                                    ]
+                                });
                                 ctx.unregisterComponent("locale");
                                 return;
                             }
@@ -263,10 +272,19 @@ export default class SetupCommand extends SlashCommand<Lilith> {
                             try {
                                 await mctx.acknowledge();
                                 await Users.create({ uid: ctx.user.id, region, locale, battleTag: mctx.values.battletag });
-                                await localeCtx.editOriginal("✅ Account created.", { components: [] });
+                                await localeCtx.editOriginal({
+                                    content: "",
+                                    components: [],
+                                    embeds: [
+                                        {
+                                            color: Embed.Colors.success,
+                                            description: "✅ Account created."
+                                        }
+                                    ]
+                                });
                             } catch (e) {
                                 this.client.logger.error("CMD:SETUP", e);
-                                Embed.Danger(ctx, "❌ Failed creating account.", { ephemeral: true });
+                                Embed.Danger(ctx, "❌ Failed creating account.");
                             }
                         }
                     );

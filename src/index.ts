@@ -64,6 +64,8 @@ client.on("error", (e: Error) => {
     if (isDiscordError(e) && e.code === 1001) {
         client.disconnect({ reconnect: true });
     } else {
+        // Don't care about this error
+        if (e.message.includes("(reading 'emit')")) return;
         client.logger.error("ERROR", e);
     }
 });
