@@ -1,5 +1,8 @@
-import { AutocompleteChoice, AutocompleteContext, CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
+import { Embed } from "../../utils/Embed";
+import Lilith from "../../utils/Lilith";
 import { getDBUser } from "../../utils/Helpers";
+
+import { AutocompleteChoice, AutocompleteContext, CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 
 const locales: Record<string, AutocompleteChoice[]> = {
     us: [
@@ -66,7 +69,7 @@ const locales: Record<string, AutocompleteChoice[]> = {
     ]
 };
 
-export default class LocaleCommand extends SlashCommand {
+export default class LocaleCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "locale",
@@ -93,23 +96,25 @@ export default class LocaleCommand extends SlashCommand {
         await ctx.sendResults(locales[user.region]);
     }
 
-    async run(ctx: CommandContext): Promise<string> {
+    async run(ctx: CommandContext): Promise<void> {
         await ctx.defer();
 
         const user = await getDBUser(ctx.user.id);
         if (!user) {
-            return "⚠️ Please use the `/setup` command before using any of the other Diablo related commands.";
+            Embed.Warning(ctx, "⚠️ Please use the `/setup` command before using any of the other Diablo related commands.");
+            return;
         }
 
         if (ctx.options.locale) {
             try {
                 await user.updateOne({ locale: ctx.options.locale }).exec();
-                return "✅ Success updating locale.";
+                Embed.Success(ctx, "✅ Success updating locale.");
             } catch (e) {
-                return "❌ Failed updating locale.";
+                Embed.Danger(ctx, "❌ Failed updating locale.");
+                return;
             }
         } else {
-            return `ℹ️ Your current locale is: \`${user.locale}\`.`;
+            Embed.Info(ctx, `ℹ️ Your current locale is: \`${user.locale}\`.`);
         }
     }
 }

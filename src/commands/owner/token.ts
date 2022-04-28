@@ -4,7 +4,7 @@ import settings from "../../settings";
 
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 
-export default class TokenCommand extends SlashCommand {
+export default class TokenCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "token",
@@ -28,12 +28,11 @@ export default class TokenCommand extends SlashCommand {
     async run(ctx: CommandContext): Promise<void> {
         switch (ctx.subcommands[0]) {
             case "update":
-                const client = this.creator.client as Lilith;
                 try {
-                    await client.diablo.updateToken();
+                    await this.client.diablo.updateToken();
                     await Embed.Success(ctx, "✅ Successfully updated token!");
                 } catch (e) {
-                    client.logger.error("TOKEN", e);
+                    this.client.logger.error("TOKEN", e);
                     await Embed.Danger(ctx, "❌ Failed to update token");
                 }
                 break;

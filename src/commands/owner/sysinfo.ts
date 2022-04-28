@@ -1,9 +1,11 @@
+import Lilith from "../../utils/Lilith";
 import os from "os-utils";
 import settings from "../../settings";
-import { formatSeconds, round } from "../../utils/Helpers";
-import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
 
-export default class SysinfoCommand extends SlashCommand {
+import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
+import { formatSeconds, round } from "../../utils/Helpers";
+
+export default class SysinfoCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "sysinfo",

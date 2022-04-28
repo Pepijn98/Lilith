@@ -1,8 +1,9 @@
+import Lilith from "./Lilith";
 import axios from "axios";
 import chalk from "chalk";
 import moment from "moment";
 import settings from "../settings";
-import Lilith from "./Lilith";
+
 import { Logger as WinstonLogger, createLogger, format, transports } from "winston";
 
 /** Custom logger, you know, this logs stuff to the terminal with pretty colors and timestamps :O */

@@ -1,3 +1,6 @@
+import { Embed } from "../../utils/Embed";
+import Lilith from "../../utils/Lilith";
+
 import { AutocompleteChoice, AutocompleteContext, CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import { defaultLocales, getDBUser } from "../../utils/Helpers";
 
@@ -24,7 +27,7 @@ const regions: AutocompleteChoice[] = [
     }
 ];
 
-export default class RegionCommand extends SlashCommand {
+export default class RegionCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "region",
@@ -49,19 +52,21 @@ export default class RegionCommand extends SlashCommand {
 
         const user = await getDBUser(ctx.user.id);
         if (!user) {
-            return "⚠️ Please use the `/setup` command before using any of the other Diablo related commands.";
+            Embed.Warning(ctx, "⚠️ Please use the `/setup` command before using any of the other Diablo related commands.");
+            return;
         }
 
         if (ctx.options.region) {
             try {
                 const defaultLocale = defaultLocales[ctx.options.region];
                 await user.updateOne({ region: ctx.options.region, locale: defaultLocale }).exec();
-                return `✅ Success updating region.\nℹ️ Because you changed region, the locale changed to the default \`${defaultLocale}\`.`;
+                await Embed.Success(ctx, `✅ Success updating region.\nℹ️ Because you changed region, the locale changed to the default \`${defaultLocale}\`.`);
             } catch (e) {
-                return "❌ Failed updating region.";
+                await Embed.Danger(ctx, "❌ Failed updating region.");
+                return;
             }
         } else {
-            return `ℹ️ Your current region is: \`${user.region}\`.`;
+            await Embed.Info(ctx, `ℹ️ Your current region is: \`${user.region}\`.`);
         }
     }
 }

@@ -1,8 +1,9 @@
-import Users from "../../models/User";
-import Lilith from "../../utils/Lilith";
 import { Embed } from "../../utils/Embed";
-import { getDBUser, rbattleTag } from "../../utils/Helpers";
+import Lilith from "../../utils/Lilith";
+import Users from "../../models/User";
+
 import { CommandContext, ComponentSelectOption, ComponentType, SlashCommand, SlashCreator, TextInputStyle } from "slash-create";
+import { getDBUser, rbattleTag } from "../../utils/Helpers";
 
 const regions: ComponentSelectOption[] = [
     {

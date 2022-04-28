@@ -1,4 +1,5 @@
 import Config from "../types/db/Config";
+
 import { Document, Model, Schema, model } from "mongoose";
 
 export interface ConfigModel extends Config, Document {}

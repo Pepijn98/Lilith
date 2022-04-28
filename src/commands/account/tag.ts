@@ -1,7 +1,10 @@
+import { Embed } from "../../utils/Embed";
+import Lilith from "../../utils/Lilith";
+
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import { getDBUser, rbattleTag } from "../../utils/Helpers";
 
-export default class TagCommand extends SlashCommand {
+export default class TagCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "tag",
@@ -16,27 +19,30 @@ export default class TagCommand extends SlashCommand {
         });
     }
 
-    async run(ctx: CommandContext): Promise<string> {
+    async run(ctx: CommandContext): Promise<void> {
         await ctx.defer();
 
         const user = await getDBUser(ctx.user.id);
         if (!user) {
-            return "⚠️ Please use the `/setup` command before using any of the other Diablo related commands.";
+            await Embed.Warning(ctx, "⚠️ Please use the `/setup` command before using any of the other Diablo related commands.");
+            return;
         }
 
         if (ctx.options.battletag) {
             if (!rbattleTag.test(ctx.options.battletag)) {
-                return "❌ Invalid BattleTag (example: abcxyz#12345).";
+                await Embed.Danger(ctx, "❌ Invalid BattleTag (example: AbcXyz#12345).");
+                return;
             }
 
             try {
                 await user.updateOne({ battleTag: ctx.options.battletag }).exec();
-                return "✅ Success updating your BattleTag.";
+                await Embed.Success(ctx, "✅ Success updating your BattleTag.");
             } catch (e) {
-                return "❌ Failed updating your BattleTag.";
+                await Embed.Danger(ctx, "❌ Failed updating your BattleTag.");
+                return;
             }
         } else {
-            return `ℹ️ Your current BattleTag is: \`${user.battleTag}\`.`;
+            await Embed.Info(ctx, `ℹ️ Your current BattleTag is: \`${user.battleTag}\`.`);
         }
     }
 }

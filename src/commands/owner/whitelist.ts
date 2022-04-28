@@ -1,8 +1,10 @@
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
-import settings from "../../settings";
 import Configs from "../../models/Config";
+import Lilith from "../../utils/Lilith";
+import settings from "../../settings";
 
-export default class WhitelistCommand extends SlashCommand {
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
+
+export default class WhitelistCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "whitelist",

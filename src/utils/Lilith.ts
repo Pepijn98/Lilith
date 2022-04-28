@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
-import settings from "../settings";
 import Diablo from "../utils/Diablo";
 import Logger from "../utils/Logger";
+import mongoose from "mongoose";
+import settings from "../settings";
+
 import { Client, ClientOptions } from "eris";
 
 export default class Lilith extends Client {

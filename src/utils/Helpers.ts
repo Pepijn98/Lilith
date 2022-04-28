@@ -1,11 +1,12 @@
+import Lilith from "./Lilith";
+import { Population } from "../types/General";
+import Yukikaze from "yukikaze";
 import axios from "axios";
 import settings from "../settings";
-import Yukikaze from "yukikaze";
-import Lilith from "./Lilith";
-import { UserModel, Users } from "../models/User";
-import { Channel, DiscordHTTPError, DiscordRESTError, Guild, GuildChannel, PrivateChannel } from "eris";
-import { Population } from "../types/General";
+
 import { AnyComponent, ComponentActionRow, ComponentType } from "slash-create";
+import { Channel, DiscordHTTPError, DiscordRESTError, Guild, GuildChannel, PrivateChannel } from "eris";
+import { UserModel, Users } from "../models/User";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 export const rbattleTag = /^\w+#\d+$/iu;

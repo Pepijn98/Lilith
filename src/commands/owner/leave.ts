@@ -1,11 +1,12 @@
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
+import Configs from "../../models/Config";
+import { Embed } from "../../utils/Embed";
+import Guilds from "../../models/Guild";
 import Lilith from "../../utils/Lilith";
 import settings from "../../settings";
-import Guilds from "../../models/Guild";
-import Configs from "../../models/Config";
-import { Embed } from "src/utils/Embed";
 
-export default class LeaveCommand extends SlashCommand {
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
+
+export default class LeaveCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "leave",
@@ -36,8 +37,7 @@ export default class LeaveCommand extends SlashCommand {
     async run(ctx: CommandContext): Promise<void> {
         ctx.defer();
 
-        const client = this.creator.client as Lilith;
-        const guild = client.guilds.get(ctx.options.id);
+        const guild = this.client.guilds.get(ctx.options.id);
         if (guild) {
             if (ctx.options.blacklist) {
                 await Configs.findOneAndUpdate({ name: "blacklist" }, { $push: { guilds: ctx.options.id } }, { new: true }).exec();

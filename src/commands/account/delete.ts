@@ -1,7 +1,10 @@
-import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
+import { Embed } from "../../utils/Embed";
+import Lilith from "../../utils/Lilith";
 import { getDBUser } from "../../utils/Helpers";
 
-export default class DeleteCommand extends SlashCommand {
+import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
+
+export default class DeleteCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "delete",
@@ -9,15 +12,16 @@ export default class DeleteCommand extends SlashCommand {
         });
     }
 
-    async run(ctx: CommandContext): Promise<string> {
+    async run(ctx: CommandContext): Promise<void> {
         await ctx.defer();
 
         const user = await getDBUser(ctx.user.id);
         if (!user) {
-            return "⚠️ You do not have an account set up.";
+            Embed.Warning(ctx, "⚠️ You do not have an account set up.");
+            return;
         }
 
         await user.delete();
-        return "✅ Account info has been removed.";
+        Embed.Success(ctx, "✅ Account info has been removed.");
     }
 }

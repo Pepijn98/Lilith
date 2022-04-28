@@ -1,8 +1,10 @@
-import settings from "../../settings";
+import Lilith from "../../utils/Lilith";
 import { exec } from "child_process";
+import settings from "../../settings";
+
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 
-export default class ExecCommand extends SlashCommand {
+export default class ExecCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "exec",

@@ -1,7 +1,7 @@
 import Event from "../types/Event";
-import Lilith from "../utils/Lilith";
-import Guilds from "../models/Guild";
 import { Guild } from "eris";
+import Guilds from "../models/Guild";
+import Lilith from "../utils/Lilith";
 
 export default class implements Event {
     name = "guildDelete";

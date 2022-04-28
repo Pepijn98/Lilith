@@ -1,6 +1,6 @@
-import path from "path";
-import dotenv from "dotenv";
 import { Settings } from "./types/Settings";
+import dotenv from "dotenv";
+import path from "path";
 
 let dotenvPath = path.join(process.cwd(), ".env");
 if (path.parse(process.cwd()).name === "dist") {

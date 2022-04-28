@@ -1,7 +1,10 @@
-import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
+import { Embed } from "../../utils/Embed";
+import Lilith from "../../utils/Lilith";
 import settings from "../../settings";
 
-export default class SyncCommand extends SlashCommand {
+import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
+
+export default class SyncCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "sync",
@@ -15,7 +18,7 @@ export default class SyncCommand extends SlashCommand {
         return ctx.user.id === settings.owner;
     }
 
-    async run(ctx: CommandContext): Promise<string> {
+    async run(ctx: CommandContext): Promise<void> {
         await ctx.defer();
 
         try {
@@ -24,9 +27,9 @@ export default class SyncCommand extends SlashCommand {
                 syncGuilds: true,
                 syncPermissions: true
             });
-            return "✅ Success syncing commands.";
+            await Embed.Success(ctx, "✅ Success syncing commands.");
         } catch (e) {
-            return "❌ Failed syncing commands.";
+            await Embed.Danger(ctx, "❌ Failed syncing commands.");
         }
     }
 }

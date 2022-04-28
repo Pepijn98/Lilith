@@ -1,10 +1,11 @@
 import "./utils/Extensions";
 
+import { Constants } from "eris";
+import EventLoader from "./utils/EventLoader";
+import Lilith from "./utils/Lilith";
 import path from "path";
 import settings from "./settings";
-import Lilith from "./utils/Lilith";
-import EventLoader from "./utils/EventLoader";
-import { Constants } from "eris";
+
 import { GatewayServer, SlashCreator } from "slash-create";
 import { isDiscordError, postGuildCount } from "./utils/Helpers";
 

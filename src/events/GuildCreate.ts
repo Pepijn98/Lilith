@@ -1,9 +1,9 @@
-import Event from "../types/Event";
-import Lilith from "../utils/Lilith";
 import Configs from "../models/Config";
-import Guilds from "../models/Guild";
-import { checkPopulation } from "../utils/Helpers";
+import Event from "../types/Event";
 import { Guild } from "eris";
+import Guilds from "../models/Guild";
+import Lilith from "../utils/Lilith";
+import { checkPopulation } from "../utils/Helpers";
 
 export default class implements Event {
     name = "guildCreate";

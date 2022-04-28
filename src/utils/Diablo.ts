@@ -1,9 +1,10 @@
-import axios from "axios";
-import settings from "../settings";
-import Interval from "yukikaze";
 import Account from "../types/diablo/Account";
 import Hero from "../types/diablo/Hero";
+import Interval from "yukikaze";
 import Logger from "./Logger";
+import axios from "axios";
+import settings from "../settings";
+
 import { Auth, AuthResponse } from "../types/diablo/Auth";
 import { baseUrl, defaultLocales, getDBUser } from "./Helpers";
 

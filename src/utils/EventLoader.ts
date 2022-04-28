@@ -1,8 +1,8 @@
-import path from "path";
+import Event from "../types/Event";
 import Lilith from "./Lilith";
 import Logger from "../utils/Logger";
-import Event from "../types/Event";
 import { promises as fs } from "fs";
+import path from "path";
 
 export default class EventLoader {
     client: Lilith;
