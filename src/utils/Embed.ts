@@ -1,6 +1,6 @@
 // TODO : Use for logging (maybe)
 
-import { CommandContext, Message, MessageOptions } from "slash-create";
+import { CommandContext, ComponentContext, Message, MessageOptions } from "slash-create";
 
 type Colors = {
     default: number;
@@ -35,7 +35,7 @@ export class Embed {
         DANGER: 4
     };
 
-    private static Build(ctx: CommandContext, text: string, type: typeof Embed.Type[keyof Type], options: MessageOptions = {}): Promise<boolean | Message> {
+    private static Build(ctx: CommandContext | ComponentContext, text: string, type: typeof Embed.Type[keyof Type], options: MessageOptions = {}): Promise<boolean | Message> {
         let color: number;
         switch (type) {
             case Embed.Type.INFO:
@@ -68,23 +68,23 @@ export class Embed {
         return ctx.send(content);
     }
 
-    static Default(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+    static Default(ctx: CommandContext | ComponentContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
         return Embed.Build(ctx, text, Embed.Type.DEFAULT, options);
     }
 
-    static Info(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+    static Info(ctx: CommandContext | ComponentContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
         return Embed.Build(ctx, text, Embed.Type.INFO, options);
     }
 
-    static Success(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+    static Success(ctx: CommandContext | ComponentContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
         return Embed.Build(ctx, text, Embed.Type.SUCCESS, options);
     }
 
-    static Warning(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+    static Warning(ctx: CommandContext | ComponentContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
         return Embed.Build(ctx, text, Embed.Type.WARNING, options);
     }
 
-    static Danger(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+    static Danger(ctx: CommandContext | ComponentContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
         return Embed.Build(ctx, text, Embed.Type.DANGER, options);
     }
 }
