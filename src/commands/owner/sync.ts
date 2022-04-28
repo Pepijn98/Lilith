@@ -6,7 +6,8 @@ export default class SyncCommand extends SlashCommand {
         super(creator, {
             name: "sync",
             description: "Sync commands to discord",
-            guildIDs: settings.devGuildID
+            guildIDs: settings.devGuildID,
+            defaultPermission: false
         });
     }
 

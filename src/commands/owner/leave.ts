@@ -10,6 +10,7 @@ export default class LeaveCommand extends SlashCommand {
             name: "leave",
             description: "Make the bot leave a guild",
             guildIDs: settings.devGuildID,
+            defaultPermission: false,
             options: [
                 {
                     type: CommandOptionType.NUMBER,

@@ -8,6 +8,7 @@ export default class WhitelistCommand extends SlashCommand {
             name: "whitelist",
             description: "Whitelist guild from the user/bot ratio",
             guildIDs: settings.devGuildID,
+            defaultPermission: false,
             options: [
                 {
                     type: CommandOptionType.NUMBER,

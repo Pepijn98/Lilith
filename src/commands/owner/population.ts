@@ -6,7 +6,8 @@ export default class PopulationCommand extends SlashCommand {
         super(creator, {
             name: "population",
             description: "Something about this command",
-            guildIDs: settings.devGuildID
+            guildIDs: settings.devGuildID,
+            defaultPermission: false
         });
     }
 

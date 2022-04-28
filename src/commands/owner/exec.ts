@@ -8,6 +8,7 @@ export default class ExecCommand extends SlashCommand {
             name: "exec",
             description: "Execute shell commands",
             guildIDs: settings.devGuildID,
+            defaultPermission: false,
             options: [
                 {
                     type: CommandOptionType.STRING,

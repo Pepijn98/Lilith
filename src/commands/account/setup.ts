@@ -1,6 +1,8 @@
 import Users from "../../models/User";
+import Lilith from "../../utils/Lilith";
+import { Embed } from "../../utils/Embed";
 import { getDBUser, rbattleTag } from "../../utils/Helpers";
-import { SlashCommand, SlashCreator, CommandContext, ComponentSelectOption, ComponentType, CommandOptionType } from "slash-create";
+import { SlashCommand, SlashCreator, CommandContext, ComponentSelectOption, ComponentType, TextInputStyle } from "slash-create";
 
 const regions: ComponentSelectOption[] = [
     {
@@ -144,116 +146,138 @@ const locales: Record<string, ComponentSelectOption[]> = {
     ]
 };
 
-export default class SetupCommand extends SlashCommand {
+export default class SetupCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "setup",
-            description: "Setup your battle.net info",
-            options: [
-                {
-                    type: CommandOptionType.STRING,
-                    name: "battletag",
-                    description: "Your BattleTag (abcxyz#12345)",
-                    required: true
-                }
-            ]
+            description: "Setup your battle.net info"
         });
     }
 
-    async run(ctx: CommandContext): Promise<any> {
-        await ctx.defer();
+    async run(ctx: CommandContext): Promise<unknown> {
+        await ctx.defer(true);
 
-        if (ctx.options.battletag) {
-            if (!rbattleTag.test(ctx.options.battletag)) {
-                return "❌ Invalid BattleTag (example: abcxyz#12345).";
-            }
+        const user = await getDBUser(ctx.user.id);
+        if (user) {
+            return ctx.send("⚠️ Account already setup, use `/locale`, `/region` or `/tag` to modify your info.", { ephemeral: true });
+        }
 
-            let user = await getDBUser(ctx.user.id);
-            if (!user) {
-                user = await Users.create({ uid: ctx.user.id, region: "", locale: "", battleTag: ctx.options.battletag });
-            } else {
-                return "⚠️ Account already setup, use `/locale`, `/region` or `/tag` to modify your info.";
-            }
+        let region = "";
+        let locale = "";
 
-            await ctx.send("Select your region:", {
-                ephemeral: true,
-                components: [
-                    {
-                        type: ComponentType.ACTION_ROW,
+        await ctx.send("Select your region:", {
+            ephemeral: true,
+            components: [
+                {
+                    type: ComponentType.ACTION_ROW,
+                    components: [
+                        {
+                            type: ComponentType.SELECT,
+                            custom_id: "region",
+                            options: regions,
+                            min_values: 1,
+                            max_values: 1,
+                            placeholder: "Select a region"
+                        }
+                    ]
+                }
+            ]
+        });
+
+        ctx.registerComponent(
+            "region",
+            async (regionCtx) => {
+                if (ctx.user.id !== regionCtx.user.id) {
+                    return regionCtx.send("⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
+                        ephemeral: true
+                    });
+                }
+
+                if (regionCtx.values[0]) {
+                    region = regionCtx.values[0];
+
+                    regionCtx.editOriginal("Select your locale:", {
                         components: [
                             {
-                                type: ComponentType.SELECT,
-                                custom_id: "region",
-                                options: regions,
-                                min_values: 1,
-                                max_values: 1,
-                                placeholder: "Select a region"
+                                type: ComponentType.ACTION_ROW,
+                                components: [
+                                    {
+                                        type: ComponentType.SELECT,
+                                        custom_id: "locale",
+                                        options: locales[region],
+                                        min_values: 1,
+                                        max_values: 1,
+                                        placeholder: "Select a locale"
+                                    }
+                                ]
                             }
                         ]
-                    }
-                ]
-            });
+                    });
 
-            ctx.registerComponent(
-                "region",
-                async (regionCtx) => {
-                    if (ctx.user.id !== regionCtx.user.id) {
-                        return regionCtx.send("⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
-                            ephemeral: true
-                        });
-                    }
+                    ctx.unregisterComponent("region");
+                }
+            },
+            1000 * 60
+        );
 
-                    if (regionCtx.values[0]) {
-                        await user.updateOne({ region: regionCtx.values[0] }).exec();
+        ctx.registerComponent(
+            "locale",
+            async (localeCtx) => {
+                if (ctx.user.id !== localeCtx.user.id) {
+                    return localeCtx.send("⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
+                        ephemeral: true
+                    });
+                }
 
-                        regionCtx.editOriginal("Select your locale", {
+                if (localeCtx.values[0]) {
+                    locale = localeCtx.values[0];
+
+                    await localeCtx.sendModal(
+                        {
+                            title: "Enter your Blizzard BattleTag:",
                             components: [
                                 {
                                     type: ComponentType.ACTION_ROW,
                                     components: [
                                         {
-                                            type: ComponentType.SELECT,
-                                            custom_id: "locale",
-                                            options: locales[regionCtx.values[0]],
-                                            min_values: 1,
-                                            max_values: 1,
-                                            placeholder: "Select a locale"
+                                            type: ComponentType.TEXT_INPUT,
+                                            custom_id: "battletag",
+                                            label: "BattleTag",
+                                            style: TextInputStyle.SHORT,
+                                            min_length: 8,
+                                            required: true,
+                                            placeholder: "AbcXyz#12345"
                                         }
                                     ]
                                 }
                             ]
-                        });
+                        },
+                        async (mctx) => {
+                            if (!rbattleTag.test(mctx.values.battletag)) {
+                                localeCtx.editOriginal("❌ Invalid BattleTag (example: AbcXyz#12345).", { components: [] });
+                                ctx.unregisterComponent("locale");
+                                return;
+                            }
 
-                        ctx.unregisterComponent("region");
-                    }
-                },
-                15 * 1000,
-                () => ctx.unregisterComponent("region")
-            );
+                            try {
+                                await mctx.acknowledge();
+                                await Users.create({ uid: ctx.user.id, region, locale, battleTag: mctx.values.battletag });
+                                await localeCtx.editOriginal("✅ Account created.", { components: [] });
+                            } catch (e) {
+                                this.client.logger.error("CMD:SETUP", e);
+                                Embed.Danger(ctx, "❌ Failed creating account.", { ephemeral: true });
+                            }
+                        }
+                    );
 
-            ctx.registerComponent(
-                "locale",
-                async (localeCtx) => {
-                    if (ctx.user.id !== localeCtx.user.id) {
-                        return localeCtx.send("⚠️ This command was triggered by someone else, if you want to setup your account use `/setup` yourself.", {
-                            ephemeral: true
-                        });
-                    }
-
-                    if (localeCtx.values[0]) {
-                        await user.updateOne({ locale: localeCtx.values[0] }).exec();
-                        await localeCtx.editOriginal("✅ Account created.", { components: [] });
-                        ctx.unregisterComponent("locale");
-                    }
-                },
-                15 * 1000,
-                async () => {
                     ctx.unregisterComponent("locale");
-                    await user.delete();
-                    await ctx.send("ℹ️ You took too long to answer, command has expired.", { ephemeral: true });
-                    await ctx.delete();
                 }
-            );
-        }
+            },
+            1000 * 60,
+            async () => {
+                await ctx.send("ℹ️ You took too long to answer, command has expired.", { ephemeral: true });
+                await ctx.delete();
+            }
+        );
     }
 }

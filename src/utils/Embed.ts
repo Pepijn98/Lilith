@@ -1,6 +1,6 @@
 // TODO : Use for logging (maybe)
 
-import { Message } from "eris";
+import { CommandContext, MessageOptions, Message } from "slash-create";
 
 type Colors = {
     default: number;
@@ -35,7 +35,7 @@ export class Embed {
         DANGER: 4
     };
 
-    private static Build(msg: Message, text: string, type: typeof Embed.Type[keyof Type]): Promise<Message> {
+    private static Build(ctx: CommandContext, text: string, type: typeof Embed.Type[keyof Type], options: MessageOptions = {}): Promise<boolean | Message> {
         let color: number;
         switch (type) {
             case Embed.Type.INFO:
@@ -56,31 +56,35 @@ export class Embed {
                 break;
         }
 
-        return msg.channel.createMessage({
-            embed: {
-                color,
-                description: text
-            }
+        const content = Object.assign({}, options, {
+            embeds: [
+                {
+                    color,
+                    description: text
+                }
+            ]
         });
+
+        return ctx.send(content);
     }
 
-    static Default(msg: Message, text: string): Promise<Message> {
-        return Embed.Build(msg, text, Embed.Type.DEFAULT);
+    static Default(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+        return Embed.Build(ctx, text, Embed.Type.DEFAULT, options);
     }
 
-    static Info(msg: Message, text: string): Promise<Message> {
-        return Embed.Build(msg, text, Embed.Type.INFO);
+    static Info(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+        return Embed.Build(ctx, text, Embed.Type.INFO, options);
     }
 
-    static Success(msg: Message, text: string): Promise<Message> {
-        return Embed.Build(msg, text, Embed.Type.SUCCESS);
+    static Success(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+        return Embed.Build(ctx, text, Embed.Type.SUCCESS, options);
     }
 
-    static Warning(msg: Message, text: string): Promise<Message> {
-        return Embed.Build(msg, text, Embed.Type.WARNING);
+    static Warning(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+        return Embed.Build(ctx, text, Embed.Type.WARNING, options);
     }
 
-    static Danger(msg: Message, text: string): Promise<Message> {
-        return Embed.Build(msg, text, Embed.Type.DANGER);
+    static Danger(ctx: CommandContext, text: string, options: MessageOptions = {}): Promise<boolean | Message> {
+        return Embed.Build(ctx, text, Embed.Type.DANGER, options);
     }
 }

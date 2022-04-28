@@ -10,6 +10,7 @@ export default class BlacklistCommand extends SlashCommand {
             name: "blacklist",
             description: "Backlist guild from inviting the bot",
             guildIDs: settings.devGuildID,
+            defaultPermission: false,
             options: [
                 {
                     type: CommandOptionType.NUMBER,

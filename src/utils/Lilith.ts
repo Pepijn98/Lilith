@@ -18,10 +18,10 @@ export default class Lilith extends Client {
 
     async setup(): Promise<void> {
         try {
+            this.diablo = new Diablo(this.logger);
             await mongoose.connect(`mongodb+srv://${settings.database.user}:${settings.database.password}@${settings.database.host}/?retryWrites=true&w=majority`, {
                 dbName: settings.database.name,
             });
-            this.diablo = new Diablo(this.logger);
         } catch (e) {
             this.logger.error("SETUP", e);
         }
