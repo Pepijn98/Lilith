@@ -29,7 +29,6 @@
         "chalk": "4.1.2",
         "dotenv": "^16.0.0",
         "eris": "^0.16.1",
-        "erlpack": "abalabahaha/erlpack",
         "moment": "^2.29.3",
         "mongoose": "^6.3.1",
         "os-utils": "oscmejia/os-utils",
