@@ -11,6 +11,7 @@
     "scripts": {
         "sync": "slash-up sync",
         "sync:dev": "slash-up sync -e development",
+        "deploy": "pm2 start ecosystem.config.js --env production",
         "start": "cd dist && cross-env NODE_ENV=production node ./index.js",
         "test": "yarn clean:dist && yarn build && cd dist && cross-env NODE_ENV=development node ./index.js",
         "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts",
