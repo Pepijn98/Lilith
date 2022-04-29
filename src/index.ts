@@ -68,9 +68,9 @@ client.on("messageCreate", async (msg) => {
     if (msg.author.discriminator === "0000") return;
     if (msg.author.id === client.user.id) return;
 
-    if (msg.content.trim() === ";help" && (msg.channel as TextableChannel).createdAt) {
+    if (msg.content.trim() === ";help") {
         const channel = msg.channel as TextableChannel;
-        await channel.createMessage({
+        await channel?.createMessage({
             embed: {
                 title: "Lilith v2 is here!",
                 color: 0x413448,
@@ -78,9 +78,9 @@ client.on("messageCreate", async (msg) => {
                     url: client.user.dynamicAvatarURL()
                 },
                 description:
-                    "The most significant change is the migration to slash commands." +
-                    "Type `/` to see all available commands." +
-                    "If slash commands are not showing up, re-invite the bot." +
+                    "The most significant change is the migration to slash commands.\n" +
+                    "Type `/` to see all available commands.\n" +
+                    "If slash commands are not showing up, re-invite the bot.\n" +
                     "https://apps.vdbroek.dev/lilith/invite",
                 footer: {
                     text: "This command will stop working around the end of 2022"
