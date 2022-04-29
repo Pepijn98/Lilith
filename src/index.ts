@@ -17,7 +17,7 @@ const client = new Lilith(settings.token, {
     restMode: true,
     defaultImageFormat: "webp",
     defaultImageSize: 2048,
-    intents: Constants.Intents.guilds | Constants.Intents.guildEmojisAndStickers
+    intents: Constants.Intents.guilds | Constants.Intents.guildMessages | Constants.Intents.directMessages | Constants.Intents.guildEmojisAndStickers
 });
 
 const creator = new SlashCreator({
