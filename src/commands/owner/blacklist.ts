@@ -10,9 +10,12 @@ export default class BlacklistCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "blacklist",
-            description: "Backlist guild from inviting the bot",
+            description: "[Bot Owner Only] Backlist guild from inviting the bot",
             guildIDs: settings.devGuildID,
             defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.NUMBER,

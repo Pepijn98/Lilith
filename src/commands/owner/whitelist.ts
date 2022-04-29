@@ -8,9 +8,12 @@ export default class WhitelistCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "whitelist",
-            description: "Whitelist guild from the user/bot ratio",
+            description: "[Bot Owner Only] Whitelist guild from the user/bot ratio",
             guildIDs: settings.devGuildID,
             defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.NUMBER,

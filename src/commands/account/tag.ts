@@ -8,12 +8,15 @@ export default class TagCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "tag",
-            description: "Update your BattleTag (example: abcxyz#12345)",
+            description: "Update your BattleTag (example: AbcXyz#12345)",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.STRING,
                     name: "battletag",
-                    description: "Your BattleTag (abcxyz#12345)"
+                    description: "Your BattleTag (AbcXyz#12345)"
                 }
             ]
         });

@@ -10,9 +10,12 @@ export default class LeaveCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "leave",
-            description: "Make the bot leave a guild",
+            description: "[Bot Owner Only] Make the bot leave a guild",
             guildIDs: settings.devGuildID,
             defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.NUMBER,

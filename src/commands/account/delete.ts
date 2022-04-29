@@ -8,7 +8,10 @@ export default class DeleteCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "delete",
-            description: "Remove your account info"
+            description: "Remove your account info",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ]
         });
     }
 

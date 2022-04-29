@@ -7,6 +7,9 @@ export default class InviteCommand extends SlashCommand<Lilith> {
         super(creator, {
             name: "invite",
             description: "Create an invite url",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.NUMBER,

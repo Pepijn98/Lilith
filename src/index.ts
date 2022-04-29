@@ -14,6 +14,7 @@ let botReady = false;
 const client = new Lilith(settings.token, {
     autoreconnect: true,
     compress: true,
+    restMode: true,
     defaultImageFormat: "webp",
     defaultImageSize: 2048,
     intents: Constants.Intents.guilds | Constants.Intents.guildEmojisAndStickers

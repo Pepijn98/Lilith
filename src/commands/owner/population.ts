@@ -9,9 +9,12 @@ export default class PopulationCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "population",
-            description: "Check a guilds population, bot:user ratio",
+            description: "[Bot Owner Only] Check a guilds population, bot:user ratio",
             guildIDs: settings.devGuildID,
             defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.NUMBER,

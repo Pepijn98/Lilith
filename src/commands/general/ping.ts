@@ -6,7 +6,10 @@ export default class PingCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "ping",
-            description: "Pong"
+            description: "Pong",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ]
         });
     }
 

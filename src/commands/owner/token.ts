@@ -8,9 +8,12 @@ export default class TokenCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "token",
-            description: "Something about this command",
+            description: "[Bot Owner Only] Regenerate blizzard api token",
             guildIDs: settings.devGuildID,
             defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.SUB_COMMAND,

@@ -151,7 +151,10 @@ export default class SetupCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "setup",
-            description: "Setup your battle.net info"
+            description: "Setup your battle.net info",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
         });
     }
 

@@ -38,6 +38,9 @@ export default class HeroesCommand extends SlashCommand<Lilith> {
         super(creator, {
             name: "heroes",
             description: "Get a list of heroes",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.STRING,

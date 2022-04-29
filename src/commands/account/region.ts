@@ -32,6 +32,9 @@ export default class RegionCommand extends SlashCommand<Lilith> {
         super(creator, {
             name: "region",
             description: "Update your region",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.STRING,

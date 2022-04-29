@@ -8,9 +8,12 @@ export default class SyncCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "sync",
-            description: "Sync commands to discord",
+            description: "[Bot Owner Only] Sync commands to discord",
             guildIDs: settings.devGuildID,
-            defaultPermission: false
+            defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ]
         });
     }
 

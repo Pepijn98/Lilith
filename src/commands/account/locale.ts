@@ -74,6 +74,9 @@ export default class LocaleCommand extends SlashCommand<Lilith> {
         super(creator, {
             name: "locale",
             description: "Set locale for api response data from blizzard (does NOT change locale for the bot)",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.STRING,

@@ -39,6 +39,9 @@ export default class AccountCommand extends SlashCommand<Lilith> {
         super(creator, {
             name: "account",
             description: "Get details about your d3 account",
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.STRING,

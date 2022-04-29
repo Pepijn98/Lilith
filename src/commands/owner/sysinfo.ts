@@ -9,9 +9,12 @@ export default class SysinfoCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "sysinfo",
-            description: "Info about the system the bot runs on",
+            description: "[Bot Owner Only] Info about the system the bot runs on",
             guildIDs: settings.devGuildID,
-            defaultPermission: false
+            defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ]
         });
     }
 

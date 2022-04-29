@@ -8,9 +8,12 @@ export default class ExecCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "exec",
-            description: "Execute shell commands",
+            description: "[Bot Owner Only] Execute shell commands",
             guildIDs: settings.devGuildID,
             defaultPermission: false,
+            requiredPermissions: [
+                "SEND_MESSAGES"
+            ],
             options: [
                 {
                     type: CommandOptionType.STRING,
