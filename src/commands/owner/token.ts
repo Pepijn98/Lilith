@@ -1,4 +1,4 @@
-import { Embed } from "../../utils/Embed";
+import Embed from "../../utils/Embed";
 import Lilith from "../../utils/Lilith";
 import settings from "../../settings";
 

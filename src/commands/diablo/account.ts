@@ -1,10 +1,9 @@
 import Account from "../../types/diablo/Account";
-import { Embed } from "../../utils/Embed";
+import Embed from "../../utils/Embed";
 import Hero from "../../types/diablo/Hero";
 import Lilith from "../../utils/Lilith";
 
 import {
-    ApplicationCommandOptionChoice,
     ButtonStyle,
     CommandContext,
     CommandOptionType,
@@ -15,30 +14,7 @@ import {
     SlashCommand,
     SlashCreator
 } from "slash-create";
-import { classColors, classImages, rbattleTag, round } from "../../utils/Helpers";
-
-const regions: ApplicationCommandOptionChoice[] = [
-    {
-        name: "United States",
-        value: "us"
-    },
-    {
-        name: "Europe",
-        value: "eu"
-    },
-    {
-        name: "Korea",
-        value: "kr"
-    },
-    {
-        name: "Taiwan",
-        value: "tw"
-    },
-    {
-        name: "China",
-        value: "cn"
-    }
-];
+import { classColors, classImages, rbattleTag, regionChoices, round } from "../../utils/Helpers";
 
 function updateButtonState(button: ComponentButton, page: number, lastPage: number): void {
     if (button.custom_id === "previous" || button.custom_id === "first") {
@@ -68,7 +44,7 @@ export default class AccountCommand extends SlashCommand<Lilith> {
                     type: CommandOptionType.STRING,
                     name: "region",
                     description: "The region of your account",
-                    choices: regions
+                    choices: regionChoices
                 },
                 {
                     type: CommandOptionType.STRING,
@@ -81,6 +57,11 @@ export default class AccountCommand extends SlashCommand<Lilith> {
 
     async run(ctx: CommandContext): Promise<void> {
         await ctx.defer();
+
+        if ((!ctx.options.region && ctx.options.battletag) || (ctx.options.region && !ctx.options.battletag)) {
+            await Embed.Danger(ctx, "❌ Region and BattleTag have to be used together.");
+            return;
+        }
 
         let page = 0;
 

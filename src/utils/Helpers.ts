@@ -4,46 +4,12 @@ import Yukikaze from "yukikaze";
 import axios from "axios";
 import settings from "../settings";
 
-import { AnyComponent, ComponentActionRow, ComponentType } from "slash-create";
+import { AnyComponent, ApplicationCommandOptionChoice, ComponentActionRow, ComponentType } from "slash-create";
 import { Channel, DiscordHTTPError, DiscordRESTError, Guild, GuildChannel, PrivateChannel } from "eris";
 import { UserModel, Users } from "../models/User";
 
 export const baseUrl = "https://{REGION}.api.blizzard.com";
 export const rbattleTag = /^\w+#\d+$/iu;
-
-export const classes = [
-    "dh",
-    "demon-hunter",
-    "necro",
-    "necromancer",
-    "monk",
-    "barb",
-    "barbarian",
-    "wd",
-    "witch-doctor",
-    "wiz",
-    "wizard",
-    "cru",
-    "sader",
-    "crusader"
-];
-
-export const acronymClass: Record<string, string> = {
-    "dh": "demon-hunter",
-    "demon-hunter": "demon-hunter",
-    "necro": "necromancer",
-    "necromancer": "necromancer",
-    "monk": "monk",
-    "barb": "barbarian",
-    "barbarian": "barbarian",
-    "wd": "witch-doctor",
-    "witch-doctor": "witch-doctor",
-    "wiz": "wizard",
-    "wizard": "wizard",
-    "cru": "crusader",
-    "sader": "crusader",
-    "crusader": "crusader"
-};
 
 export const classImages: Record<string, string> = {
     "barbarian-male": "https://files.catbox.moe/b2fa2v.png",
@@ -79,6 +45,60 @@ export const defaultLocales: Record<string, string> = {
     tw: "zh_TW",
     cn: "zh_CN"
 };
+
+export const classChoices: ApplicationCommandOptionChoice[] = [
+    {
+        name: "Demon Hunter",
+        value: "demon-hunter"
+    },
+    {
+        name: "Necromancer",
+        value: "necromancer"
+    },
+    {
+        name: "Monk",
+        value: "monk"
+    },
+    {
+        name: "Barbarian",
+        value: "barbarian"
+    },
+    {
+        name: "Witch Doctor",
+        value: "witch-doctor"
+    },
+    {
+        name: "Wizard",
+        value: "wizard"
+    },
+    {
+        name: "Crusader",
+        value: "crusader"
+    }
+];
+
+export const regionChoices: ApplicationCommandOptionChoice[] = [
+    {
+        name: "United States",
+        value: "us"
+    },
+    {
+        name: "Europe",
+        value: "eu"
+    },
+    {
+        name: "Korea",
+        value: "kr"
+    },
+    {
+        name: "Taiwan",
+        value: "tw"
+    },
+    {
+        name: "China",
+        value: "cn"
+    }
+];
 
 /** Wait x amount of milliseconds */
 export function sleep(ms: number): Promise<unknown> {

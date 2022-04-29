@@ -18,7 +18,7 @@ type Type = {
     DANGER: 4;
 };
 
-export class Embed {
+export default class Embed {
     static Colors: Colors = {
         default: 0xff,
         info: 0x209cee,

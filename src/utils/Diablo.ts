@@ -58,11 +58,8 @@ class Diablo {
             // Increment error after failed request
             this.hasError++;
 
-            this.logger.warn("REQUEST_TOKEN", e.message || e.toString()); // TODO : Remove temp logging
-
             // Reset error count if error is a ECONNRESET, we can ignore it.
             if (e.toString().includes("ECONNRESET")) {
-                this.logger.error("REQUEST_TOKEN", "ECONNRESET"); // TODO : Remove temp logging
                 this.hasError = 0;
             }
 
@@ -133,7 +130,7 @@ class Diablo {
     async getHero(userID: string, heroID: string): Promise<Hero> {
         const user = await getDBUser(userID);
         if (!user) {
-            throw Error("User not found, use `;setup` to get started");
+            throw Error("User not found, use `/setup` to get started");
         }
 
         if (!user.region) {

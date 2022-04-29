@@ -1,5 +1,5 @@
 import Configs from "../../models/Config";
-import { Embed } from "../../utils/Embed";
+import Embed from "../../utils/Embed";
 import Guilds from "../../models/Guild";
 import Lilith from "../../utils/Lilith";
 import settings from "../../settings";
