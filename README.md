@@ -4,7 +4,6 @@
 
 # Lilith
 Diablo 3 discord bot \
-Default prefix will be `;` \
 Click [here][invite-link] to invite the bot
 
 <!-- # TODO (Must Have) -->
@@ -15,6 +14,7 @@ Click [here][invite-link] to invite the bot
 - request season/era leaderboards
 
 # Completed
+- migrate to slash commands
 - switch to typescript
 - command handler
 - set battle.net account name
@@ -36,35 +36,23 @@ Click [here][invite-link] to invite the bot
 | hero | <id> [<[region][locale-link]> <[battle-tag][tag-link]>] | get a specific hero | yes |
 | heroes | [[class][class-link]] [<[region][locale-link]> <[battle-tag][tag-link]>] | get a list of all your heroes | yes |
 | setup || setup your account by specifying your battle tag, region and locale. <br> This is an interactive command and does not require any arguments | yes |
-| prefix | [new_prefix] | set custom prefix for the server (requires the user to have the manage server permission) | yes |
 
 # Regions and their corresponding locale(s)
 | region        | Acronym | host                              | locales                                                                 |
 |:--------------|:--------|:----------------------------------|:------------------------------------------------------------------------|
-| North America | us      | https://us.api.blizzard.com/      | en_US <br> es_MX <br> pt_BR                                             |
+| America       | us      | https://us.api.blizzard.com/      | en_US <br> es_MX <br> pt_BR                                             |
 | Europe        | eu      | https://eu.api.blizzard.com/      | en_GB <br> es_ES <br> fr_FR <br> ru_RU <br> de_DE <br> pt_PT <br> it_IT |
 | Korea         | kr      | https://kr.api.blizzard.com/      | ko_KR                                                                   |
 | Taiwan        | tw      | https://tw.api.blizzard.com/      | zh_TW                                                                   |
 | China         | cn      | https://gateway.battlenet.com.cn/ | zh_CN                                                                   |
 
-# Class list
-| Class        | Option               |
-|:-------------|:---------------------|
-| Demon Hunter | dh, demon-hunter     |
-| Necromancer  | necro, necromancer   |
-| Monk         | monk                 |
-| Brabarian    | barb, barbarian      |
-| Witch Doctor | wd, witch-doctor     |
-| Wizard       | wiz, wizard          |
-| Cursader     | cru, sader, crusader |
-
 # Links
-Thanks you to [eris-additions](https://github.com/minemidnight/eris-additions) and [eris-pagination](https://github.com/riyacchi/eris-pagination) for allowing me to stay lazy while still having nice paginated embeds and being able to await messages! \
+Thank you to [eris](https://github.com/abalabahaha/eris) for the awesome discord api library and [slash-create](https://github.com/Snazzah/slash-create) for making migrating to slash commands super easy! \
 Check out my website: [vdbroek.dev](https://vdbroek.dev) \
-[![discord](https://discordapp.com/api/v6/guilds/240059867744698368/widget.png?style=banner2)](https://discord.gg/p895czC)
+[![discord](https://discordapp.com/api/v6/guilds/240059867744698368/widget.png?style=banner2)](https://discord.gg/qqtrrMj)
 
 
-[invite-link]: https://discord.com/oauth2/authorize?client_id=740897738983604284&scope=bot&permissions=388160
+[invite-link]: https://discord.com/api/oauth2/authorize?client_id=740897738983604284&permissions=412384349248&scope=applications.commands%20bot
 [locale-link]: https://github.com/Pepijn98/Lilith#regions-and-their-corresponding-locales
 [class-link]: https://github.com/Pepijn98/Lilith#class-list
 [tag-link]: https://eu.battle.net/support/en/article/75767
