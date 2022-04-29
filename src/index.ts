@@ -1,11 +1,11 @@
 import "./utils/Extensions";
 
-import { Constants } from "eris";
 import EventLoader from "./utils/EventLoader";
 import Lilith from "./utils/Lilith";
 import path from "path";
 import settings from "./settings";
 
+import { Constants, TextableChannel } from "eris";
 import { GatewayServer, SlashCreator } from "slash-create";
 import { isDiscordError, postGuildCount } from "./utils/Helpers";
 
@@ -53,11 +53,40 @@ creator
 client.on("ready", async () => {
     if (!botReady) {
         client.logger.ready(`Logged in as ${client.user.username}#${client.user.discriminator}`);
-        client.editStatus("online", { name: "Diablo III", type: 0 });
+        client.editStatus("online", { name: "Diablo III | ;help", type: 0 });
 
         await postGuildCount(client);
 
         botReady = true;
+    }
+});
+
+// Let people know what to do when slash commands aren't being created with a traditional command
+client.on("messageCreate", async (msg) => {
+    if (!botReady) return;
+    if (!msg.author) return;
+    if (msg.author.discriminator === "0000") return;
+    if (msg.author.id === client.user.id) return;
+
+    if (msg.content.trim() === ";help" && (msg.channel as TextableChannel).createdAt) {
+        const channel = msg.channel as TextableChannel;
+        await channel.createMessage({
+            embed: {
+                title: "Lilith v2 is here!",
+                color: 0x413448,
+                thumbnail: {
+                    url: client.user.dynamicAvatarURL()
+                },
+                description:
+                    "The most significant change is the migration to slash commands." +
+                    "Type `/` to see all available commands." +
+                    "If slash commands are not showing up, re-invite the bot." +
+                    "https://apps.vdbroek.dev/lilith/invite",
+                footer: {
+                    text: "This command will stop working around the end of 2022"
+                }
+            }
+        });
     }
 });
 
@@ -78,7 +107,7 @@ client.on("disconnect", () => {
 client.on("shardResume", (id: number) => {
     const shard = client.shards.get(id);
     if (shard) {
-        shard.editStatus("online", { name: "Diablo III", type: 0 });
+        shard.editStatus("online", { name: "Diablo III | ;help", type: 0 });
     }
 });
 
