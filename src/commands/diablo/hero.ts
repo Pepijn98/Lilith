@@ -14,7 +14,8 @@ export default class HeroCommand extends SlashCommand<Lilith> {
                 {
                     type: CommandOptionType.STRING,
                     name: "id",
-                    description: "Hero ID"
+                    description: "Hero ID",
+                    required: true
                 },
                 {
                     type: CommandOptionType.STRING,

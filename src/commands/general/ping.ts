@@ -6,12 +6,12 @@ export default class PingCommand extends SlashCommand<Lilith> {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: "ping",
-            description: "Something about this command"
+            description: "Pong"
         });
     }
 
     async run(ctx: CommandContext): Promise<string> {
         await ctx.defer();
-        return "Not implemented yet";
+        return "No.";
     }
 }
