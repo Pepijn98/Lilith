@@ -15,7 +15,6 @@ commands: &commands
         build:
             files: git diff --name-only HEAD main
             glob: "*.ts"
-            include: "src/"
             run: yarn build
 
 post-merge:
