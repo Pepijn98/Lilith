@@ -2,12 +2,26 @@ import "./utils/Extensions";
 
 import EventLoader from "./utils/EventLoader";
 import Lilith from "./utils/Lilith";
+import axios from "axios";
 import path from "path";
 import settings from "./settings";
 
 import { Constants, TextableChannel } from "eris";
 import { GatewayServer, SlashCreator } from "slash-create";
 import { isDiscordError, postGuildCount } from "./utils/Helpers";
+
+axios.interceptors.request.use(x => {
+    // to avoid overwriting if another interceptor
+    // already defined the same object (meta)
+    x.meta = x.meta || {};
+    x.meta.requestStartedAt = Date.now();
+    return x;
+});
+
+axios.interceptors.response.use(x => {
+    x.responseTime = Date.now() - x.config.meta.requestStartedAt;
+    return x;
+});
 
 let botReady = false;
 

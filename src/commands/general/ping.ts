@@ -8,9 +8,7 @@ export default class PingCommand extends SlashCommand<Lilith> {
         super(creator, {
             name: "ping",
             description: "Pong",
-            requiredPermissions: [
-                "SEND_MESSAGES"
-            ]
+            requiredPermissions: ["SEND_MESSAGES"]
         });
     }
 
@@ -27,20 +25,13 @@ export default class PingCommand extends SlashCommand<Lilith> {
         });
 
         if (msg instanceof Message) {
-            let message = `🏓 Latency is ${Date.now() - msg.timestamp}ms`;
-            if (ctx.guildID) {
-                const shardID = this.client.guildShardMap[ctx.guildID];
-                const shard = this.client.shards.get(shardID) || this.client.shards.get(0);
-                if (shard) {
-                    message += `\n📶 API Latency is ${Math.round(shard.latency)}ms`;
-                }
-            }
-
             msg.edit({
                 embeds: [
                     {
                         color: Embed.Colors.default,
-                        description: message
+                        // prettier-ignore
+                        description: `🏓 Latency is ${Date.now() - msg.timestamp}ms\n` +
+                            `📶 API Latency is ${this.creator.requestHandler.latencyRef.latency}ms`
                     }
                 ]
             });
