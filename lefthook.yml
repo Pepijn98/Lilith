@@ -4,11 +4,11 @@ pre-commit:
         prettier:
             glob: "*.ts"
             include: "src/"
-            run: yarn prettier --list-different {staged_files}
+            run: prettier --list-different {staged_files}
         eslint:
             glob: "*.ts"
             include: "src/"
-            run: yarn eslint -f compact {staged_files}
+            run: eslint -f compact {staged_files}
 
 commands: &commands
     commands:

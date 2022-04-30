@@ -20,7 +20,7 @@ type Type = {
 
 export default class Embed {
     static Colors: Colors = {
-        default: 0xff,
+        default: 0x413448,
         info: 0x209cee,
         success: 0x65c875,
         warning: 0xffdd57,
