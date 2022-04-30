@@ -11,10 +11,12 @@ export default class Logger {
     #client: Lilith;
     #log: WinstonLogger;
 
+    logLevel: string = settings.debug ? "debug" : "info";
+
     constructor(client: Lilith) {
         this.#client = client;
         this.#log = createLogger({
-            level: "info",
+            level: this.logLevel,
             format: format.combine(
                 format.timestamp(),
                 format.printf(
@@ -23,7 +25,7 @@ export default class Logger {
             ),
             transports: [
                 new transports.Console({
-                    level: "info"
+                    level: this.logLevel
                 })
             ]
         });
@@ -35,6 +37,10 @@ export default class Logger {
 
     info(label: string, message: string): void {
         this.#log.info(message, { label });
+    }
+
+    debug(label: string, message: string): void {
+        this.#log.debug(message, { label });
     }
 
     warn(label: string, error: Error | string): void {

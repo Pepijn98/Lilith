@@ -9,6 +9,7 @@ Click [here][invite-link] to invite the bot
 <!-- # TODO (Must Have) -->
 
 # TODO (Add Later)
+- Create `DiabloError` class and return errors thrown by `Diablo#getHero` etc. as a response.
 - request items
 - character class/skills
 - request season/era leaderboards

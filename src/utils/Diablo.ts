@@ -25,7 +25,7 @@ class Diablo {
 
     async updateToken(): Promise<void> {
         try {
-            this.logger.info("REQUEST_TOKEN", "Making api request...");
+            this.logger.debug("REQUEST_TOKEN", "Making api request...");
             // prettier-ignore
             const response = await axios.post<AuthResponse>("https://eu.battle.net/oauth/token", {}, {
                 params: {
@@ -45,7 +45,7 @@ class Diablo {
                         access_token: response.data.access_token,
                         expires_at: expiresAt
                     };
-                    this.logger.info("REQUEST_TOKEN", "Request successful");
+                    this.logger.debug("REQUEST_TOKEN", "Request successful");
                     break;
                 default:
                     this.logger.error("REQUEST_TOKEN", "Invalid token type", true);
@@ -73,7 +73,7 @@ class Diablo {
     async getAccount(userID: string): Promise<Account> {
         const user = await getDBUser(userID);
         if (!user) {
-            throw Error("User not found, use `;setup` to get started");
+            throw Error("User not found, use `/setup` to get started");
         }
 
         if (!user.region) {

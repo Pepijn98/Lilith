@@ -29,7 +29,7 @@ const creator = new SlashCreator({
 
 const eventLoader = new EventLoader(client);
 
-creator.on("debug", (message) => client.logger.info("SLASH:DEBUG", message));
+creator.on("debug", (message) => client.logger.debug("SLASH:DEBUG", message));
 creator.on("warn", (message) => client.logger.warn("SLASH:WARN", message));
 creator.on("error", (error) => client.logger.error("SLASH:ERROR", error));
 creator.on("synced", () => client.logger.info("SLASH:SYNC", "Commands synced!"));
@@ -70,7 +70,8 @@ client.on("messageCreate", async (msg) => {
 
     if (msg.content.trim() === ";help") {
         const channel = msg.channel as TextableChannel;
-        await channel?.createMessage({
+        client.logger.info("LILITH:CMD", `${msg.author.username}${msg.author.discriminator} (${msg.author.id}) ran command ;help`);
+        await channel.createMessage?.({
             embed: {
                 title: "Lilith v2 is here!",
                 color: 0x413448,
