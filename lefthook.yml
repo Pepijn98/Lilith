@@ -1,10 +1,6 @@
 pre-commit:
     parallel: true
     commands:
-        prettier:
-            glob: "*.ts"
-            include: "src/"
-            run: prettier --list-different {staged_files}
         eslint:
             glob: "*.ts"
             include: "src/"
