@@ -18,6 +18,7 @@ const client = new Lilith(settings.token, {
     defaultImageFormat: "webp",
     defaultImageSize: 2048,
     intents: Constants.Intents.guilds | Constants.Intents.guildMessages | Constants.Intents.directMessages | Constants.Intents.guildEmojisAndStickers
+    // intents: Constants.Intents.guilds | Constants.Intents.guildEmojisAndStickers
 });
 
 const creator = new SlashCreator({
@@ -58,6 +59,8 @@ client.on("ready", async () => {
         await postGuildCount(client);
 
         botReady = true;
+    } else {
+        client.logger.info("RESUME", "Client resumed");
     }
 });
 
@@ -91,7 +94,7 @@ client.on("messageCreate", async (msg) => {
     }
 });
 
-client.on("error", (e: Error) => {
+client.on("error", (e) => {
     if (isDiscordError(e) && e.code === 1001) {
         client.disconnect({ reconnect: true });
     } else {
@@ -105,10 +108,15 @@ client.on("disconnect", () => {
     client.logger.warn("DISCONNECT", "Client disconnected");
 });
 
-client.on("shardResume", (id: number) => {
+// client.on("shardDisconnect", (id) => {
+//     client.logger.warn("SHARD:DISCONNECT", `Shard [${id}] disconnected`);
+// });
+
+client.on("shardResume", (id) => {
     const shard = client.shards.get(id);
     if (shard) {
         shard.editStatus("online", { name: "Diablo III | ;help", type: 0 });
+        // client.logger.info("SHARD:RESUME", `Shard [${id}] resumed`);
     }
 });
 

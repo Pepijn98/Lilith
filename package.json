@@ -1,6 +1,6 @@
 {
     "name": "lilith",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Diablo 3 discord bot",
     "license": "MIT",
     "main": "dist/index.js",
