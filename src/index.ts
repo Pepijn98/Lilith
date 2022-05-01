@@ -10,7 +10,7 @@ import { Constants, TextableChannel } from "eris";
 import { GatewayServer, SlashCreator } from "slash-create";
 import { isDiscordError, postGuildCount } from "./utils/Helpers";
 
-axios.interceptors.request.use(x => {
+axios.interceptors.request.use((x) => {
     // to avoid overwriting if another interceptor
     // already defined the same object (meta)
     x.meta = x.meta || {};
@@ -18,7 +18,7 @@ axios.interceptors.request.use(x => {
     return x;
 });
 
-axios.interceptors.response.use(x => {
+axios.interceptors.response.use((x) => {
     x.responseTime = Date.now() - x.config.meta.requestStartedAt;
     return x;
 });
@@ -49,8 +49,8 @@ creator.on("warn", (message) => client.logger.warn("SLASH:WARN", message));
 creator.on("error", (error) => client.logger.error("SLASH:ERROR", error));
 creator.on("synced", () => client.logger.info("SLASH:SYNC", "Commands synced!"));
 creator.on("commandRun", (command, _, ctx) => client.logger.info("SLASH:CMD", `${ctx.user.tag} (${ctx.user.id}) ran command ${command.commandName}`));
-creator.on("commandRegister", (command) => client.logger.info(`CMD:${command.commandName.toUpperCase()}`, "Registered!"));
-creator.on("commandError", (command, error) => client.logger.error(`CMD:${command.commandName.toUpperCase()}`, error));
+creator.on("commandRegister", (command) => client.logger.info("SLASH:CMD", `Command (${command.commandName.toUpperCase()}) registered!`));
+creator.on("commandError", (_, error) => client.logger.error("SLASH:CMD", error));
 
 creator
     .withServer(
@@ -74,7 +74,7 @@ client.on("ready", async () => {
 
         botReady = true;
     } else {
-        client.logger.info("RESUME", "Client resumed");
+        client.logger.info("LILITH", "Client resumed");
     }
 });
 
@@ -87,7 +87,7 @@ client.on("messageCreate", async (msg) => {
 
     if (msg.content.trim() === ";help") {
         const channel = msg.channel as TextableChannel;
-        client.logger.info("LILITH:CMD", `${msg.author.username}${msg.author.discriminator} (${msg.author.id}) ran command ;help`);
+        client.logger.info("LILITH:CMD", `${msg.author.username}${msg.author.discriminator} (${msg.author.id}) ran command help`);
         await channel.createMessage?.({
             embed: {
                 title: "Lilith v2 is here!",
@@ -109,17 +109,18 @@ client.on("messageCreate", async (msg) => {
 });
 
 client.on("error", (e) => {
-    if (isDiscordError(e) && e.code === 1001) {
-        client.disconnect({ reconnect: true });
-    } else {
-        // Don't care about this error
-        if (e.message.includes("(reading 'emit')")) return;
-        client.logger.error("ERROR", e);
-    }
+    // Not a relevant error
+    if (e.message.includes("(reading 'emit')")) return;
+    // Conn reset by peer, not relevant
+    if (isDiscordError(e) && e.code === 1006) return;
+    // NGL I completely forgot why I'm doing this but whatever
+    if (isDiscordError(e) && e.code === 1001) client.disconnect({ reconnect: true });
+
+    client.logger.error("LILITH", e);
 });
 
 client.on("disconnect", () => {
-    client.logger.warn("DISCONNECT", "Client disconnected");
+    client.logger.warn("LILITH", "Client disconnected");
 });
 
 // client.on("shardDisconnect", (id) => {
