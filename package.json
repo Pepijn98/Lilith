@@ -1,6 +1,6 @@
 {
     "name": "lilith",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "Diablo 3 discord bot",
     "license": "MIT",
     "main": "dist/index.js",
@@ -24,15 +24,15 @@
     },
     "dependencies": {
         "@kurozero/collection": "^0.5.1",
-        "axios": "^0.26.1",
+        "axios": "^0.27.2",
         "bufferutil": "^4.0.6",
         "chalk": "4.1.2",
         "dotenv": "^16.0.0",
         "eris": "^0.16.1",
         "moment": "^2.29.3",
-        "mongoose": "^6.3.1",
+        "mongoose": "^6.3.2",
         "os-utils": "oscmejia/os-utils",
-        "slash-create": "^5.2.0",
+        "slash-create": "^5.5.3",
         "winston": "^3.7.2",
         "yukikaze": "^1.0.0",
         "zlib-sync": "^0.1.7"
@@ -40,16 +40,16 @@
     "devDependencies": {
         "@arkweid/lefthook": "^0.7.7",
         "@types/mongoose": "^5.11.97",
-        "@types/node": "^17.0.25",
-        "@typescript-eslint/eslint-plugin": "^5.20.0",
-        "@typescript-eslint/parser": "^5.20.0",
+        "@types/node": "^17.0.31",
+        "@typescript-eslint/eslint-plugin": "^5.22.0",
+        "@typescript-eslint/parser": "^5.22.0",
         "cross-env": "^7.0.3",
         "eslint": "^8.14.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.0.0",
         "prettier": "^2.6.2",
-        "slash-up": "^1.1.0",
+        "slash-up": "^1.1.1",
         "ts-node": "^10.7.0",
-        "typescript": "^4.6.3"
+        "typescript": "^4.6.4"
     }
 }

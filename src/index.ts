@@ -110,9 +110,13 @@ client.on("messageCreate", async (msg) => {
 
 client.on("error", (e) => {
     // Not a relevant error
-    if (e.message.includes("(reading 'emit')")) return;
-    // Conn reset by peer, not relevant
-    if (isDiscordError(e) && e.code === 1006) return;
+    // prettier-ignore
+    if (
+        e.message.includes("(reading 'emit')") ||
+        e.message.includes("Connection reset by peer") ||
+        (isDiscordError(e) && e.code === 1006)
+    ) return;
+
     // NGL I completely forgot why I'm doing this but whatever
     if (isDiscordError(e) && e.code === 1001) client.disconnect({ reconnect: true });
 

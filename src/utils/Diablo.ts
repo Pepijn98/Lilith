@@ -9,7 +9,7 @@ import { Auth, AuthResponse } from "../types/diablo/Auth";
 import { baseUrl, defaultLocales, getDBUser } from "./Helpers";
 
 class Diablo {
-    timeout = 60 * 1000; // Check every minute
+    timeout = 1000 * 60 * 5; // Check every 5 minutes
     hasError = 0;
 
     logger: Logger;
@@ -55,18 +55,21 @@ class Diablo {
             // Reset error after successful request
             this.hasError = 0;
         } catch (e) {
-            // Increment error after failed request
-            this.hasError++;
-
-            // Reset error count if error is a ECONNRESET, we can ignore it.
-            if (e.toString().includes("ECONNRESET")) {
-                this.hasError = 0;
-            }
-
-            // Only log error on the first failed attempt
-            if (this.hasError === 1) {
-                this.logger.error("REQUEST_TOKEN", e, true);
-            }
+            // // Increment error after failed request
+            // this.hasError++;
+            // // Reset error count if error is a ECONNRESET, ETIMEDOUT or ENOTFOUND, we can ignore it.
+            // // prettier-ignore
+            // if (
+            //     e.toString().includes("ECONNRESET") ||
+            //     e.toString().includes("ETIMEDOUT") ||
+            //     e.toString().includes("ENOTFOUND")
+            // ) {
+            //     this.hasError = 0;
+            // }
+            // // Only log error on the first failed attempt
+            // if (this.hasError === 1) {
+            //     this.logger.error("REQUEST_TOKEN", e, true);
+            // }
         }
     }
 
