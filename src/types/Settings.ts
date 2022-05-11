@@ -11,8 +11,11 @@ interface Database {
 }
 
 interface BotLists {
-    topgg: string;
+    tgg: string;
     bod: string;
+    dls: string;
+    bfd: string;
+    bgg: string;
 }
 
 interface Webhook {
@@ -30,7 +33,7 @@ export interface Settings {
     devGuildID: string;
     blizzard: Blizzard;
     database: Database;
-    botLists: BotLists;
+    dbl: BotLists;
     webhook: Webhook;
 }
 

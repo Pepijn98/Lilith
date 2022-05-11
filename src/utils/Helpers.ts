@@ -147,6 +147,11 @@ export async function getDBUser(id: string): Promise<UserModel | null> {
     return await Users.findOne({ uid: id }).exec();
 }
 
+/**
+ * Post server count to https://top.gg
+ * @param client
+ * @returns
+ */
 async function topgg(client: Lilith): Promise<void> {
     if (settings.debug) {
         return;
@@ -160,49 +165,141 @@ async function topgg(client: Lilith): Promise<void> {
             },
             {
                 headers: {
-                    "Authorization": settings.botLists.topgg,
+                    "Authorization": settings.dbl.tgg,
                     "Content-Type": "application/json"
                 }
             }
         );
     } catch (e) {
-        client.logger.error("TOPGG", "Failed sending guild count to top.gg");
+        client.logger.error("DBL", "Failed sending guild count to top.gg");
     }
 }
 
-// Not yet approved
-// async function botsondiscord(client: Lilith): Promise<void> {
-//     if (settings.debug) {
-//         return;
-//     }
+/**
+ * Post server count to https://discord.bots.gg
+ * @param client
+ * @returns
+ */
+async function botsgg(client: Lilith): Promise<void> {
+    if (settings.debug) {
+        return;
+    }
 
-//     try {
-//         await axios.post(
-//             `https://bots.ondiscord.xyz/bot-api/bots/${client.user.id}/guilds`,
-//             {
-//                 guildCount: client.guilds.size
-//             },
-//             {
-//                 headers: {
-//                     "Authorization": settings.botLists.bod,
-//                     "Content-Type": "application/json"
-//                 }
-//             }
-//         );
-//     } catch (e) {
-//         client.logger.error("BOD", "Failed sending guild count to bots.ondiscord.xyz");
-//     }
-// }
+    try {
+        await axios.post(
+            `https://discord.bots.gg/api/v1/bots/${client.user.id}/stats`,
+            {
+                guildCount: client.guilds.size,
+                shardCount: client.shards.size
+            },
+            {
+                headers: {
+                    "Authorization": settings.dbl.bgg,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+    } catch (e) {
+        client.logger.error("DBL", "Failed sending guild count to bots.gg");
+    }
+}
+
+/**
+ * Post server count to https://discordlist.space
+ * @param client
+ * @returns
+ */
+async function discordlist(client: Lilith): Promise<void> {
+    if (settings.debug) {
+        return;
+    }
+
+    try {
+        await axios.post(
+            `https://api.discordlist.space/v2/bots/${client.user.id}`,
+            {
+                serverCount: client.guilds.size
+            },
+            {
+                headers: {
+                    "Authorization": settings.dbl.dls,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+    } catch (e) {
+        client.logger.error("DBL", "Failed sending guild count to discordlist.space");
+    }
+}
+
+/**
+ * Post server count to https://discords.com
+ * @param client
+ * @returns
+ */
+async function discordsbots(client: Lilith): Promise<void> {
+    if (settings.debug) {
+        return;
+    }
+
+    try {
+        await axios.post(
+            `https://discords.com/bots/api/bot/${client.user.id}`,
+            {
+                server_count: client.guilds.size
+            },
+            {
+                headers: {
+                    "Authorization": settings.dbl.bfd,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+    } catch (e) {
+        client.logger.error("DBL", "Failed sending guild count to discords.com");
+    }
+}
+
+/**
+ * Post server count to https://bots.ondiscord.xyz
+ * @param client
+ * @returns
+ */
+async function botsondiscord(client: Lilith): Promise<void> {
+    if (settings.debug) {
+        return;
+    }
+
+    try {
+        await axios.post(
+            `https://bots.ondiscord.xyz/bot-api/bots/${client.user.id}/guilds`,
+            {
+                guildCount: client.guilds.size
+            },
+            {
+                headers: {
+                    "Authorization": settings.dbl.bod,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+    } catch (e) {
+        client.logger.error("DBL", "Failed sending guild count to bots.ondiscord.xyz");
+    }
+}
 
 export async function postGuildCount(client: Lilith): Promise<void> {
     const interval = new Yukikaze();
     interval.run(
         async () => {
             await topgg(client);
-            // await botsondiscord(client);
+            await botsgg(client);
+            await discordlist(client);
+            await discordsbots(client);
+            await botsondiscord(client);
         },
         30 * 60 * 1000,
-        false
+        true
     );
 }
 

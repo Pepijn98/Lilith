@@ -2,9 +2,11 @@ import { Settings } from "./types/Settings";
 import dotenv from "dotenv";
 import path from "path";
 
-let dotenvPath = path.join(process.cwd(), ".env");
+const fileName = process.env.NODE_ENV === "development" ? ".env.development" : ".env";
+console.log(fileName);
+let dotenvPath = path.join(process.cwd(), fileName);
 if (path.parse(process.cwd()).name === "dist") {
-    dotenvPath = path.join(process.cwd(), "..", ".env");
+    dotenvPath = path.join(process.cwd(), "..", fileName);
 }
 const { error, parsed } = dotenv.config({ path: dotenvPath });
 
@@ -24,11 +26,11 @@ if (parsed) {
 
 const settings: Settings = {
     debug: String(process.env.DEBUG).toLowerCase() === "true",
-    appID: process.env.DISCORD_APP_ID,
-    publicKey: process.env.DISCORD_PUBLIC_KEY,
-    token: process.env.DISCORD_BOT_TOKEN,
+    appID: process.env.BOT_ID,
+    publicKey: process.env.BOT_PUBLIC_KEY,
+    token: process.env.BOT_TOKEN,
     owner: process.env.BOT_OWNER_ID,
-    devGuildID: process.env.DEVELOPMENT_GUILD_ID,
+    devGuildID: process.env.DEV_GUILD_ID,
     blizzard: {
         id: process.env.BLIZZARD_APP_ID,
         secret: process.env.BLIZZARD_SECRET
@@ -39,9 +41,12 @@ const settings: Settings = {
         host: process.env.DB_HOST,
         name: process.env.DB_NAME
     },
-    botLists: {
-        topgg: process.env.BOT_TOPGG_TOKEN,
-        bod: process.env.BOT_BOD_TOKEN
+    dbl: {
+        tgg: process.env.DBL_TGG_TOKEN,
+        bod: process.env.DBL_BOD_TOKEN,
+        dls: process.env.DBL_DLS_TOKEN,
+        bfd: process.env.DBL_BFD_TOKEN,
+        bgg: process.env.DBL_BGG_TOKEN,
     },
     webhook: {
         id: process.env.WEBHOOK_ID,

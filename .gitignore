@@ -12,5 +12,5 @@ logs/
 .vscode/**/*
 !.vscode/extensions.json
 .env
-.env.bak
+.env.*
 dist/
