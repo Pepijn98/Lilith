@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import path from "path";
 
 const fileName = process.env.NODE_ENV === "development" ? ".env.development" : ".env";
-console.log(fileName);
 let dotenvPath = path.join(process.cwd(), fileName);
 if (path.parse(process.cwd()).name === "dist") {
     dotenvPath = path.join(process.cwd(), "..", fileName);

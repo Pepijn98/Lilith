@@ -299,7 +299,7 @@ export async function postGuildCount(client: Lilith): Promise<void> {
             await botsondiscord(client);
         },
         30 * 60 * 1000,
-        true
+        false
     );
 }
 
