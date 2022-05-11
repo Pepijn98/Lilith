@@ -15,12 +15,16 @@
         "start": "yarn build && cd dist && cross-env NODE_ENV=production node ./index.js",
         "test": "yarn build && cd dist && cross-env NODE_ENV=development node ./index.js",
         "dev": "cross-env NODE_ENV=development ts-node ./src/index.ts",
-        "build": "yarn clean:dist && npx tsc",
-        "build:test": "npx tsc --noEmit",
+        "build": "yarn clean-dist && npx tsc",
+        "build-test": "npx tsc --noEmit",
         "clean": "(if exist \"node_modules\" rd /q /s node_modules) && (if exist \"yarn.lock\" del /q yarn.lock)",
-        "clean:dist": "if exist \"dist\" rd /q /s dist",
+        "clean-dist": "if exist \"dist\" rd /q /s dist",
         "lint": "npx eslint --ext .ts ./src",
-        "lint:fix": "npx eslint --ext .ts ./src --fix"
+        "lint-fix": "npx eslint --ext .ts ./src --fix",
+
+        "nix:build": "yarn nix:clean-dist && npx tsc",
+        "nix:clean": "rm -rf ./node_modules ./yarn.lock",
+        "nix:clean-dist": "rm -rf ./dist"
     },
     "dependencies": {
         "@kurozero/collection": "^0.5.1",
