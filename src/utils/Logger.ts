@@ -77,7 +77,7 @@ export default class Logger {
                 }
             }
 
-            this.#client.executeWebhook(settings.webhook.id, settings.webhook.token, {
+            await this.#client.executeWebhook(settings.webhook.id, settings.webhook.token, {
                 username: this.#client.ready ? this.#client.user.username : "Lilith",
                 avatarURL: this.#client.ready ? this.#client.user.dynamicAvatarURL() : "https://discord.com/assets/0e291f67c9274a1abdddeb3fd919cbaa.png",
                 content: `\`\`\`diff\n- ${message}\n\`\`\``

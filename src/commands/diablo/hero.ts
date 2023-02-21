@@ -35,6 +35,10 @@ export default class HeroCommand extends SlashCommand<Lilith> {
         });
     }
 
+    async onError(err: Error, ctx: CommandContext): Promise<void> {
+        await ctx.send(err && err.message ? err.message : "Error while fetching hero. If this keeps happening please contact ForestOni#0001 or join the support server.");
+    }
+
     async run(ctx: CommandContext): Promise<void> {
         await ctx.defer();
 

@@ -108,7 +108,7 @@ client.on("messageCreate", async (msg) => {
     }
 });
 
-client.on("error", (e) => {
+client.on("error", async (e) => {
     // Not a relevant error
     // prettier-ignore
     if (
@@ -120,7 +120,7 @@ client.on("error", (e) => {
     // NGL I completely forgot why I'm doing this but whatever
     if (isDiscordError(e) && e.code === 1001) client.disconnect({ reconnect: true });
 
-    client.logger.error("LILITH", e);
+    await client.logger.error("LILITH", e);
 });
 
 client.on("disconnect", () => {
@@ -139,12 +139,12 @@ client.on("shardResume", (id) => {
     }
 });
 
-process.on("unhandledRejection", (reason: string | Error) => {
-    client.logger.error("UNHANDLED_REJECTION", reason);
+process.on("unhandledRejection", async (reason: string | Error) => {
+    await client.logger.error("UNHANDLED_REJECTION", reason);
 });
 
-process.on("uncaughtException", (error) => {
-    client.logger.error("UNCAUGHT_EXCEPTION", error);
+process.on("uncaughtException", async (error) => {
+    await client.logger.error("UNCAUGHT_EXCEPTION", error);
 });
 
 process.on("SIGINT", () => {
