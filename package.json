@@ -39,7 +39,7 @@
         "slash-create": "^5.5.3",
         "winston": "^3.7.2",
         "yukikaze": "^1.0.0",
-        "zlib-sync": "^0.1.7"
+        "zlib-sync": "^0.1.9"
     },
     "devDependencies": {
         "@arkweid/lefthook": "^0.7.7",
